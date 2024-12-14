@@ -23,7 +23,10 @@ export async function signin(data: LoginType, authUpdate: (data: AuthContextType
             ...token,
             username: decodedToken.sub,
             id: decodedToken.id,
-            profilePicture: decodedToken.profilePicture
+            profilePicture: decodedToken.profilePicture,
+            firstname: decodedToken.firstname,
+            lastname: decodedToken.lastname,
+            bio: decodedToken.bio
         }
 
         console.log(tokenToStore)

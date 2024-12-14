@@ -4,7 +4,6 @@ import GlobalStyles from '@mui/joy/GlobalStyles';
 import CssBaseline from '@mui/joy/CssBaseline';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
-import Checkbox from '@mui/joy/Checkbox';
 import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
@@ -16,11 +15,8 @@ import Stack from '@mui/joy/Stack';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
-import { useAuth, useAuthUpdate } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { signin } from '../util/api';
-import { useEffect } from 'react';
+import { useAppDispatch} from '../app/hooks';
+import { login } from '../features/auth/authSlice';
 // import GoogleIcon from './GoogleIcon';
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -60,36 +56,17 @@ const customTheme = extendTheme({ defaultColorScheme: 'dark' });
 
 export default function SignIn() {
 
-
-    const auth = useAuth();
-    const authUpdate = useAuthUpdate();
-    const navigate = useNavigate();
-    const [error, setError] = React.useState(false);
-
-    useEffect(() => {
-
-    }, [auth])
-
+    const dispatch = useAppDispatch();
 
     const handleSubmit = async (event: SignInFormElement) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget as HTMLFormElement);
-
-        try {
-            await signin(
-                {
-                    username: data.get('username') as string,
-                    password: data.get('password') as string
-                }
-                , authUpdate);
-
-            navigate("/")
-
-        } catch (error) {
-            console.error(error);
-            toast.error("Error Logging In. Try again");
-            setError(true);
-        }
+        dispatch(login(
+            {
+                username: data.get('username') as string,
+                password: data.get('password') as string
+            },
+        ))
     }
 
     return (
@@ -175,7 +152,7 @@ export default function SignIn() {
                                     </Link>
                                 </Typography>
                             </Stack>
-                           
+
                         </Stack>
                         <Divider
                             sx={(theme) => ({

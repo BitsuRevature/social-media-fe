@@ -1,135 +1,114 @@
-import {
-    Avatar,
-    Card, CardActions,
-    CardContent, CardHeader,
-    CardMedia, Collapse,
-    IconButton,
-    IconButtonProps,
-     styled,
-    Typography
-} from "@mui/material";
-import {PostType} from "../util/types.ts";
-import {useState} from "react";
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {red} from "@mui/material/colors";
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {formateDate} from "../util/helper.ts";
+import AspectRatio from '@mui/joy/AspectRatio';
+import Box from '@mui/joy/Box';
+import Button from '@mui/joy/Button';
+import Divider from '@mui/joy/Divider';
+import Stack from '@mui/joy/Stack';
+import Typography from '@mui/joy/Typography';
+import Card from '@mui/joy/Card';
+import CardActions from '@mui/joy/CardActions';
+import CardOverflow from '@mui/joy/CardOverflow';
 
-interface ExpandMoreProps extends IconButtonProps {
-    expand: boolean;
-}
-
-const ExpandMore = styled((props: ExpandMoreProps) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-})(({ theme }) => ({
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-    }),
-    variants: [
-        {
-            props: ({ expand }) => !expand,
-            style: {
-                transform: 'rotate(0deg)',
-            },
-        },
-        {
-            props: ({ expand }) => !!expand,
-            style: {
-                transform: 'rotate(180deg)',
-            },
-        },
-    ],
-}));
+import { formateDate } from '../util/helper'
+import { useAuth } from '../contexts/AuthContext';
+import { CommentType, PostType } from '../util/types';
+import Comment from './Comment';
+import { useAppDispatch, useAppSelector} from '../app/hooks';
+import { deletePost, getPosts } from '../features/post/postSlice';
 
 
-export default function Post({key, post}: { key: number, post: PostType }) {
+export default function Post({ post }: { post: PostType }) {
 
-    const [expanded, setExpanded] = useState(false);
+    const authStore = useAppSelector(store => store.auth); 
+    const dispatch = useAppDispatch();
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
+
+    async function handleDelete() {
+        dispatch(deletePost(post.id))
+        dispatch(getPosts())
     }
 
     return (
-        <Card key={key} sx={{minWidth:300, maxHeight:600}} style={{padding:"1rem"}}>
-            <CardHeader
-                avatar={
-                    <Avatar
-                        sx={{ bgcolor: red[500] }}
-                        alt={post.user.username}
-                        src={post.user.profilePicture}
-                    >
-
-                    </Avatar>
-                }
-                action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                    </IconButton>
-                }
-                title={post.user.username}
-                subheader={formateDate(post.createdAt)}
-            />
-            <CardMedia
-                component="img"
-                height="300"
-                image={post.mediaURL}
-                alt={post.content}
-            />
-            <CardContent>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    {post.content}
-                </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon  />
-                </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon />
-                </IconButton>
-                <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
+        <Card>
+            <Stack
+                direction="row"
+                spacing={3}
+                alignItems="center"
+            >
+                <AspectRatio
+                    ratio="1"
+                    maxHeight={60}
+                    sx={{ flex: 1, minWidth: 40, maxWidth: 60, borderRadius: '100%' }}
                 >
-                    <ExpandMoreIcon />
-                </ExpandMore>
-            </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                    <Typography sx={{ marginBottom: 2 }}>Method:</Typography>
-                    <Typography sx={{ marginBottom: 2 }}>
-                        Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
-                        aside for 10 minutes.
+                    <img
+                        // src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
+                        // srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
+                        src={post.user.profilePicture}
+                        loading="lazy"
+                        alt=""
+                    />
+                </AspectRatio>
+                <Box sx={{ mb: 1 }}>
+                    <Typography level="title-md">{post.user.username}</Typography>
+                    <Typography level="body-sm">
+                        {formateDate(post.createdAt)}
                     </Typography>
-                    <Typography sx={{ marginBottom: 2 }}>
-                        Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
-                        medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring
-                        occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a
-                        large plate and set aside, leaving chicken and chorizo in the pan. Add
-                        pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
-                        stirring often until thickened and fragrant, about 10 minutes. Add
-                        saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-                    </Typography>
-                    <Typography sx={{ marginBottom: 2 }}>
-                        Add rice and stir very gently to distribute. Top with artichokes and
-                        peppers, and cook without stirring, until most of the liquid is absorbed,
-                        15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
-                        mussels, tucking them down into the rice, and cook again without
-                        stirring, until mussels have opened and rice is just tender, 5 to 7
-                        minutes more. (Discard any mussels that don&apos;t open.)
-                    </Typography>
-                    <Typography>
-                        Set aside off of the heat to let rest for 10 minutes, and then serve.
-                    </Typography>
-                </CardContent>
-            </Collapse>
+                </Box>
+            </Stack>
+
+
+            <Divider />
+
+            <Stack
+                direction="column"
+                spacing={3}
+                sx={{ display: { xs: 'flex', md: 'flex' }, my: 1 }}
+                justifyContent="center"
+            >
+                <AspectRatio
+                    ratio="1"
+                    maxHeight={500}
+                    sx={{ flex: 1, minWidth: 40, maxWidth: "95%" }}
+                >
+                    <img
+                        // srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
+                        src={post.user.profilePicture}
+                        loading="lazy"
+                        alt=""
+                    />
+                </AspectRatio>
+
+                {
+                    post.comments.map((comment: CommentType) => {
+                        return (
+                            <Comment key={comment.id} comment={comment} postId={post.id} />
+                        )
+                    })
+                }
+
+            </Stack>
+
+            <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
+                <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
+
+                    <Button size="sm" variant="solid">
+                        {
+
+                        }
+                        Save
+                    </Button>
+                    {
+                        authStore.auth?.id == post.user.id ? (
+                            <Button
+                                size="sm" variant="solid" color="danger"
+                                onClick={handleDelete}
+                            >
+                                Delete Post
+                            </Button>
+                        ) : ""
+                    }
+                </CardActions>
+            </CardOverflow>
         </Card>
-    );
+    )
+
 }

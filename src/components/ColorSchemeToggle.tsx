@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { useColorScheme } from '@mui/joy/styles';
+import { extendTheme, useColorScheme } from '@mui/joy/styles';
 import IconButton, { IconButtonProps } from '@mui/joy/IconButton';
 
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeIcon from '@mui/icons-material/LightMode';
+
+const customTheme = extendTheme({ defaultColorScheme: 'dark' });
+
 
 export default function ColorSchemeToggle(props: IconButtonProps) {
   const { onClick, sx, ...other } = props;

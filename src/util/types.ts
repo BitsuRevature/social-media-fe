@@ -3,6 +3,9 @@ export type AuthContextType = {
     id: number | null;
     username: string | null;
     profilePicture: string | null;
+    bio: string | null;
+    firstname: string | null;
+    lastname: string | null;
 }
 
 export type LoginType = {
@@ -28,6 +31,7 @@ export type PostType = {
 export type CommentType = {
     content: string;
     createdAt: string;
+    user: UserType;
     id: number;
 
 }
@@ -43,4 +47,5 @@ export type UserType = {
 export type ReactionType = {
     id: number;
     type: string;
+    user: UserType;
 }
