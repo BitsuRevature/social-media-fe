@@ -68,7 +68,9 @@ export default function SignUp() {
         try {
             await register({
                 username: data.get('username') as string,
-                password: data.get('password') as string
+                password: data.get('password') as string,
+                firstname: data.get('firstname') as string,
+                lastname: data.get('lastname') as string,
             });
             navigate('/login');
         } catch (errorc) {
@@ -182,6 +184,14 @@ export default function SignUp() {
                 <FormControl required>
                   <FormLabel>User Name</FormLabel>
                   <Input type="text" name="username" />
+                </FormControl>
+                <FormControl required>
+                  <FormLabel>First Name</FormLabel>
+                  <Input type="text" name="firstname" />
+                </FormControl>
+                <FormControl required>
+                  <FormLabel>Last Name</FormLabel>
+                  <Input type="text" name="lastname" />
                 </FormControl>
                 <FormControl required>
                   <FormLabel>Password</FormLabel>

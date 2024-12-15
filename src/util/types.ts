@@ -16,6 +16,8 @@ export type LoginType = {
 export type RegisterType = {
     username: string;
     password: string;
+    firstname: string;
+    lastname: string;
 }
 
 export type PostType = {
@@ -26,6 +28,11 @@ export type PostType = {
     comments: CommentType[];
     reactions: ReactionType[];
     user: UserType;
+}
+
+export type CreatePostType = {
+    content: string;
+    mediaURL: string;
 }
 
 export type CommentType = {

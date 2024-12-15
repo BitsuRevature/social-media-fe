@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import MyProfile from '../components/MyProfile';
 import Posts from './Posts';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
+import CreatePost from '../components/CreatePost';
 
 
 export default function Home() {
@@ -13,12 +14,14 @@ export default function Home() {
     const viewIdx = useAppSelector(store => store.viewIdx);
 
     function handleView(){
-        
         switch(viewIdx.idx){
             case 1:
                 return (<Posts />)
                 break;
-            case 2:
+            case 2: 
+                return(<CreatePost />)
+                break;
+            case 3:
                 return (<MyProfile />)     
                 break;
         }

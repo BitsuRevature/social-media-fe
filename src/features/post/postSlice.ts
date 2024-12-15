@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "../../config/axiosConfig";
-import { CommentType, PostType } from "../../util/types";
+import { CommentType, CreatePostType } from "../../util/types";
+import { toast } from "react-toastify";
 
 interface PostSliceType {
     posts: PostType[],
@@ -20,6 +21,18 @@ export const getPosts = createAsyncThunk(
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue({ error: error.message });
+        }
+    }
+)
+
+export const createPost = createAsyncThunk(
+    'post/createPost',
+    async(post: CreatePostType, thunkAPI) => {
+        try{
+            await axios.post('/posts', post);
+            return;
+        }catch(error: any){
+            return thunkAPI.rejectWithValue({error: error.message})
         }
     }
 )
@@ -103,6 +116,18 @@ const postSlice = createSlice({
         // builder.addCase(deleteComment.rejected, (state) => {
 
         // }
+
+        builder.addCase(createPost.pending), (state, action) => {
+
+        }
+
+        builder.addCase(createPost.fulfilled), (state, action) => {
+            
+        }
+
+        builder.addCase(createPost.rejected), (state, action) => {
+            toast.error("Post Failed");
+        }
 
     }
 

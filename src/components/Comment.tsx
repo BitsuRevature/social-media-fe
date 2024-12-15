@@ -5,7 +5,6 @@ import Typography from "@mui/joy/Typography";
 import { CommentType } from "../util/types";
 import { formateDate } from "../util/helper";
 import Button from "@mui/joy/Button";
-import { useAuth } from "../contexts/AuthContext";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { deleteComment } from "../features/post/postSlice";
 

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AuthContextType, LoginType } from "../../util/types";
 import axios from "axios";
 import { jwtDecode, JwtPayload } from "jwt-decode";
-import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface AuthSliceType {
     auth: AuthContextType | null,
@@ -67,11 +67,11 @@ const authSlice = createSlice({
             localStorage.setItem('user', JSON.stringify(tokenToStore));
             state.isLoading = false;
             window.location.reload();
-
         })
 
         builder.addCase(login.rejected, (state) => {
             state.isLoading = false;
+            toast.error("Username or password wrong. Try Again!");
         })
 
 

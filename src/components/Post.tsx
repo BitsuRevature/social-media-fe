@@ -9,7 +9,6 @@ import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
 
 import { formateDate } from '../util/helper'
-import { useAuth } from '../contexts/AuthContext';
 import { CommentType, PostType } from '../util/types';
 import Comment from './Comment';
 import { useAppDispatch, useAppSelector} from '../app/hooks';
@@ -24,7 +23,7 @@ export default function Post({ post }: { post: PostType }) {
 
     async function handleDelete() {
         dispatch(deletePost(post.id))
-        dispatch(getPosts())
+        // dispatch(getPosts())
     }
 
     return (
@@ -43,7 +42,6 @@ export default function Post({ post }: { post: PostType }) {
                         // src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
                         // srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
                         src={post.user.profilePicture}
-                        loading="lazy"
                         alt=""
                     />
                 </AspectRatio>
@@ -71,8 +69,7 @@ export default function Post({ post }: { post: PostType }) {
                 >
                     <img
                         // srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
-                        src={post.user.profilePicture}
-                        loading="lazy"
+                        src={post.mediaURL}
                         alt=""
                     />
                 </AspectRatio>
