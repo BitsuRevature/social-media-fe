@@ -26,4 +26,4 @@ dist-ssr
 .env
 .env.test
 
-firebaseConfig
+/firebaseConfigg.ts
