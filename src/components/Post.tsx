@@ -4,6 +4,7 @@ import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
+
 import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
@@ -11,15 +12,17 @@ import CardOverflow from '@mui/joy/CardOverflow';
 import { formateDate } from '../util/helper'
 import { CommentType, PostType } from '../util/types';
 import Comment from './Comment';
-import { useAppDispatch, useAppSelector} from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { deletePost, getPosts } from '../features/post/postSlice';
+import CardHeader from '@mui/material/CardHeader/CardHeader';
+import Avatar from '@mui/joy/Avatar';
+import { CardContent, CardMedia } from '@mui/material';
 
 
 export default function Post({ post }: { post: PostType }) {
 
-    const authStore = useAppSelector(store => store.auth); 
+    const authStore = useAppSelector(store => store.auth);
     const dispatch = useAppDispatch();
-
 
     async function handleDelete() {
         dispatch(deletePost(post.id))
@@ -28,30 +31,20 @@ export default function Post({ post }: { post: PostType }) {
 
     return (
         <Card>
-            <Stack
-                direction="row"
-                spacing={3}
-                alignItems="center"
-            >
-                <AspectRatio
-                    ratio="1"
-                    maxHeight={60}
-                    sx={{ flex: 1, minWidth: 40, maxWidth: 60, borderRadius: '100%' }}
-                >
-                    <img
-                        // src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-                        // srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
-                        src={post.user.profilePicture}
-                        alt=""
-                    />
-                </AspectRatio>
-                <Box sx={{ mb: 1 }}>
-                    <Typography level="title-md">{post.user.username}</Typography>
-                    <Typography level="body-sm">
-                        {formateDate(post.createdAt)}
-                    </Typography>
-                </Box>
-            </Stack>
+
+            <CardHeader
+                avatar={
+                    <Avatar>
+                        {post.user.profilePicture}
+                    </Avatar>
+                }
+                sx={{
+                    height: 25
+                }}
+                title={post.user.username}
+                subheader={formateDate(post.createdAt)}
+            />
+
 
 
             <Divider />
@@ -62,29 +55,21 @@ export default function Post({ post }: { post: PostType }) {
                 sx={{ display: { xs: 'flex', md: 'flex' }, my: 1 }}
                 justifyContent="center"
             >
-                <AspectRatio
-                    ratio="1"
-                    maxHeight={500}
-                    sx={{ flex: 1, minWidth: 40, maxWidth: "95%" }}
+                <CardMedia
+                    component="img"
+                    height={500}
+                    image={post.mediaURL}
+                />
+                <CardContent
+                    sx={{
+                        height: 25
+                    }}
                 >
-                    <img
-                        // srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
-                        src={post.mediaURL}
-                        alt=""
-                    />
-                </AspectRatio>
+                    <Typography>
+                        {post.content}
+                    </Typography>
+                </CardContent>
 
-                {
-                    post.comments.map((comment: CommentType) => {
-                        return (
-                            <Comment key={comment.id} comment={comment} postId={post.id} />
-                        )
-                    })
-                }
-
-            </Stack>
-
-            <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
                 <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
 
                     <Button size="sm" variant="solid">
@@ -104,6 +89,21 @@ export default function Post({ post }: { post: PostType }) {
                         ) : ""
                     }
                 </CardActions>
+
+            </Stack>
+
+
+            <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
+                <CardContent>
+                    {
+                        post.comments.map((comment: CommentType) => {
+                            return (
+                                <Comment key={comment.id} comment={comment} postId={post.id} />
+                            )
+                        })
+                    }
+                </CardContent>
+
             </CardOverflow>
         </Card>
     )
