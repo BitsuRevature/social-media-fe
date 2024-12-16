@@ -15,7 +15,7 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import Post from '../components/Post';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { PostType } from '../util/types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getPosts } from '../features/post/postSlice';
 
 export default function Posts() {
@@ -23,10 +23,16 @@ export default function Posts() {
     const postStore = useAppSelector((store) => store.post);
     const dispatch = useAppDispatch();
 
+    const [posts, setPosts] = useState(postStore.posts);
+
     useEffect(() => {
         dispatch(getPosts());
         console.log(postStore.posts)
     }, []);
+
+    useEffect(() => {
+
+    }, [posts]);
 
 
     console.log(postStore.posts)
@@ -51,14 +57,11 @@ export default function Posts() {
                         <Link
                             underline="none"
                             color="neutral"
-                            href="#some-link"
+                            href="/"
                             aria-label="Home"
                         >
                             <HomeRoundedIcon />
                         </Link>
-                        <Typography color="primary" sx={{ fontWeight: 500, fontSize: 12 }}>
-                            My profile
-                        </Typography>
                     </Breadcrumbs>
                     <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
                         For You

@@ -88,8 +88,9 @@ const postSlice = createSlice({
         // })
 
         builder.addCase(deletePost.fulfilled, (state, action) => {
-
-            state.posts = state.posts.filter(post => post.id !== action.payload).slice()
+            const newState = state.posts; 
+            const filterd = newState.posts.filter(post => post.id !== action.payload).slice()
+            state.posts = filterd;
         })
 
         // builder.addCase(deletePost.rejected, (state) => {

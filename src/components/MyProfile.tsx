@@ -20,11 +20,77 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import PersonIcon from '@mui/icons-material/Person';
 
-import { useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { ChangeEvent, useRef, useState } from 'react';
+import { changeBio, changePIInfo, changeProfilePic } from '../util/apiHelper';
+import { updateAuth, updateBio, updatePI, updateProfilePic } from '../features/auth/authSlice';
+import { uploadFile } from '../util/helper';
 
 export default function MyProfile() {
 
   const authStore = useAppSelector(store => store.auth);
+  const dispatch = useAppDispatch()
+
+  const [firstname, setFirstname] = useState(authStore.auth?.firstname);
+  const [lastname, setLastname] = useState(authStore.auth?.lastname);
+  const [bio, setBio] = useState(authStore.auth?.bio);
+
+
+  const [mediaURL, setMediaURL] = useState(authStore.auth?.profilePicture);
+  const [fileDetails, setFileDetails] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+
+  const [content, setContent] = useState('');
+
+  function handleContentChange(event: ChangeEvent<HTMLInputElement>) {
+    setContent(event.target.value)
+  }
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  async function handelFileChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (file) {
+      setMediaURL(file.name);
+      setFileDetails(file);
+    }
+
+    uploadFile(file, uploading, setUploading)
+    .then( async (url) => {
+      console.log(url);
+      await changeProfilePic(url as string);
+      dispatch(updateProfilePic(url))
+    })
+      
+  }
+
+  function handleFilePickerOpen() {
+    fileInputRef.current?.click();
+  }
+
+
+
+
+  async function handlePISave() {
+
+    const data = {
+      firstname: firstname as string,
+      lastname: lastname as string
+    }
+
+    changePIInfo(data).then(() => {
+      dispatch(updatePI(data))
+    })
+  }
+
+  async function handleBioSave() {
+    const data = {
+      bio: bio as string
+    };
+    changeBio(data).then(() => {
+      dispatch(updateBio(data))
+    })
+  }
 
   return (
     <Box sx={{ flex: 1, width: '100%' }}>
@@ -98,8 +164,7 @@ export default function MyProfile() {
                 sx={{ flex: 1, minWidth: 120, borderRadius: '100%' }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-                  srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
+                  src={authStore.auth?.profilePicture as string}
                   loading="lazy"
                   alt=""
                 />
@@ -118,6 +183,8 @@ export default function MyProfile() {
                   top: 170,
                   boxShadow: 'sm',
                 }}
+                onClick={handleFilePickerOpen}
+
               >
                 <EditRoundedIcon />
               </IconButton>
@@ -128,12 +195,20 @@ export default function MyProfile() {
                 <FormControl
                   sx={{ display: { sm: 'flex-column', md: 'flex-row' }, gap: 2 }}
                 >
-                  <Input size="sm" placeholder="First name" defaultValue={authStore.auth?.firstname as string} />
+                  <Input size="sm" placeholder="First name" defaultValue={authStore.auth?.firstname as string}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      setFirstname(event?.target.value)
+                    }}
+                  />
                 </FormControl>
                 <FormControl
                   sx={{ display: { sm: 'flex-column', md: 'flex-row' }, gap: 2 }}
                 >
-                  <Input size="sm" placeholder="Last name" sx={{ flexGrow: 1 }} defaultValue={authStore.auth?.lastname as string} />
+                  <Input size="sm" placeholder="Last name" sx={{ flexGrow: 1 }} defaultValue={authStore.auth?.lastname as string}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      setLastname(event?.target.value)
+                    }}
+                  />
                 </FormControl>
               </Stack>
               <Stack direction="row" spacing={2}>
@@ -143,8 +218,8 @@ export default function MyProfile() {
                     size="sm"
                     type="text"
                     startDecorator={<PersonIcon />}
-                    placeholder="username"
                     defaultValue={authStore.auth?.username as string}
+                    disabled
                     sx={{ flexGrow: 1 }}
                   />
                 </FormControl>
@@ -164,8 +239,9 @@ export default function MyProfile() {
                   sx={{ flex: 1, minWidth: 108, borderRadius: '100%' }}
                 >
                   <img
-                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-                    srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
+                    // src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
+                    // srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
+                    src={authStore.auth?.profilePicture as string}
                     loading="lazy"
                     alt=""
                   />
@@ -184,6 +260,8 @@ export default function MyProfile() {
                     top: 180,
                     boxShadow: 'sm',
                   }}
+                  onClick={handleFilePickerOpen}
+
                 >
                   <EditRoundedIcon />
                 </IconButton>
@@ -199,7 +277,12 @@ export default function MyProfile() {
                     gap: 2,
                   }}
                 >
-                  <Input size="sm" placeholder="First name" defaultValue={authStore.auth?.firstname as string} />
+                  <Input
+                    size="sm" placeholder="First name" defaultValue={authStore.auth?.firstname as string}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      setFirstname(event?.target.value)
+                    }}
+                  />
                 </FormControl>
 
                 <FormControl
@@ -211,7 +294,11 @@ export default function MyProfile() {
                     gap: 2,
                   }}
                 >
-                  <Input size="sm" placeholder="Last name" defaultValue={authStore.auth?.lastname as string} />
+                  <Input size="sm" placeholder="Last name" defaultValue={authStore.auth?.lastname as string}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      setLastname(event?.target.value)
+                    }}
+                  />
                 </FormControl>
               </Stack>
             </Stack>
@@ -232,7 +319,9 @@ export default function MyProfile() {
               <Button size="sm" variant="outlined" color="neutral">
                 Cancel
               </Button>
-              <Button size="sm" variant="solid">
+              <Button size="sm" variant="solid"
+                onClick={handlePISave}
+              >
                 Save
               </Button>
             </CardActions>
@@ -252,7 +341,9 @@ export default function MyProfile() {
               minRows={4}
               sx={{ mt: 1.5 }}
               defaultValue={authStore.auth?.bio as string}
-            />
+              onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
+                setBio(event?.target.value)
+              }} />
             {/* <FormHelperText sx={{ mt: 0.75, fontSize: 'xs' }}>
               275 characters left
             </FormHelperText> */}
@@ -262,13 +353,19 @@ export default function MyProfile() {
               <Button size="sm" variant="outlined" color="neutral">
                 Cancel
               </Button>
-              <Button size="sm" variant="solid">
+              <Button size="sm" variant="solid" onClick={handleBioSave}>
                 Save
               </Button>
             </CardActions>
           </CardOverflow>
         </Card>
       </Stack>
+      <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: 'none' }} // Hides the file input
+        onChange={handelFileChange}
+      />
     </Box>
   );
 }

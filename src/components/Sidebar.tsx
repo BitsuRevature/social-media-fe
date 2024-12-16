@@ -161,7 +161,8 @@ export default function Sidebar() {
                 () => dispatch(changeIdx(1))
               }
             >
-              <AddRoundedIcon />
+              <HomeRoundedIcon />
+
               <ListItemContent>
                 <Typography level="title-sm">Home</Typography>
               </ListItemContent>
@@ -174,9 +175,24 @@ export default function Sidebar() {
                 () => dispatch(changeIdx(2))
               }
             >
-              <HomeRoundedIcon />
+              <AddRoundedIcon />
+
               <ListItemContent>
                 <Typography level="title-sm">Create Post</Typography>
+              </ListItemContent>
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem>
+            <ListItemButton
+              onClick={
+                () => dispatch(changeIdx(3))
+              }
+            >
+              <GroupRoundedIcon />
+
+              <ListItemContent>
+                <Typography level="title-sm">My Profile</Typography>
               </ListItemContent>
             </ListItemButton>
           </ListItem>
@@ -215,7 +231,7 @@ export default function Sidebar() {
             </Toggler>
           </ListItem> */}
 
-          <ListItem nested>
+          {/* <ListItem nested>
             <Toggler
               defaultExpanded
               renderToggle={({ open, setOpen }) => (
@@ -243,15 +259,15 @@ export default function Sidebar() {
                     My profile
                   </ListItemButton>
                 </ListItem>
-                {/* <ListItem>
+                <ListItem>
                   <ListItemButton>Create a new user</ListItemButton>
                 </ListItem>
                 <ListItem>
                   <ListItemButton>Roles & permission</ListItemButton>
-                </ListItem> */}
+                </ListItem>
               </List>
             </Toggler>
-          </ListItem>
+          </ListItem> */}
         </List>
       </Box>
       <Divider />

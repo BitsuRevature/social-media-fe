@@ -24,8 +24,10 @@ export default function Post({ post }: { post: PostType }) {
     const authStore = useAppSelector(store => store.auth);
     const dispatch = useAppDispatch();
 
+
     async function handleDelete() {
-        dispatch(deletePost(post.id))
+        dispatch(deletePost(post.id)).then(() => {
+        })
         // dispatch(getPosts())
     }
 

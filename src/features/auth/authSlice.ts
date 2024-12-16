@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { AuthContextType, LoginType } from "../../util/types";
+import { AuthContextType, LoginType, UserBioType, UserPIType } from "../../util/types";
 import axios from "axios";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { toast } from "react-toastify";
+import { act } from "react";
 
 interface AuthSliceType {
     auth: AuthContextType | null,
@@ -36,6 +37,25 @@ const authSlice = createSlice({
         updateAuth: (state, action) => {
             const data = action.payload as AuthContextType;
             state.auth = data;
+        },
+        updatePI: (state, action) => {
+            const data = action.payload as UserPIType;
+            const newState = state.auth;
+            newState!.firstname = data.firstname;
+            newState!.lastname = data.lastname;
+            state.auth = newState;
+        },
+        updateBio: (state, action) => {
+            const data = action.payload as UserBioType;
+            const newState = state.auth;
+            newState!.bio = data.bio;
+            state.auth = newState;
+        },
+        updateProfilePic: (state, action) => {
+            const data = action.payload as string;
+            const newState = state.auth;
+            newState!.profilePicture = data
+            state.auth = newState;
         },
         logout: (state) => {
             state.auth = null;
@@ -78,5 +98,5 @@ const authSlice = createSlice({
     }
 })
 
-export const { updateAuth, logout } = authSlice.actions;
+export const { updateAuth, logout, updateBio, updatePI, updateProfilePic } = authSlice.actions;
 export default authSlice.reducer

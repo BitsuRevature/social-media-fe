@@ -117,25 +117,14 @@ export default function CreatePost() {
                         <Link
                             underline="none"
                             color="neutral"
-                            href="#some-link"
+                            href="/"
                             aria-label="Home"
                         >
                             <HomeRoundedIcon />
                         </Link>
-                        <Link
-                            underline="hover"
-                            color="neutral"
-                            href="#some-link"
-                            sx={{ fontSize: 12, fontWeight: 500 }}
-                        >
-                            Users
-                        </Link>
-                        <Typography color="primary" sx={{ fontWeight: 500, fontSize: 12 }}>
-                            My profile
-                        </Typography>
                     </Breadcrumbs>
                     <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
-                        My profile
+                        Create A Post
                     </Typography>
                 </Box>
             </Box>

@@ -56,3 +56,13 @@ export type ReactionType = {
     type: string;
     user: UserType;
 }
+
+export type UserPIType = {
+    firstname: string;
+    lastname: string ;
+}
+
+export type UserBioType = {
+    bio: string;
+}
+
