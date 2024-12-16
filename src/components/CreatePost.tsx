@@ -28,6 +28,7 @@ import { getDownloadURL } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../app/hooks';
 import { createPost } from '../features/post/postSlice';
+import { uploadFile } from '../util/helper';
 
 export default function CreatePost() {
 
@@ -59,37 +60,40 @@ export default function CreatePost() {
         fileInputRef.current?.click();
     }
 
-    async function uploadFile() {
-        const file = fileDetails;
-        if (!file || uploading) return;
+    // async function uploadFile() {
+    //     const file = fileDetails;
+    //     if (!file || uploading) return;
 
-        setUploading(true);
+    //     setUploading(true);
 
-        const imageRef = ref(storage, `images/${file.name + v4()}`);
-        const res = await uploadBytes(imageRef, file);
+    //     const imageRef = ref(storage, `images/${file.name + v4()}`);
+    //     const res = await uploadBytes(imageRef, file);
 
-        const downloadURL = await getDownloadURL(ref(storage, res.metadata.fullPath))
-        setMediaURL(downloadURL);
-        alert(downloadURL)
-        return downloadURL;
-    }
+    //     const downloadURL = await getDownloadURL(ref(storage, res.metadata.fullPath))
+    //     setMediaURL(downloadURL);
+    //     alert(downloadURL)
+    //     return downloadURL;
+    // }
 
     function handleCancel() {
         navigate('/');
     }
 
     async function handleSave() {
-        const mURL = await uploadFile();
+        // const mURL = await uploadFile(fileDetails, uploading, setUploading);
 
-        dispatch(createPost({
-            content: content,
-            mediaURL: mURL as string
-        }))
+        uploadFile(fileDetails, uploading, setUploading)
+            .then(url => {
+                dispatch(createPost({
+                    content: content,
+                    mediaURL: url as string
+                }))
 
-        navigate('/')
-    }
+                setUploading(false);
+            }).finally(() => {
+                navigate('/')
+            })
 
-    function handleImage() {
 
     }
 
@@ -187,7 +191,6 @@ export default function CreatePost() {
                                         display: "none"
                                     }}
                                     type='file'
-                                    onChange={handleImage}
                                 ></Input>
                             </IconButton>
 
@@ -239,8 +242,7 @@ export default function CreatePost() {
                                         // top: 180,
                                         boxShadow: 'sm',
                                     }}
-                                    onClick={handleImage}
-
+                                    onClick={handleFilePickerOpen}
                                 >
                                     <EditRoundedIcon />
                                 </IconButton>
