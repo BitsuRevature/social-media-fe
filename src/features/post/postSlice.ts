@@ -15,9 +15,9 @@ const initialState: PostSliceType = {
 
 export const getPosts = createAsyncThunk(
     'post/getPosts',
-    async (arg, thunkAPI) => {
+    async (search: string, thunkAPI) => {
         try {
-            const response = await axios.get("/posts");
+            const response = await axios.get(`/posts?search=${search}`);
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue({ error: error.message });

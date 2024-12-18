@@ -17,21 +17,23 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { PostType } from '../util/types';
 import { useEffect, useState } from 'react';
 import { getPosts } from '../features/post/postSlice';
+import { FormControl, IconButton, Input } from '@mui/joy';
+import SearchIcon from '@mui/icons-material/Search'
 
 export default function Posts() {
 
     const postStore = useAppSelector((store) => store.post);
+    const [search, setSearch] = useState('');
+    const [clicked, setClicked] = useState(false);
+
     const dispatch = useAppDispatch();
 
-    const [posts, setPosts] = useState(postStore.posts);
+    // const [posts, setPosts] = useState(postStore.posts);
 
     useEffect(() => {
-        dispatch(getPosts());
-    }, []);
+        dispatch(getPosts(search));
+    }, [clicked]);
 
-    useEffect(() => {
-
-    }, [posts]);
 
 
 
@@ -76,6 +78,29 @@ export default function Posts() {
                     py: { xs: 2, md: 3 },
                 }}
             >
+                <FormControl id="free-solo-demo"
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}
+                >
+                    {/* <FormLabel>freeSolo</FormLabel> */}
+                    <Input
+                        placeholder='Search'
+                        onChange={(e) => {
+                            setSearch(e.target.value)
+                        }}
+                        sx={{
+                            width: "100%"
+                        }}
+                    />
+                    <IconButton
+                        onClick={() => setClicked(!clicked)}
+                    >
+                        <SearchIcon />
+                    </IconButton>
+                </FormControl>
                 {
                     postStore.isLoading ?
                         <></> :
