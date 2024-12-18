@@ -20,7 +20,6 @@ export const login = createAsyncThunk(
     async (data: LoginType, thunkAPI) => {
         try {
             const response = await axios.post('/auth/login', data);
-            console.log(response);
             // navigate("/");
             return response.data;
         } catch (error: any) {
@@ -72,7 +71,6 @@ const authSlice = createSlice({
             const decodedToken: JwtPayload & AuthContextType = jwtDecode(data);
 
             console.error("==========Auth Slice ==========")
-            console.log(decodedToken)
 
             const tokenToStore = {
                 token: data,

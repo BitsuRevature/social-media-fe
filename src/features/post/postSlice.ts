@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "../../config/axiosConfig";
-import { CommentType, CreatePostType } from "../../util/types";
+import { CommentType, CreatePostType, PostType } from "../../util/types";
 import { toast } from "react-toastify";
 
 interface PostSliceType {
@@ -61,6 +61,36 @@ export const deleteComment = createAsyncThunk(
     }
 )
 
+export const likePost = createAsyncThunk(
+    'post/likePost',
+    async(data: {postId: number, userId: number}, thunkAPI) => {
+        const type = 'LIKE';
+        try{
+            await axios.post('/reactions', {
+                postId: data.postId as number,
+                type: type as string
+            })
+            return;
+        }catch (error: any) {
+            return thunkAPI.rejectWithValue({ error: error.message })
+        }
+    }
+)
+
+export const unLikePost = createAsyncThunk(
+    'post/unLikePost',
+    async(data: {postId: number, userId: number}, thunkAPI) => {
+        try{
+            await axios.delete(`/posts/reactions/${data.postId as number}`)
+            return;
+        }catch (error: any) {
+            return thunkAPI.rejectWithValue({ error: error.message })
+        }
+    }
+)
+
+
+
 const postSlice = createSlice({
     name: 'post',
     initialState,
@@ -102,8 +132,7 @@ const postSlice = createSlice({
 
         // })
 
-        builder.addCase(deleteComment.fulfilled, (state, action: PayloadAction<{ postId: number, commentId: number }>) => {
-
+        builder.addCase(deleteComment.fulfilled, (state, action) => {
             let newState = state.posts.at(action.payload.postId)
             newState.comments = newState.comments.filter(
                 (comment: CommentType) => {
@@ -118,17 +147,51 @@ const postSlice = createSlice({
 
         // }
 
-        builder.addCase(createPost.pending), (state, action) => {
+        builder.addCase(createPost.pending, (state, action) => {
 
-        }
+        })
 
-        builder.addCase(createPost.fulfilled), (state, action) => {
+        builder.addCase(createPost.fulfilled, (state, action) => {
             
-        }
+        })
 
-        builder.addCase(createPost.rejected), (state, action) => {
+        builder.addCase(createPost.rejected, (state, action) => {
             toast.error("Post Failed");
-        }
+        })
+
+        builder.addCase(likePost.pending, (state, action) => {
+
+        })
+
+        builder.addCase(likePost.fulfilled, (state, action) => {
+            const data = action.payload;
+
+            const newState = state.posts.at(data.postId);
+            newState?.reactions.push(data.userId);
+
+            state.posts = newState;
+        })
+
+        builder.addCase(likePost.rejected, (state, action) => {
+            
+        })
+
+        builder.addCase(unLikePost.pending, (state, action) => {
+
+        })
+
+        builder.addCase(unLikePost.fulfilled, (state, action) => {
+            const data = action.payload;
+
+            let newState = state.posts.at(data.postId);
+
+            newState?.reactions.splice(newState.reactions.indexOf(data.userId), 1);
+            state.posts = newState;
+        })
+
+        builder.addCase(unLikePost.rejected, (state, action) => {
+            
+        })
 
     }
 
