@@ -7,21 +7,27 @@ import { formateDate } from "../util/helper";
 import Button from "@mui/joy/Button";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { deleteComment } from "../features/post/postSlice";
+import { useState } from "react";
 
 
 export default function Comment({ postId, comment }: { postId: number, comment: CommentType }) {
 
     const authStore = useAppSelector(store => store.auth);
     const dispatch = useAppDispatch();
+
+    const [show, setShow] = useState(true);
+    
     
     function handleDelete() {
         dispatch(
             deleteComment({ postId, commentId: comment.id })
         );
+
+        setShow(false);
     }
 
     return (
-        <Stack
+        show && <Stack
             direction="row"
             spacing={3}
             alignItems="center"

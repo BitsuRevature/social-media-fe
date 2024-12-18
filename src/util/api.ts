@@ -9,15 +9,12 @@ const localStorage = window.localStorage;
 export async function signin(data: LoginType, authUpdate: (data: AuthContextType) => void){
     // eslint-disable-next-line no-useless-catch
     try{
-        console.log(data)
         const response = await axios.post('/auth/login', data);
-        console.log(response)
 
         // Save our token to local storage
         const token = response.data as AuthContextType;
         const decodedToken: JwtPayload & AuthContextType = jwtDecode(token.token!);
 
-        console.log(decodedToken)
 
         const tokenToStore = {
             ...token,
@@ -29,7 +26,6 @@ export async function signin(data: LoginType, authUpdate: (data: AuthContextType
             bio: decodedToken.bio
         }
 
-        console.log(tokenToStore)
 
         localStorage.setItem('user', JSON.stringify(tokenToStore));
         authUpdate(token);
@@ -41,9 +37,7 @@ export async function signin(data: LoginType, authUpdate: (data: AuthContextType
 export async function register(data: RegisterType){
     // eslint-disable-next-line no-useless-catch
     try{
-        console.log(data)
         const response = await axios.post('/auth/register', data);
-        console.log(response)
     }catch (error){
         throw error;
     }

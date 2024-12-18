@@ -26,7 +26,7 @@ export type PostType = {
     id: number;
     mediaURL: string;
     comments: CommentType[];
-    reactions: ReactionType[];
+    reactions: Number[];
     user: UserType;
 }
 

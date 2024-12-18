@@ -57,7 +57,6 @@ export default function MyProfile() {
 
     uploadFile(file, uploading, setUploading)
     .then( async (url) => {
-      console.log(url);
       await changeProfilePic(url as string);
       dispatch(updateProfilePic(url))
     })

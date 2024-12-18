@@ -27,7 +27,6 @@ export default function Posts() {
 
     useEffect(() => {
         dispatch(getPosts());
-        console.log(postStore.posts)
     }, []);
 
     useEffect(() => {
@@ -35,7 +34,6 @@ export default function Posts() {
     }, [posts]);
 
 
-    console.log(postStore.posts)
 
     return (
         <Box sx={{ flex: 1, width: '100%' }}>

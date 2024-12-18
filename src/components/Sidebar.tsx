@@ -19,12 +19,13 @@ import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
-import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '../util/utils';
 import { useNavigate } from 'react-router-dom';
 import { changeIdx } from '../features/viewIdx/viewIdxSlice';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { logout } from '../features/auth/authSlice';
+
+import { useState } from 'react';
 
 function Toggler({
   defaultExpanded = false,
@@ -73,6 +74,8 @@ export default function Sidebar() {
     dispatch(logout());
     navigate("/login",);
   }
+
+  const [open, setOpen] = useState(false);
 
 
   return (
@@ -132,7 +135,7 @@ export default function Sidebar() {
           <BrightnessAutoRoundedIcon />
         </IconButton>
         <Typography level="title-lg">Acme Co.</Typography>
-        <ColorSchemeToggle sx={{ ml: 'auto' }} />
+        {/* <ColorSchemeToggle sx={{ ml: 'auto' }} /> */}
       </Box>
       <Input size="sm" startDecorator={<SearchRoundedIcon />} placeholder="Search" />
       <Box
@@ -183,62 +186,14 @@ export default function Sidebar() {
             </ListItemButton>
           </ListItem>
 
-          <ListItem>
-            <ListItemButton
-              onClick={
-                () => dispatch(changeIdx(3))
-              }
-            >
-              <GroupRoundedIcon />
-
-              <ListItemContent>
-                <Typography level="title-sm">My Profile</Typography>
-              </ListItemContent>
-            </ListItemButton>
-          </ListItem>
-
-
-          {/* <ListItem nested>
-            <Toggler
-              renderToggle={({ open, setOpen }) => (
-                <ListItemButton onClick={() => setOpen(!open)}>
-                  <AssignmentRoundedIcon />
-                  <ListItemContent>
-                    <Typography level="title-sm">Tasks</Typography>
-                  </ListItemContent>
-                  <KeyboardArrowDownIcon
-                    sx={[
-                      open ? { transform: 'rotate(180deg)' } : { transform: 'none' },
-                    ]}
-                  />
-                </ListItemButton>
-              )}
-            >
-              <List sx={{ gap: 0.5 }}>
-                <ListItem sx={{ mt: 0.5 }}>
-                  <ListItemButton>All tasks</ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton>Backlog</ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton>In progress</ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton>Done</ListItemButton>
-                </ListItem>
-              </List>
-            </Toggler>
-          </ListItem> */}
-
-          {/* <ListItem nested>
+          <ListItem nested>
             <Toggler
               defaultExpanded
               renderToggle={({ open, setOpen }) => (
                 <ListItemButton onClick={() => setOpen(!open)}>
                   <GroupRoundedIcon />
                   <ListItemContent>
-                    <Typography level="title-sm">Users</Typography>
+                    <Typography level="title-sm">Freinds</Typography>
                   </ListItemContent>
                   <KeyboardArrowDownIcon
                     sx={[
@@ -251,23 +206,42 @@ export default function Sidebar() {
               <List sx={{ gap: 0.5 }}>
                 <ListItem sx={{ mt: 0.5 }}>
                   <ListItemButton
-                    selected
+                    
                     onClick={
                       () => dispatch(changeIdx(3))
                     }
                   >
-                    My profile
+                    All
                   </ListItemButton>
                 </ListItem>
                 <ListItem>
-                  <ListItemButton>Create a new user</ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton>Roles & permission</ListItemButton>
+                  <ListItemButton
+                    onClick={
+                      () => dispatch(changeIdx(4))
+                    }
+                  >Following</ListItemButton>
                 </ListItem>
               </List>
             </Toggler>
-          </ListItem> */}
+          </ListItem>
+
+          <ListItem>
+            <ListItemButton
+              onClick={
+                () => dispatch(changeIdx(5))
+              }
+            >
+              <GroupRoundedIcon />
+
+              <ListItemContent>
+                <Typography level="title-sm">My Profile</Typography>
+              </ListItemContent>
+            </ListItemButton>
+          </ListItem>
+
+          
+
+
         </List>
       </Box>
       <Divider />
@@ -275,7 +249,7 @@ export default function Sidebar() {
         <Avatar
           variant="outlined"
           size="sm"
-          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
+          src={authStore.auth?.profilePicture}
         />
         <Box sx={{ minWidth: 0, flex: 1 }}>
           <Typography level="title-sm">{`${authStore.auth?.firstname} ${authStore.auth?.lastname}`}</Typography>
@@ -288,3 +262,4 @@ export default function Sidebar() {
     </Sheet>
   );
 }
+
