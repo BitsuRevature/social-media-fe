@@ -11,30 +11,19 @@ import { formateDate } from '../util/helper'
 import { CommentType, PostType } from '../util/types';
 import Comment from './Comment';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { deletePost, getPosts, likePost, unLikePost } from '../features/post/postSlice';
+import { addComment, deletePost, likePost, unLikePost } from '../features/post/postSlice';
 import CardHeader from '@mui/material/CardHeader/CardHeader';
 import Avatar from '@mui/joy/Avatar';
-import { Box, CardContent, CardMedia, } from '@mui/material';
+import { CardContent, CardMedia, } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/joy/IconButton'
 import { useState } from 'react';
 
-import Modal from '@mui/joy/modal'
 
 import AddIcon from '@mui/icons-material/AddRounded'
+import RemoveIcon from '@mui/icons-material/Remove';
+import { FormControl, Input } from '@mui/joy';
 
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    // width: 500,
-    bgcolor: '#000000',
-    border: '2px solid #000',
-    // boxShadow: 24,
-    p: 4,
-  };
 
 
 export default function Post({ post }: { post: PostType }) {
@@ -42,13 +31,15 @@ export default function Post({ post }: { post: PostType }) {
     const authStore = useAppSelector(store => store.auth);
     const dispatch = useAppDispatch();
 
+    const [commentInput, setCommentInput] = useState("");
+
     const [show, setShow] = useState(true);
     const [like, setLike] = useState(
-        authStore.auth?.id in post.reactions
+        authStore.auth?.id! in post.reactions
     );
 
     const [open, setOpen] = useState(false);
-    const handleClose = () => setOpen(false);
+    // const handleClose = () => setOpen(false);
 
 
     async function handleDelete() {
@@ -61,17 +52,20 @@ export default function Post({ post }: { post: PostType }) {
 
     async function handleLike() {
         if (like) {
-            dispatch(unLikePost({ postId: post.id, userId: authStore.auth?.id as number}))
+            dispatch(unLikePost({ postId: post.id, userId: authStore.auth?.id as number }))
             setLike(false);
         } else {
-            dispatch(likePost({ postId: post.id, userId: authStore.auth?.id as number}))
+            dispatch(likePost({ postId: post.id, userId: authStore.auth?.id as number }))
             setLike(true);
         }
     }
 
     async function handleAddComment() {
-        setOpen(true);
-
+        dispatch(addComment({
+            postId: post.id,
+            content: commentInput
+        }))
+        setOpen(false);
     }
 
     return (
@@ -89,8 +83,6 @@ export default function Post({ post }: { post: PostType }) {
                 title={post.user.username}
                 subheader={formateDate(post.createdAt)}
             />
-
-
 
             <Divider />
 
@@ -139,9 +131,11 @@ export default function Post({ post }: { post: PostType }) {
                         <FavoriteIcon sx={like ? { color: "red" } : {}} />
                     </IconButton>
                     <IconButton
-                        onClick={handleAddComment}
+                        onClick={() => {
+                            setOpen(!open);
+                        }}
                     >
-                        <AddIcon />
+                        {!open ? <AddIcon /> : <RemoveIcon/>}
                     </IconButton>
 
 
@@ -151,6 +145,30 @@ export default function Post({ post }: { post: PostType }) {
 
 
             <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
+                {open && <CardContent>
+
+                    <Stack spacing={2} sx={{ flexGrow: 1 }}>
+                        <Stack spacing={1}>
+                            <FormControl
+                                sx={{ display: { sm: 'flex-column', md: 'flex-row' }, gap: 2 }}
+                            >
+                                <Input size="sm" placeholder="Add new comment" name='content' defaultValue={"" as string}
+                                    onChange={(e) => {
+                                        setCommentInput(e.target.value)
+                                    }}
+                                    required
+                                />
+                            </FormControl>
+                            <Button
+                                size="sm" variant="solid"
+                                onClick={handleAddComment}
+                            >
+                                Add Comment
+                            </Button>
+                        </Stack>
+                    </Stack>
+
+                </CardContent>}
                 <CardContent>
                     {
                         post.comments.map((comment: CommentType) => {
@@ -160,7 +178,7 @@ export default function Post({ post }: { post: PostType }) {
                         })
                     }
                 </CardContent>
-                <CardContent>
+                {/* <CardContent>
                     <Modal
                         open={open}
                         onClose={handleClose}
@@ -177,7 +195,7 @@ export default function Post({ post }: { post: PostType }) {
                             </Typography>
                         </Box>
                     </Modal>
-                </CardContent>
+                </CardContent> */}
 
             </CardOverflow>
         </Card>

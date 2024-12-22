@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../config/axiosConfig";
-import { CommentType, CreatePostType, PostType } from "../../util/types";
+import { CreatePostType, PostType } from "../../util/types";
 import { toast } from "react-toastify";
 
 interface PostSliceType {
@@ -42,7 +42,7 @@ export const deletePost = createAsyncThunk(
     async (id: number, thunkAPI) => {
         try {
             await axios.delete(`/posts/${id}`)
-            return;
+            return {postId: id};
         } catch (error: any) {
             return thunkAPI.rejectWithValue({ error: error.message })
         }
@@ -54,7 +54,22 @@ export const deleteComment = createAsyncThunk(
     async (data: { postId: number, commentId: number }, thunkAPI) => {
         try {
             await axios.delete(`/comments/${data.commentId}`)
-            return;
+            return data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue({ error: error.message })
+        }
+    }
+)
+
+export const addComment = createAsyncThunk(
+    'post/addComment',
+    async(data: { postId: number, content: string}, thunkAPI) => {
+        try {
+            const res = await axios.post(`/comments`, data)
+            return {
+                comment: res.data,
+                postId: data.postId
+            };     
         } catch (error: any) {
             return thunkAPI.rejectWithValue({ error: error.message })
         }
@@ -70,7 +85,7 @@ export const likePost = createAsyncThunk(
                 postId: data.postId as number,
                 type: type as string
             })
-            return;
+            return data;
         }catch (error: any) {
             return thunkAPI.rejectWithValue({ error: error.message })
         }
@@ -82,7 +97,7 @@ export const unLikePost = createAsyncThunk(
     async(data: {postId: number, userId: number}, thunkAPI) => {
         try{
             await axios.delete(`/posts/reactions/${data.postId as number}`)
-            return;
+            return data;
         }catch (error: any) {
             return thunkAPI.rejectWithValue({ error: error.message })
         }
@@ -108,8 +123,9 @@ const postSlice = createSlice({
             state.isLoading = false;
         })
 
-        builder.addCase(getPosts.rejected, (state, action) => {
+        builder.addCase(getPosts.rejected, (state) => {
             state.isLoading = false;
+            toast.error("Couldn't Load Posts");
         })
 
         // Delete Post
@@ -118,80 +134,110 @@ const postSlice = createSlice({
         // })
 
         builder.addCase(deletePost.fulfilled, (state, action) => {
-            const newState = state.posts; 
-            const filterd = newState.posts.filter(post => post.id !== action.payload).slice()
-            state.posts = filterd;
+            const {postId} = action.payload;
+            state.posts = state.posts.filter(post => post.id != postId);
         })
 
-        // builder.addCase(deletePost.rejected, (state) => {
-
-        // }
-        1
+        builder.addCase(deletePost.rejected, () => {
+            toast.error("Couldn't Delete Posts");
+        })
+        
         // Delete Comment
         // builder.addCase(deleteComment.pending, (state) => {
 
         // })
 
         builder.addCase(deleteComment.fulfilled, (state, action) => {
-            let newState = state.posts.at(action.payload.postId)
-            newState.comments = newState.comments.filter(
-                (comment: CommentType) => {
-                    return comment.id !== action.payload.id
+            const {postId, commentId} = action.payload;
+
+            state.posts = state.posts.map(post => {
+                if(post.id == postId){
+                    post.comments = post.comments.filter(comment => {
+                            return comment.id != commentId
+                        }
+                    )
                 }
-            );
 
-            state.posts = newState;
-        })
-
-        // builder.addCase(deleteComment.rejected, (state) => {
-
-        // }
-
-        builder.addCase(createPost.pending, (state, action) => {
+                return post
+            })
 
         })
 
-        builder.addCase(createPost.fulfilled, (state, action) => {
+        builder.addCase(deleteComment.rejected, () => {
+            toast.error("Couldn't Delete Comment");
+        })
+
+        // builder.addCase(createPost.pending, (state, action) => {
+
+        // })
+
+        // builder.addCase(createPost.fulfilled, (state, action) => {
             
+        // })
+
+        builder.addCase(createPost.rejected, () => {
+            toast.error("Couldn't Create Post");
         })
 
-        builder.addCase(createPost.rejected, (state, action) => {
-            toast.error("Post Failed");
-        })
+        // builder.addCase(likePost.pending, (state, action) => {
 
-        builder.addCase(likePost.pending, (state, action) => {
-
-        })
+        // })
 
         builder.addCase(likePost.fulfilled, (state, action) => {
-            const data = action.payload;
-
-            const newState = state.posts.at(data.postId);
-            newState?.reactions.push(data.userId);
-
-            state.posts = newState;
-        })
-
-        builder.addCase(likePost.rejected, (state, action) => {
+            const {postId, userId} = action.payload;
             
+            state.posts = state.posts.map((post => {
+                if(post.id == postId){
+                    post.reactions.push(userId)
+                }
+                return post;
+            }))
         })
 
-        builder.addCase(unLikePost.pending, (state, action) => {
-
+        builder.addCase(likePost.rejected, () => {
+            toast.error("Couldn't Like Post");
         })
+
+        // builder.addCase(unLikePost.pending, (state, action) => {
+
+        // })
 
         builder.addCase(unLikePost.fulfilled, (state, action) => {
-            const data = action.payload;
+            const {postId, userId}= action.payload;
 
-            let newState = state.posts.at(data.postId);
-
-            newState?.reactions.splice(newState.reactions.indexOf(data.userId), 1);
-            state.posts = newState;
+            state.posts = state.posts.map(post => {
+                if(post.id == postId){
+                    post.reactions = post.reactions.filter(reaction => reaction != userId)
+                }
+                return post;
+            })
         })
 
-        builder.addCase(unLikePost.rejected, (state, action) => {
+        builder.addCase(unLikePost.rejected, () => {
+            toast.error("Couldn't Unlike Posts");
             
         })
+
+        // builder.addCase(addComment.pending, (state, action) => {
+
+        // })
+
+        builder.addCase(addComment.fulfilled, (state, action) => {
+            const {postId, comment} = action.payload;
+            state.posts = state.posts.map(post => {
+                if(post.id == postId){
+                    post.comments.push(comment)
+                }
+
+                return post;
+            })
+        })
+
+
+        builder.addCase(addComment.rejected, () => {
+            toast.error("Couldn't Create Comment");
+        })
+
 
     }
 
