@@ -32,6 +32,7 @@ export default function Posts() {
 
     useEffect(() => {
         dispatch(getPosts(search));
+
     }, [clicked]);
 
 

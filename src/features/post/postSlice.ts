@@ -1,16 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../config/axiosConfig";
 import { CreatePostType, PostType } from "../../util/types";
-import { toast } from "react-toastify";
+import { Id, toast } from "react-toastify";
 
 interface PostSliceType {
     posts: PostType[],
-    isLoading: boolean
+    isLoading: boolean,
+    loadingId: Id[]
 }
 
 const initialState: PostSliceType = {
     posts: [],
     isLoading: false,
+    loadingId: []
 }
 
 export const getPosts = createAsyncThunk(
@@ -116,11 +118,13 @@ const postSlice = createSlice({
         // Get Posts Reducer
         builder.addCase(getPosts.pending, (state) => {
             state.isLoading = true;
+            state.loadingId.push(toast.loading("Loading Posts"))
         })
 
         builder.addCase(getPosts.fulfilled, (state, action) => {
             state.posts = action.payload;
             state.isLoading = false;
+            state.loadingId.forEach(id => toast.done(id));
         })
 
         builder.addCase(getPosts.rejected, (state) => {

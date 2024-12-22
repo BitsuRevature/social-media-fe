@@ -45,7 +45,6 @@ export default function Post({ post }: { post: PostType }) {
     async function handleDelete() {
         dispatch(deletePost(post.id)).then(() => {
         })
-        // dispatch(getPosts())
         setShow(false);
 
     }
