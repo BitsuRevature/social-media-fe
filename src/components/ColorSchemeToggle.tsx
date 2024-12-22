@@ -5,7 +5,9 @@ import IconButton, { IconButtonProps } from '@mui/joy/IconButton';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeIcon from '@mui/icons-material/LightMode';
 
-const customTheme = extendTheme({ defaultColorScheme: 'dark' });
+export const customTheme = extendTheme({
+  defaultColorScheme: 'dark'
+ });
 
 
 export default function ColorSchemeToggle(props: IconButtonProps) {
@@ -27,6 +29,15 @@ export default function ColorSchemeToggle(props: IconButtonProps) {
       />
     );
   }
+
+  const handleClick = (event: React.MouseEvent) => {
+    setMode(mode === 'light' ? 'dark' : 'light');
+    onClick?.(event);
+
+    console.log(mode)
+  };
+
+
   return (
     <IconButton
       data-screenshot="toggle-mode"
@@ -34,14 +45,7 @@ export default function ColorSchemeToggle(props: IconButtonProps) {
       variant="outlined"
       color="neutral"
       {...props}
-      onClick={(event) => {
-        if (mode === 'light') {
-          setMode('dark');
-        } else {
-          setMode('light');
-        }
-        onClick?.(event);
-      }}
+      onClick={handleClick}
       sx={[
         mode === 'dark'
           ? { '& > *:first-of-type': { display: 'none' } }

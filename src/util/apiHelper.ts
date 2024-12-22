@@ -5,7 +5,7 @@ import { UserBioType, UserPIType, UserType } from "./types";
 export async function changePIInfo(data: UserPIType){
     try{
         
-        const response = await axios.put('/users/PI', data); 
+        await axios.put('/users/PI', data); 
     }catch (error){
         throw error;
     }
@@ -13,7 +13,7 @@ export async function changePIInfo(data: UserPIType){
 
 export async function changeBio(data: UserBioType){
     try{
-        const response = await axios.put('/users/bio', data);
+        await axios.put('/users/bio', data);
     }catch (error){
         throw error;
     }

@@ -6,13 +6,12 @@ import Link from '@mui/material/Link';
 
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-import Post from '../components/Post';
 import { useAppSelector } from '../app/hooks';
-import { PostType, UserType } from '../util/types';
+import { UserType } from '../util/types';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { getAllConnections, getUserConnections } from '../util/apiHelper';
 import Connection from './Connection';
-import { Autocomplete, FormControl, FormLabel, Input } from '@mui/joy';
+import { FormControl,  Input } from '@mui/joy';
 
 interface ConnectionsProps {
 
@@ -23,8 +22,8 @@ const Connections: FunctionComponent<ConnectionsProps> = () => {
   const authStore = useAppSelector(store => store.auth);
 
   const viewIdxStore = useAppSelector(store => store.viewIdx);
-  const [connections, setConnections] = useState([]);
-  const [following, setFollowing] = useState([]);
+  const [connections, setConnections]: [UserType[], any] = useState([]);
+  const [following, setFollowing]: [UserType[], any] = useState([]);
   const [search, setSearch] = useState('');
 
 
@@ -55,7 +54,6 @@ const Connections: FunctionComponent<ConnectionsProps> = () => {
       >
         <Box sx={{ px: { xs: 2, md: 6 } }}>
           <Breadcrumbs
-            size="sm"
             aria-label="breadcrumbs"
             separator={<ChevronRightRoundedIcon />}
             sx={{ pl: 0 }}
@@ -69,7 +67,7 @@ const Connections: FunctionComponent<ConnectionsProps> = () => {
               <HomeRoundedIcon />
             </Link>
           </Breadcrumbs>
-          <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
+          <Typography component="h1" sx={{ mt: 1, mb: 2 }}>
             {viewIdxStore.idx == 3 ? "All" : "Following"}
           </Typography>
         </Box>

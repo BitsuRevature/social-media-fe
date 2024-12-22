@@ -23,7 +23,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { ChangeEvent, useRef, useState } from 'react';
 import { changeBio, changePIInfo, changeProfilePic } from '../util/apiHelper';
-import { updateAuth, updateBio, updatePI, updateProfilePic } from '../features/auth/authSlice';
+import { updateBio, updatePI, updateProfilePic } from '../features/auth/authSlice';
 import { uploadFile } from '../util/helper';
 
 export default function MyProfile() {
@@ -55,7 +55,7 @@ export default function MyProfile() {
       setFileDetails(file);
     }
 
-    uploadFile(file, uploading, setUploading)
+    uploadFile(file!, uploading, setUploading)
     .then( async (url) => {
       await changeProfilePic(url as string);
       dispatch(updateProfilePic(url))

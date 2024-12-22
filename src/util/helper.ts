@@ -17,5 +17,7 @@ export  async function uploadFile(file: File | null, uploading: boolean, setUplo
     const res = await uploadBytes(imageRef, file);
 
     const downloadURL = await getDownloadURL(ref(storage, res.metadata.fullPath))
+    console.log(downloadURL);
+    
     return downloadURL;
 }

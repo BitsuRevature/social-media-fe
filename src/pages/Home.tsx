@@ -1,11 +1,11 @@
-import { CssVarsProvider, extendTheme } from '@mui/joy/styles';
+import { CssVarsProvider} from '@mui/joy/styles';
 import CssBaseline from '@mui/joy/CssBaseline';
 import Box from '@mui/joy/Box';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import MyProfile from '../components/MyProfile';
 import Posts from './Posts';
-import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { useAppSelector} from '../app/hooks';
 import CreatePost from '../components/CreatePost';
 import Connections from '../components/Connections';
 

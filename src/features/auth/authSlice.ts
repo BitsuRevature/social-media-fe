@@ -3,7 +3,6 @@ import { AuthContextType, LoginType, UserBioType, UserPIType } from "../../util/
 import axios from "axios";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { toast } from "react-toastify";
-import { act } from "react";
 
 interface AuthSliceType {
     auth: AuthContextType | null,

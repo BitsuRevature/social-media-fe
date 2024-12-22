@@ -1,13 +1,10 @@
 import AspectRatio from '@mui/joy/AspectRatio';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
-import ButtonMUI from "@mui/material/Button"
-import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
 import IconButton from '@mui/joy/IconButton';
-import Textarea from '@mui/joy/Textarea';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
 import Breadcrumbs from '@mui/joy/Breadcrumbs';
@@ -19,12 +16,7 @@ import CardOverflow from '@mui/joy/CardOverflow';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import PersonIcon from '@mui/icons-material/Person';
 import { ChangeEvent, useRef, useState } from 'react';
-import { ref, uploadBytes, UploadResult } from "firebase/storage";
-import { v4 } from "uuid";
-import { storage } from '../firebase';
-import { getDownloadURL } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../app/hooks';
 import { createPost } from '../features/post/postSlice';

@@ -4,7 +4,7 @@ import Card from "@mui/joy/Card";
 import Stack from "@mui/joy/Stack";
 import AspectRatio from "@mui/joy/AspectRatio";
 import Typography from "@mui/joy/Typography";
-import { Button, CardContent, IconButton } from "@mui/joy";
+import { Button, CardContent} from "@mui/joy";
 import { CardActions } from "@mui/joy";
 import { follow, unFollow } from "../util/apiHelper";
 

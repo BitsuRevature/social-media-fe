@@ -1,5 +1,5 @@
 import axios from "axios";
-import {AuthContextType, LoginType, RegisterType, UserBioType, UserPIType} from "./types.ts";
+import {AuthContextType, LoginType, RegisterType} from "./types.ts";
 import {jwtDecode, JwtPayload} from "jwt-decode";
 
 axios.defaults.baseURL = 'http://localhost:8080/api/v1';
@@ -37,7 +37,7 @@ export async function signin(data: LoginType, authUpdate: (data: AuthContextType
 export async function register(data: RegisterType){
     // eslint-disable-next-line no-useless-catch
     try{
-        const response = await axios.post('/auth/register', data);
+        await axios.post('/auth/register', data);
     }catch (error){
         throw error;
     }

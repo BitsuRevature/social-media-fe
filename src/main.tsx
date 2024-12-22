@@ -12,19 +12,18 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 axios.defaults.baseURL = 'http://localhost:8080/api/v1';
+
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <BrowserRouter>
             <StyledEngineProvider injectFirst>
                 <Provider store={store}>
-
-                    <App />
+                        <App />
                     <ToastContainer
                         position="bottom-right"
                         autoClose={2000}
 
                     />
-
                 </Provider>
             </StyledEngineProvider>
         </BrowserRouter>

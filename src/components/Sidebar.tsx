@@ -4,14 +4,12 @@ import Avatar from '@mui/joy/Avatar';
 import Box from '@mui/joy/Box';
 import Divider from '@mui/joy/Divider';
 import IconButton from '@mui/joy/IconButton';
-import Input from '@mui/joy/Input';
 import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
 import ListItemButton, { listItemButtonClasses } from '@mui/joy/ListItemButton';
 import ListItemContent from '@mui/joy/ListItemContent';
 import Typography from '@mui/joy/Typography';
 import Sheet from '@mui/joy/Sheet';
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
@@ -25,7 +23,8 @@ import { changeIdx } from '../features/viewIdx/viewIdxSlice';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { logout } from '../features/auth/authSlice';
 
-import { useState } from 'react';
+
+
 
 function Toggler({
   defaultExpanded = false,
@@ -61,13 +60,13 @@ function Toggler({
   );
 }
 
+
 export default function Sidebar() {
 
   const authStore = useAppSelector(store => store.auth);
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
-  const { viewIdx } = useAppSelector((store) => store.viewIdx);
 
   function handleLogOut() {
     localStorage.removeItem("user");
@@ -75,7 +74,7 @@ export default function Sidebar() {
     navigate("/login",);
   }
 
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
 
   return (
@@ -134,10 +133,10 @@ export default function Sidebar() {
         <IconButton variant="soft" color="primary" size="sm">
           <BrightnessAutoRoundedIcon />
         </IconButton>
-        <Typography level="title-lg">Acme Co.</Typography>
-        {/* <ColorSchemeToggle sx={{ ml: 'auto' }} /> */}
+        <Typography level="title-lg">Social Media</Typography>
       </Box>
-      <Input size="sm" startDecorator={<SearchRoundedIcon />} placeholder="Search" />
+      {/* <Input size="sm" startDecorator={<SearchRoundedIcon />} placeholder="Search" /> */}
+      <Divider />
       <Box
         sx={{
           minHeight: 0,
@@ -206,7 +205,7 @@ export default function Sidebar() {
               <List sx={{ gap: 0.5 }}>
                 <ListItem sx={{ mt: 0.5 }}>
                   <ListItemButton
-                    
+
                     onClick={
                       () => dispatch(changeIdx(3))
                     }
@@ -239,7 +238,7 @@ export default function Sidebar() {
             </ListItemButton>
           </ListItem>
 
-          
+
 
 
         </List>
@@ -249,7 +248,7 @@ export default function Sidebar() {
         <Avatar
           variant="outlined"
           size="sm"
-          src={authStore.auth?.profilePicture}
+          src={authStore.auth?.profilePicture as string}
         />
         <Box sx={{ minWidth: 0, flex: 1 }}>
           <Typography level="title-sm">{`${authStore.auth?.firstname} ${authStore.auth?.lastname}`}</Typography>
