@@ -28,37 +28,11 @@ interface SignInFormElement extends HTMLFormElement {
     readonly elements: FormElements;
 }
 
-function ColorSchemeToggle(props: IconButtonProps) {
-    const { onClick, ...other } = props;
-    const { mode, setMode } = useColorScheme();
-    const [mounted, setMounted] = React.useState(false);
-
-    React.useEffect(() => setMounted(true), []);
-
-    return (
-        <IconButton
-            aria-label="toggle light/dark mode"
-            size="sm"
-            variant="outlined"
-            disabled={!mounted}
-            onClick={(event) => {
-                setMode(mode === 'light' ? 'dark' : 'light');
-                onClick?.(event);
-            }}
-            {...other}
-        >
-            {mode === 'light' ? <DarkModeRoundedIcon /> : <LightModeRoundedIcon />}
-        </IconButton>
-    );
-}
-
-const customTheme = extendTheme({ defaultColorScheme: 'dark' });
-
 export default function SignIn() {
 
     const dispatch = useAppDispatch();
 
-    const handleSubmit = async (event: SignInFormElement) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget as HTMLFormElement);
         dispatch(login(
@@ -70,7 +44,7 @@ export default function SignIn() {
     }
 
     return (
-        <CssVarsProvider theme={customTheme} disableTransitionOnChange>
+        <CssVarsProvider disableTransitionOnChange>
             <CssBaseline />
             <GlobalStyles
                 styles={{
@@ -115,7 +89,6 @@ export default function SignIn() {
                             </IconButton>
                             <Typography level="title-lg">Company logo</Typography>
                         </Box>
-                        <ColorSchemeToggle />
                     </Box>
                     <Box
                         component="main"

@@ -29,31 +29,7 @@ interface SignInFormElement extends HTMLFormElement {
   readonly elements: FormElements;
 }
 
-function ColorSchemeToggle(props: IconButtonProps) {
-  const { onClick, ...other } = props;
-  const { mode, setMode } = useColorScheme();
-  const [mounted, setMounted] = React.useState(false);
 
-  React.useEffect(() => setMounted(true), []);
-
-  return (
-    <IconButton
-      aria-label="toggle light/dark mode"
-      size="sm"
-      variant="outlined"
-      disabled={!mounted}
-      onClick={(event) => {
-        setMode(mode === 'light' ? 'dark' : 'light');
-        onClick?.(event);
-      }}
-      {...other}
-    >
-      {mode === 'light' ? <DarkModeRoundedIcon /> : <LightModeRoundedIcon />}
-    </IconButton>
-  );
-}
-
-const customTheme = extendTheme({ defaultColorScheme: 'dark' });
 
 export default function SignUp() {
 
@@ -84,7 +60,7 @@ export default function SignUp() {
     }
 
   return (
-    <CssVarsProvider theme={customTheme} disableTransitionOnChange>
+    <CssVarsProvider  disableTransitionOnChange>
       <CssBaseline />
       <GlobalStyles
         styles={{
@@ -129,7 +105,6 @@ export default function SignUp() {
               </IconButton>
               <Typography level="title-lg">Company logo</Typography>
             </Box>
-            <ColorSchemeToggle />
           </Box>
           <Box
             component="main"
