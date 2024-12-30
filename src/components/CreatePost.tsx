@@ -80,13 +80,11 @@ export default function CreatePost() {
                     content: content,
                     mediaURL: url as string
                 }))
-
                 setUploading(false);
-            }).finally(() => {
-                navigate('/')
+                navigate('/');
+            }).catch((err) => {
+                console.error(err);
             })
-
-
     }
 
     return (

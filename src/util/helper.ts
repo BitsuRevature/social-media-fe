@@ -1,23 +1,34 @@
-import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
-import {storage} from "../firebase";
-import { v4 } from "uuid";
+import axios from "axios";
+import axiosInstance from "../config/axiosConfig";
+import { toast } from "react-toastify";
 
 export function formateDate(date: string) {
-    const options = {year: 'numeric', month: 'long', day: 'numeric'};
+    const options: Intl.DateTimeFormatOptions = {year: 'numeric', month: 'long', day: 'numeric'};
     return new Date(date).toLocaleDateString([], options);
 }
 
-export  async function uploadFile(file: File | null, uploading: boolean, setUploading: any){
+export async function uploadFile(file: File | null, uploading: boolean, setUploading: any) {
 
     if (!file || uploading) return;
 
     setUploading(true);
+    const toastID = toast.loading("Creating post...");
+    // Request a pre-signed URL from the backend
+    const response = await axiosInstance.get(`/s3/generate-presigned-url?fileName=${file.name}&contentType=${file.type}`);
+    const uploadURL = response.data.uploadURL;
 
-    const imageRef = ref(storage, `images/${file.name + v4()}`);
-    const res = await uploadBytes(imageRef, file);
-
-    const downloadURL = await getDownloadURL(ref(storage, res.metadata.fullPath))
-    console.log(downloadURL);
-    
-    return downloadURL;
+    // Upload the file to S3 using the pre-signed URL
+    axios.put(uploadURL, file, {
+        headers: {
+            "Content-Type": file.type,
+        },
+    }).then(() => {
+        toast.success("Post success");
+    }).catch(() => {
+        toast.error("Could not create post");
+    }).finally(() => {
+        toast.done(toastID);
+    })
+    // Return download URL to save in database.
+    return response.data.downloadURL;
 }
