@@ -1,10 +1,10 @@
 #Need Node for base
 FROM node:20-alpine AS build
 #Set workdir
-WORKDIR /app
+WORKDIR /src
 
 #Copy package*.json
-COPY package*.json .
+COPY package*.json ./
 
 #Install dependecies
 RUN npm install
@@ -15,10 +15,7 @@ COPY . .
 #Build the project
 RUN npm run build
 
-FROM nginx:alpine
-
-COPY --from=build /app/dist /usr/share/nginx/html
-
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+# Start the application using a lightweight server
+CMD ["npx", "serve", "-s", "dist" , "-l", "80"]
