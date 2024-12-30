@@ -9,13 +9,4 @@ export default defineConfig({
       plugins: [],
     },
   },
-  build: {
-    outDir: "dist",
-    rollupOptions: {
-      input: {
-        main: "index.html",
-        nested: "nested/index.html",
-      },
-    },
-  },
 });
