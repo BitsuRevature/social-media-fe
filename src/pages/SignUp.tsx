@@ -20,15 +20,6 @@ import { useState } from 'react';
 import { register } from '../util/api';
 import { toast } from 'react-toastify';
 
-interface FormElements extends HTMLFormControlsCollection {
-  email: HTMLInputElement;
-  password: HTMLInputElement;
-  persistent: HTMLInputElement;
-}
-interface SignInFormElement extends HTMLFormElement {
-  readonly elements: FormElements;
-}
-
 function ColorSchemeToggle(props: IconButtonProps) {
   const { onClick, ...other } = props;
   const { mode, setMode } = useColorScheme();
@@ -199,7 +190,7 @@ export default function SignUp() {
                 </FormControl>
                 <Stack sx={{ gap: 4, mt: 2 }}>
                   <Button type="submit" fullWidth>
-                    Sign in
+                    Sign up
                   </Button>
                 </Stack>
               </form>

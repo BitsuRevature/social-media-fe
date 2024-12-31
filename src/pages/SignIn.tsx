@@ -17,16 +17,6 @@ import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
 import { useAppDispatch} from '../app/hooks';
 import { login } from '../features/auth/authSlice';
-// import GoogleIcon from './GoogleIcon';
-
-interface FormElements extends HTMLFormControlsCollection {
-    email: HTMLInputElement;
-    password: HTMLInputElement;
-    persistent: HTMLInputElement;
-}
-interface SignInFormElement extends HTMLFormElement {
-    readonly elements: FormElements;
-}
 
 function ColorSchemeToggle(props: IconButtonProps) {
     const { onClick, ...other } = props;
@@ -58,7 +48,7 @@ export default function SignIn() {
 
     const dispatch = useAppDispatch();
 
-    const handleSubmit = async (event: SignInFormElement) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget as HTMLFormElement);
         dispatch(login(
