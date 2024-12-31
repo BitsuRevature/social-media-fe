@@ -35,40 +35,23 @@ export default function MyProfile() {
   const [lastname, setLastname] = useState(authStore.auth?.lastname);
   const [bio, setBio] = useState(authStore.auth?.bio);
 
-
-  const [mediaURL, setMediaURL] = useState(authStore.auth?.profilePicture);
-  const [fileDetails, setFileDetails] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
-
-  const [content, setContent] = useState('');
-
-  function handleContentChange(event: ChangeEvent<HTMLInputElement>) {
-    setContent(event.target.value)
-  }
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  async function handelFileChange(event: ChangeEvent<HTMLInputElement>) {
+  async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
-    if (file) {
-      setMediaURL(file.name);
-      setFileDetails(file);
-    }
 
     uploadFile(file!, uploading, setUploading)
-    .then( async (url) => {
+    .then(async (url) => {
       await changeProfilePic(url as string);
       dispatch(updateProfilePic(url))
     })
-      
   }
 
   function handleFilePickerOpen() {
     fileInputRef.current?.click();
   }
-
-
-
 
   async function handlePISave() {
 
@@ -147,7 +130,7 @@ export default function MyProfile() {
           <Box sx={{ mb: 1 }}>
             <Typography level="title-md">Personal info</Typography>
             <Typography level="body-sm">
-              Customize how your profile information will apper to the networks.
+              Customize how your profile will appear to others.
             </Typography>
           </Box>
           <Divider />
@@ -183,7 +166,6 @@ export default function MyProfile() {
                   boxShadow: 'sm',
                 }}
                 onClick={handleFilePickerOpen}
-
               >
                 <EditRoundedIcon />
               </IconButton>
@@ -258,7 +240,6 @@ export default function MyProfile() {
                     boxShadow: 'sm',
                   }}
                   onClick={handleFilePickerOpen}
-
                 >
                   <EditRoundedIcon />
                 </IconButton>
@@ -358,7 +339,7 @@ export default function MyProfile() {
         type="file"
         ref={fileInputRef}
         style={{ display: 'none' }} // Hides the file input
-        onChange={handelFileChange}
+        onChange={handleFileChange}
       />
     </Box>
   );
