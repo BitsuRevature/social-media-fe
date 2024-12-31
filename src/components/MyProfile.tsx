@@ -238,8 +238,6 @@ export default function MyProfile() {
                   sx={{ flex: 1, minWidth: 108, borderRadius: '100%' }}
                 >
                   <img
-                    // src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-                    // srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
                     src={authStore.auth?.profilePicture as string}
                     loading="lazy"
                     alt=""
@@ -343,9 +341,6 @@ export default function MyProfile() {
               onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
                 setBio(event?.target.value)
               }} />
-            {/* <FormHelperText sx={{ mt: 0.75, fontSize: 'xs' }}>
-              275 characters left
-            </FormHelperText> */}
           </Stack>
           <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
             <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>

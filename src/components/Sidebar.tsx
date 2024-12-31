@@ -74,8 +74,6 @@ export default function Sidebar() {
     navigate("/login",);
   }
 
-  // const [open, setOpen] = useState(false);
-
 
   return (
     <Sheet
@@ -135,7 +133,6 @@ export default function Sidebar() {
         </IconButton>
         <Typography level="title-lg">Social Media</Typography>
       </Box>
-      {/* <Input size="sm" startDecorator={<SearchRoundedIcon />} placeholder="Search" /> */}
       <Divider />
       <Box
         sx={{
@@ -237,9 +234,6 @@ export default function Sidebar() {
               </ListItemContent>
             </ListItemButton>
           </ListItem>
-
-
-
 
         </List>
       </Box>

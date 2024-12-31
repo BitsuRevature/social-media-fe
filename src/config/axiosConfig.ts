@@ -35,7 +35,6 @@ axiosInstance.interceptors.response.use(
         return response;
     }, (error) => {
         if(error.response.status === 401){
-            // Alert("Session Expired");
             console.error("Session Expired");
         }
 
