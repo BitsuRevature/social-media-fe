@@ -12,7 +12,7 @@ export async function uploadFile(file: File | null, uploading: boolean, setUploa
     if (!file || uploading) return;
 
     setUploading(true);
-    const toastID = toast.loading("Creating post...");
+    const toastID = toast.loading("Uploading image...");
     // Request a pre-signed URL from the backend
     const response = await axiosInstance.get(`/s3/generate-presigned-url?fileName=${file.name}&contentType=${file.type}`);
     const uploadURL = response.data.uploadURL;
@@ -23,9 +23,9 @@ export async function uploadFile(file: File | null, uploading: boolean, setUploa
             "Content-Type": file.type,
         },
     }).then(() => {
-        toast.success("Post success");
+        toast.success("Image uploded!");
     }).catch(() => {
-        toast.error("Could not create post");
+        toast.error("Could not upload image.");
     }).finally(() => {
         toast.done(toastID);
     })
