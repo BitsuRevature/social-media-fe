@@ -1,7 +1,7 @@
 import axios from "axios";
 import {toast} from "react-toastify";
 
-axios.defaults.baseURL = "http://localhost:8080/api/v1";
+axios.defaults.baseURL = "http://betmp2-env.eba-qpahfwng.us-east-2.elasticbeanstalk.com/api/v1";
 
 const axiosInstance = axios.create();
 
