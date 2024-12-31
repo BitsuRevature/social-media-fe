@@ -27,3 +27,6 @@ dist-ssr
 .env.test
 
 firebaseConfigg.ts
+
+# MacOS
+.DS_Store

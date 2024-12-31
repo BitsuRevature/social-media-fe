@@ -1,9 +1,3 @@
-// import Box from '@mui/joy/Box';
-// import Stack from '@mui/joy/Stack';
-// import Typography from '@mui/joy/Typography';
-// import Breadcrumbs from '@mui/joy/Breadcrumbs';
-// import Link from '@mui/joy/Link';
-
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -85,7 +79,6 @@ export default function Posts() {
                         justifyContent: 'space-between',
                     }}
                 >
-                    {/* <FormLabel>freeSolo</FormLabel> */}
                     <Input
                         placeholder='Search'
                         onChange={(e) => {
@@ -111,10 +104,7 @@ export default function Posts() {
                             )
                         )
                 }
-
-
             </Stack>
-
         </Box>
     )
 }

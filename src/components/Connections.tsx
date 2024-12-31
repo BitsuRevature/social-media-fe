@@ -84,7 +84,6 @@ const Connections: FunctionComponent<ConnectionsProps> = () => {
         }}
       >
         <FormControl id="free-solo-demo" >
-        {/* <FormLabel>freeSolo</FormLabel> */}
         <Input 
           placeholder='Search'
           onChange={(e) => {
@@ -102,19 +101,6 @@ const Connections: FunctionComponent<ConnectionsProps> = () => {
               return <Connection key={connection.id} connection={connection} following={following} setFollowing={setFollowing} />
             })
         }
-
-        {/* {
-          postStore.isLoading ?
-            <></> :
-            (
-              postStore.posts.map((post: PostType) => {
-                return <Post key={post.id} post={post} />;
-              }
-              )
-            )
-        } */}
-
-
       </Stack>
     </Box>
   );

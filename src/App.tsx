@@ -6,6 +6,7 @@ import SignIn from './pages/SignIn.tsx';
 import SignUp from './pages/SignUp.tsx';
 import { useAppDispatch, useAppSelector } from './app/hooks.ts';
 import { updateAuth } from './features/auth/authSlice.ts';
+import { CssBaseline, CssVarsProvider, GlobalStyles } from '@mui/joy';
 
 
 function App() {
@@ -24,7 +25,16 @@ function App() {
     }, [])
 
     return (
-        <>
+        <CssVarsProvider>
+            <CssBaseline />
+            <GlobalStyles
+                styles={{
+                ':root': {
+                    '--Form-maxWidth': '800px',
+                    '--Transition-duration': '0.4s', // set to `none` to disable transition
+                },
+                }}
+            />
             {
                 authStore.auth ? (
                     <Home/>
@@ -37,7 +47,7 @@ function App() {
                 )
 
             }
-        </>
+        </CssVarsProvider>
     )
 }
 

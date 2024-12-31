@@ -1,5 +1,3 @@
-import { CssVarsProvider} from '@mui/joy/styles';
-import CssBaseline from '@mui/joy/CssBaseline';
 import Box from '@mui/joy/Box';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
@@ -37,8 +35,7 @@ export default function Home() {
 
 
   return (
-    <CssVarsProvider disableTransitionOnChange>
-      <CssBaseline />
+    <>
       <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
         <Sidebar />
         <Header />
@@ -63,6 +60,6 @@ export default function Home() {
 
         </Box>
       </Box>
-    </CssVarsProvider>
+    </>
   )
 }

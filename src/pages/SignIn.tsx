@@ -1,64 +1,24 @@
 import * as React from 'react';
-import { CssVarsProvider, extendTheme, useColorScheme } from '@mui/joy/styles';
-import GlobalStyles from '@mui/joy/GlobalStyles';
-import CssBaseline from '@mui/joy/CssBaseline';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
-import IconButton, { IconButtonProps } from '@mui/joy/IconButton';
+import IconButton from '@mui/joy/IconButton';
 import Link from '@mui/joy/Link';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
-import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
-import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
 import { useAppDispatch} from '../app/hooks';
 import { login } from '../features/auth/authSlice';
-// import GoogleIcon from './GoogleIcon';
-
-interface FormElements extends HTMLFormControlsCollection {
-    email: HTMLInputElement;
-    password: HTMLInputElement;
-    persistent: HTMLInputElement;
-}
-interface SignInFormElement extends HTMLFormElement {
-    readonly elements: FormElements;
-}
-
-function ColorSchemeToggle(props: IconButtonProps) {
-    const { onClick, ...other } = props;
-    const { mode, setMode } = useColorScheme();
-    const [mounted, setMounted] = React.useState(false);
-
-    React.useEffect(() => setMounted(true), []);
-
-    return (
-        <IconButton
-            aria-label="toggle light/dark mode"
-            size="sm"
-            variant="outlined"
-            disabled={!mounted}
-            onClick={(event) => {
-                setMode(mode === 'light' ? 'dark' : 'light');
-                onClick?.(event);
-            }}
-            {...other}
-        >
-            {mode === 'light' ? <DarkModeRoundedIcon /> : <LightModeRoundedIcon />}
-        </IconButton>
-    );
-}
-
-const customTheme = extendTheme({ defaultColorScheme: 'dark' });
+import ColorSchemeToggle from '../components/ColorSchemeToggle';
 
 export default function SignIn() {
 
     const dispatch = useAppDispatch();
 
-    const handleSubmit = async (event: SignInFormElement) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget as HTMLFormElement);
         dispatch(login(
@@ -70,16 +30,7 @@ export default function SignIn() {
     }
 
     return (
-        <CssVarsProvider theme={customTheme} disableTransitionOnChange>
-            <CssBaseline />
-            <GlobalStyles
-                styles={{
-                    ':root': {
-                        '--Form-maxWidth': '800px',
-                        '--Transition-duration': '0.4s', // set to `none` to disable transition
-                    },
-                }}
-            />
+        <>
             <Box
                 sx={(theme) => ({
                     width: { xs: '100%', md: '50vw' },
@@ -212,6 +163,6 @@ export default function SignIn() {
                     },
                 })}
             />
-        </CssVarsProvider>
+        </>
     );
 }

@@ -52,39 +52,22 @@ export default function CreatePost() {
         fileInputRef.current?.click();
     }
 
-    // async function uploadFile() {
-    //     const file = fileDetails;
-    //     if (!file || uploading) return;
-
-    //     setUploading(true);
-
-    //     const imageRef = ref(storage, `images/${file.name + v4()}`);
-    //     const res = await uploadBytes(imageRef, file);
-
-    //     const downloadURL = await getDownloadURL(ref(storage, res.metadata.fullPath))
-    //     setMediaURL(downloadURL);
-    //     alert(downloadURL)
-    //     return downloadURL;
-    // }
-
     function handleCancel() {
         navigate('/');
     }
 
     async function handleSave() {
-        // const mURL = await uploadFile(fileDetails, uploading, setUploading);
-
         uploadFile(fileDetails, uploading, setUploading)
-            .then(url => {
-                dispatch(createPost({
-                    content: content,
-                    mediaURL: url as string
-                }))
-                setUploading(false);
-                navigate('/');
-            }).catch((err) => {
-                console.error(err);
-            })
+        .then(url => {
+            dispatch(createPost({
+                content: content,
+                mediaURL: url as string
+            }))
+            setUploading(false);
+            navigate('/');
+        }).catch((err) => {
+            console.error(err);
+        })
     }
 
     return (
@@ -143,7 +126,6 @@ export default function CreatePost() {
                             >
                                 <img
                                     src={mediaURL}
-                                    // srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
                                     loading="lazy"
                                     alt=""
                                 />
@@ -202,7 +184,6 @@ export default function CreatePost() {
                                 >
                                     <img
                                         src={mediaURL}
-                                        // srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
                                         loading="lazy"
                                         alt=""
                                     />
@@ -217,8 +198,6 @@ export default function CreatePost() {
                                         position: 'absolute',
                                         zIndex: 2,
                                         borderRadius: '50%',
-                                        // left: 85,
-                                        // top: 180,
                                         boxShadow: 'sm',
                                     }}
                                     onClick={handleFilePickerOpen}

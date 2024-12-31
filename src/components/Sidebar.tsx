@@ -22,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import { changeIdx } from '../features/viewIdx/viewIdxSlice';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { logout } from '../features/auth/authSlice';
+import ColorSchemeToggle from './ColorSchemeToggle';
 
 
 
@@ -73,8 +74,6 @@ export default function Sidebar() {
     dispatch(logout());
     navigate("/login",);
   }
-
-  // const [open, setOpen] = useState(false);
 
 
   return (
@@ -129,13 +128,15 @@ export default function Sidebar() {
         }}
         onClick={() => closeSidebar()}
       />
-      <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-        <IconButton variant="soft" color="primary" size="sm">
-          <BrightnessAutoRoundedIcon />
-        </IconButton>
-        <Typography level="title-lg">Social Media</Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+          <IconButton variant="soft" color="primary" size="sm">
+            <BrightnessAutoRoundedIcon />
+          </IconButton>
+          <Typography level="title-lg">Social Media</Typography>
+        </Box>
+        <ColorSchemeToggle/>
       </Box>
-      {/* <Input size="sm" startDecorator={<SearchRoundedIcon />} placeholder="Search" /> */}
       <Divider />
       <Box
         sx={{
@@ -237,9 +238,6 @@ export default function Sidebar() {
               </ListItemContent>
             </ListItemButton>
           </ListItem>
-
-
-
 
         </List>
       </Box>
