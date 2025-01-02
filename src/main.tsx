@@ -10,7 +10,7 @@ import { StyledEngineProvider } from "@mui/material";
 import 'react-toastify/dist/ReactToastify.css';
 
 
-axios.defaults.baseURL = 'http://betmp2-env.eba-qpahfwng.us-east-2.elasticbeanstalk.com/api/v1';
+axios.defaults.baseURL = 'http://ec2-3-137-181-232.us-east-2.compute.amazonaws.com/api/v1';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>

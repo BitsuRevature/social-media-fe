@@ -2,7 +2,7 @@ import axios from "axios";
 import {AuthContextType, LoginType, RegisterType} from "./types.ts";
 import {jwtDecode, JwtPayload} from "jwt-decode";
 
-axios.defaults.baseURL = 'http://betmp2-env.eba-qpahfwng.us-east-2.elasticbeanstalk.com/api/v1';
+axios.defaults.baseURL = 'http://ec2-3-137-181-232.us-east-2.compute.amazonaws.com/api/v1';
 
 const localStorage = window.localStorage;
 
