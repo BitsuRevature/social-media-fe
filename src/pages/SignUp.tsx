@@ -12,12 +12,13 @@ import Stack from '@mui/joy/Stack';
 import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { register } from '../util/api';
 import { toast } from 'react-toastify';
 import ColorSchemeToggle from '../components/ColorSchemeToggle';
+import axios from 'axios';
+
+axios.defaults.baseURL = "http://ec2-3-137-181-232.us-east-2.compute.amazonaws.com/api/v1";
 
 export default function SignUp() {
-
 
     const navigate = useNavigate();
     const [error, setError] = useState(false);
@@ -27,12 +28,13 @@ export default function SignUp() {
         const data = new FormData(event.currentTarget as HTMLFormElement);
 
         try {
-            await register({
+            const registerData = {
                 username: data.get('username') as string,
                 password: data.get('password') as string,
                 firstname: data.get('firstname') as string,
                 lastname: data.get('lastname') as string,
-            });
+            };
+            await axios.post('/auth/register', registerData);
             navigate('/login');
         } catch (errorc) {
             console.error(errorc);

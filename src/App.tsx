@@ -1,52 +1,61 @@
-import {useEffect} from 'react'
-import {Navigate, Route, Routes} from "react-router-dom";
-import {AuthContextType} from "./util/types.ts";
-import Home from "./pages/Home.tsx";
+import { useEffect, useState } from 'react'
+import { Navigate, Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import { AuthContextType } from "./util/types.ts";
 import SignIn from './pages/SignIn.tsx';
 import SignUp from './pages/SignUp.tsx';
-import { useAppDispatch, useAppSelector } from './app/hooks.ts';
+import { useAppDispatch } from './app/hooks.ts';
 import { updateAuth } from './features/auth/authSlice.ts';
 import { CssBaseline, CssVarsProvider, GlobalStyles } from '@mui/joy';
+import Posts from './pages/Posts.tsx';
+import CreatePost from './components/CreatePost.tsx';
+import Connections from './pages/Connections.tsx';
+import MyProfile from './components/MyProfile.tsx';
+import AllConnections from './components/AllConnections.tsx';
+import FollowingConnections from './components/FollowingConnections.tsx';
+import ProtectedRoute from './components/ProtectedRoute.tsx';
 
 
 function App() {
-
-    const authStore = useAppSelector(store => store.auth);
     const dispatch = useAppDispatch();
-
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if(localStorage.getItem('user')){
+        if (localStorage.getItem('user')) {
             const data: AuthContextType = JSON.parse(localStorage.getItem('user')!);
             dispatch(updateAuth(data))
-
+            setLoading(false);
         }
-
     }, [])
+
+    if (loading) return (<>Loading...</>);
 
     return (
         <CssVarsProvider>
             <CssBaseline />
             <GlobalStyles
                 styles={{
-                ':root': {
-                    '--Form-maxWidth': '800px',
-                    '--Transition-duration': '0.4s', // set to `none` to disable transition
-                },
+                    ':root': {
+                        '--Form-maxWidth': '800px',
+                        '--Transition-duration': '0.4s', // set to `none` to disable transition
+                    },
                 }}
             />
-            {
-                authStore.auth ? (
-                    <Home/>
-                ) : (
-                    <Routes>
-                        <Route path="/login" element={<SignIn />}/>
-                        <Route path="/register" element={<SignUp/>}/>
-                        <Route path="/" element={<Navigate to="/login"/>}/>
-                    </Routes>
-                )
-
-            }
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Navigate to="/posts" />} />
+                    <Route path="/login" element={<SignIn />} />
+                    <Route path="/register" element={<SignUp />} />
+                    <Route element={<ProtectedRoute />}>
+                        <Route path="/posts" element={<Posts />} />
+                        <Route path="/posts/create" element={<CreatePost />} />
+                        <Route element={<Connections />}>
+                            <Route path="/users/all" element={<AllConnections />} />
+                            <Route path="/users/following" element={<FollowingConnections />} />
+                        </Route>
+                        <Route path="/profile" element={<MyProfile />} />
+                    </Route>
+                </Routes>
+            </Router>
         </CssVarsProvider>
     )
 }

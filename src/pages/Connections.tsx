@@ -6,12 +6,9 @@ import Link from '@mui/material/Link';
 
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-import { useAppSelector } from '../app/hooks';
-import { UserType } from '../util/types';
-import { FunctionComponent, useEffect, useState } from 'react';
-import { getAllConnections, getUserConnections } from '../util/apiHelper';
-import Connection from './Connection';
+import { FunctionComponent, useState } from 'react';
 import { FormControl,  Input } from '@mui/joy';
+import { Outlet, useLocation } from 'react-router-dom';
 
 interface ConnectionsProps {
 
@@ -19,28 +16,8 @@ interface ConnectionsProps {
 
 const Connections: FunctionComponent<ConnectionsProps> = () => {
 
-  const authStore = useAppSelector(store => store.auth);
-
-  const viewIdxStore = useAppSelector(store => store.viewIdx);
-  const [connections, setConnections]: [UserType[], any] = useState([]);
-  const [following, setFollowing]: [UserType[], any] = useState([]);
   const [search, setSearch] = useState('');
-
-
-  useEffect(() => {
-
-    getAllConnections(search)
-      .then((data) => {
-        setConnections(data.filter(c => c.id != authStore.auth?.id))
-      })
-    getUserConnections(search)
-      .then((data) => {
-        setFollowing(data)
-      })
-
-
-  }, [viewIdxStore, search])
-
+  const location = useLocation();
 
   return (
     <Box>
@@ -68,7 +45,12 @@ const Connections: FunctionComponent<ConnectionsProps> = () => {
             </Link>
           </Breadcrumbs>
           <Typography component="h1" sx={{ mt: 1, mb: 2 }}>
-            {viewIdxStore.idx == 3 ? "All" : "Following"}
+            {
+              (() => {
+                const endpoint = location.pathname.split('/').pop();
+                return endpoint ? endpoint.charAt(0).toUpperCase() + endpoint.slice(1) : endpoint;
+              })()
+            }
           </Typography>
         </Box>
       </Box>
@@ -92,15 +74,8 @@ const Connections: FunctionComponent<ConnectionsProps> = () => {
         />
       </FormControl>
 
-        {
-          viewIdxStore.idx == 3 ?
-            connections.map((connection: UserType) => {
-              return <Connection key={connection.id} connection={connection} following={following} setFollowing={setFollowing} />
-            }) :
-            following.map((connection: UserType) => {
-              return <Connection key={connection.id} connection={connection} following={following} setFollowing={setFollowing} />
-            })
-        }
+      <Outlet context={{search}}/>
+
       </Stack>
     </Box>
   );

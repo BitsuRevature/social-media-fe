@@ -19,7 +19,6 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
 import { closeSidebar } from '../util/utils';
 import { useNavigate } from 'react-router-dom';
-import { changeIdx } from '../features/viewIdx/viewIdxSlice';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { logout } from '../features/auth/authSlice';
 import ColorSchemeToggle from './ColorSchemeToggle';
@@ -161,7 +160,7 @@ export default function Sidebar() {
           <ListItem>
             <ListItemButton
               onClick={
-                () => dispatch(changeIdx(1))
+                () => navigate('/posts')
               }
             >
               <HomeRoundedIcon />
@@ -175,7 +174,7 @@ export default function Sidebar() {
           <ListItem>
             <ListItemButton
               onClick={
-                () => dispatch(changeIdx(2))
+                () => navigate('/posts/create')
               }
             >
               <AddRoundedIcon />
@@ -193,7 +192,7 @@ export default function Sidebar() {
                 <ListItemButton onClick={() => setOpen(!open)}>
                   <GroupRoundedIcon />
                   <ListItemContent>
-                    <Typography level="title-sm">Freinds</Typography>
+                    <Typography level="title-sm">Users</Typography>
                   </ListItemContent>
                   <KeyboardArrowDownIcon
                     sx={[
@@ -208,7 +207,7 @@ export default function Sidebar() {
                   <ListItemButton
 
                     onClick={
-                      () => dispatch(changeIdx(3))
+                      () => navigate('/users/all')
                     }
                   >
                     All
@@ -217,7 +216,7 @@ export default function Sidebar() {
                 <ListItem>
                   <ListItemButton
                     onClick={
-                      () => dispatch(changeIdx(4))
+                      () => navigate('/users/following')
                     }
                   >Following</ListItemButton>
                 </ListItem>
@@ -228,7 +227,7 @@ export default function Sidebar() {
           <ListItem>
             <ListItemButton
               onClick={
-                () => dispatch(changeIdx(5))
+                () => navigate('/profile')
               }
             >
               <GroupRoundedIcon />
