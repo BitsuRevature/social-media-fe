@@ -10,12 +10,14 @@ import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
 import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
-import { useAppDispatch} from '../app/hooks';
+import { useAppDispatch } from '../app/hooks';
 import { login } from '../features/auth/authSlice';
 import ColorSchemeToggle from '../components/ColorSchemeToggle';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignIn() {
 
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -26,7 +28,9 @@ export default function SignIn() {
                 username: data.get('username') as string,
                 password: data.get('password') as string
             },
-        ))
+        )).then(() => {
+            navigate('/posts');
+        })
     }
 
     return (

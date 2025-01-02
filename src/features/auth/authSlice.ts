@@ -19,7 +19,6 @@ export const login = createAsyncThunk(
     async (data: LoginType, thunkAPI) => {
         try {
             const response = await axios.post('/auth/login', data);
-            // navigate("/");
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue({ error: error.message })
@@ -71,9 +70,9 @@ const authSlice = createSlice({
 
             console.error("==========Auth Slice ==========")
 
-            const tokenToStore = {
+            const tokenToStore: AuthContextType = {
                 token: data,
-                username: decodedToken.sub,
+                username: decodedToken.sub!,
                 id: decodedToken.id,
                 profilePicture: decodedToken.profilePicture,
                 firstname: decodedToken.firstname,
@@ -82,8 +81,8 @@ const authSlice = createSlice({
             }
 
             localStorage.setItem('user', JSON.stringify(tokenToStore));
+            state.auth = tokenToStore;
             state.isLoading = false;
-            window.location.reload();
         })
 
         builder.addCase(login.rejected, (state) => {
