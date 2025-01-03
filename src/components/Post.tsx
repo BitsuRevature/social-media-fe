@@ -91,11 +91,13 @@ export default function Post({ post }: { post: PostType }) {
                 sx={{ display: { xs: 'flex', md: 'flex' }, my: 1 }}
                 justifyContent="center"
             >
-                <CardMedia
-                    component="img"
-                    height={500}
-                    image={post.mediaURL}
-                />
+                {post.mediaURL &&
+                    <CardMedia
+                        component="img"
+                        height={500}
+                        image={post.mediaURL}
+                    />
+                }
                 <CardContent
                     sx={{
                         height: 25
