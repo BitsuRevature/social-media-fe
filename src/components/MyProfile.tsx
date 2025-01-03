@@ -33,6 +33,7 @@ export default function MyProfile() {
 
   const [firstname, setFirstname] = useState(authStore.auth?.firstname);
   const [lastname, setLastname] = useState(authStore.auth?.lastname);
+  const [profilePicture, setProfilePicture] = useState(authStore.auth?.profilePicture)
   const [bio, setBio] = useState(authStore.auth?.bio);
 
   const [uploading, setUploading] = useState(false);
@@ -41,12 +42,21 @@ export default function MyProfile() {
 
   async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
+    if (file) {
+      uploadFile(file, uploading, setUploading)
+        .then(async (url) => {
+          await changeProfilePic(url as string);
+          dispatch(updateProfilePic(url))
+          const reader = new FileReader();
 
-    uploadFile(file!, uploading, setUploading)
-    .then(async (url) => {
-      await changeProfilePic(url as string);
-      dispatch(updateProfilePic(url))
-    })
+          // Read the file as a data URL
+          reader.onloadend = () => {
+            setProfilePicture(reader.result as string);  // Set the image source to the result
+          };
+          // Read the file
+          reader.readAsDataURL(file);
+        })
+    }
   }
 
   function handleFilePickerOpen() {
@@ -146,7 +156,7 @@ export default function MyProfile() {
                 sx={{ flex: 1, minWidth: 120, borderRadius: '100%' }}
               >
                 <img
-                  src={authStore.auth?.profilePicture as string}
+                  src={profilePicture!}
                   loading="lazy"
                   alt=""
                 />
