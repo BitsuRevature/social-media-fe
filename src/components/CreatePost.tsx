@@ -45,8 +45,15 @@ export default function CreatePost() {
         const file = event.target.files?.[0];
         if (file) {
             setMediaURL(file.name);
-            // setMedia(file);
             setFileDetails(file);
+            const reader = new FileReader();
+
+            // Read the file as a data URL
+            reader.onloadend = () => {
+                setMediaURL(reader.result as string);  // Set the image source to the result
+            };
+            // Read the file
+            reader.readAsDataURL(file);
         }
     }
 
