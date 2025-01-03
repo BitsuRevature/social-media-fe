@@ -5,7 +5,7 @@ import SignIn from './pages/SignIn.tsx';
 import SignUp from './pages/SignUp.tsx';
 import { useAppDispatch } from './app/hooks.ts';
 import { updateAuth } from './features/auth/authSlice.ts';
-import { CssBaseline, CssVarsProvider, GlobalStyles } from '@mui/joy';
+import { Box, CircularProgress, CssBaseline, CssVarsProvider, GlobalStyles } from '@mui/joy';
 import Posts from './pages/Posts.tsx';
 import CreatePost from './components/CreatePost.tsx';
 import Connections from './pages/Connections.tsx';
@@ -23,11 +23,25 @@ function App() {
         if (localStorage.getItem('user')) {
             const data: AuthContextType = JSON.parse(localStorage.getItem('user')!);
             dispatch(updateAuth(data))
-            setLoading(false);
         }
+        setLoading(false);
     }, [])
 
-    if (loading) return (<>Loading...</>);
+    if (loading) return (
+        <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            position="fixed"
+            top={0}
+            left={0}
+            width="100%"
+            height="100%"
+            bgcolor="rgba(255, 255, 255, 0.7)"
+        >
+            <CircularProgress size={"lg"} />
+        </Box>
+    );
 
     return (
         <CssVarsProvider>
