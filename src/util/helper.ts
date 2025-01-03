@@ -2,7 +2,7 @@ import axios from "axios";
 import axiosInstance from "../config/axiosConfig";
 import { toast } from "react-toastify";
 
-export function formateDate(date: string) {
+export function formatDate(date: string) {
     const options: Intl.DateTimeFormatOptions = {year: 'numeric', month: 'long', day: 'numeric'};
     return new Date(date).toLocaleDateString([], options);
 }

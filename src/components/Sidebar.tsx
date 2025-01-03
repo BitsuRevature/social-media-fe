@@ -68,7 +68,8 @@ export default function Sidebar() {
 
   const navigate = useNavigate();
 
-  function handleLogOut() {
+  function handleLogOut(e: React.MouseEvent) {
+    e.stopPropagation();
     localStorage.removeItem("user");
     dispatch(logout());
     navigate("/login",);
@@ -134,7 +135,7 @@ export default function Sidebar() {
           </IconButton>
           <Typography level="title-lg">Social Media</Typography>
         </Box>
-        <ColorSchemeToggle/>
+        <ColorSchemeToggle />
       </Box>
       <Divider />
       <Box
@@ -224,24 +225,13 @@ export default function Sidebar() {
             </Toggler>
           </ListItem>
 
-          <ListItem>
-            <ListItemButton
-              onClick={
-                () => navigate('/profile')
-              }
-            >
-              <GroupRoundedIcon />
-
-              <ListItemContent>
-                <Typography level="title-sm">My Profile</Typography>
-              </ListItemContent>
-            </ListItemButton>
-          </ListItem>
-
         </List>
       </Box>
       <Divider />
-      <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+      <Box
+        sx={{ display: 'flex', gap: 1, alignItems: 'center', cursor: 'pointer' }}
+        onClick={() => navigate('/profile')}
+      >
         <Avatar
           variant="outlined"
           size="sm"
@@ -251,7 +241,7 @@ export default function Sidebar() {
           <Typography level="title-sm">{`${authStore.auth?.firstname} ${authStore.auth?.lastname}`}</Typography>
           <Typography level="body-xs">{authStore.auth?.username}</Typography>
         </Box>
-        <IconButton size="sm" variant="plain" color="neutral" onClick={handleLogOut}>
+        <IconButton size="sm" variant="plain" color="neutral" onClick={(e) => handleLogOut(e)}>
           <LogoutRoundedIcon />
         </IconButton>
       </Box>

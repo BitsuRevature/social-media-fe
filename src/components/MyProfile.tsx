@@ -9,14 +9,14 @@ import IconButton from '@mui/joy/IconButton';
 import Textarea from '@mui/joy/Textarea';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
-import Breadcrumbs from '@mui/joy/Breadcrumbs';
-import Link from '@mui/joy/Link';
+// import Breadcrumbs from '@mui/joy/Breadcrumbs';
+// import Link from '@mui/joy/Link';
 import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
 
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+// import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+// import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import PersonIcon from '@mui/icons-material/Person';
 
@@ -33,6 +33,7 @@ export default function MyProfile() {
 
   const [firstname, setFirstname] = useState(authStore.auth?.firstname);
   const [lastname, setLastname] = useState(authStore.auth?.lastname);
+  const [profilePicture, setProfilePicture] = useState(authStore.auth?.profilePicture)
   const [bio, setBio] = useState(authStore.auth?.bio);
 
   const [uploading, setUploading] = useState(false);
@@ -41,12 +42,21 @@ export default function MyProfile() {
 
   async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
+    if (file) {
+      uploadFile(file, uploading, setUploading)
+        .then(async (url) => {
+          await changeProfilePic(url as string);
+          dispatch(updateProfilePic(url))
+          const reader = new FileReader();
 
-    uploadFile(file!, uploading, setUploading)
-    .then(async (url) => {
-      await changeProfilePic(url as string);
-      dispatch(updateProfilePic(url))
-    })
+          // Read the file as a data URL
+          reader.onloadend = () => {
+            setProfilePicture(reader.result as string);  // Set the image source to the result
+          };
+          // Read the file
+          reader.readAsDataURL(file);
+        })
+    }
   }
 
   function handleFilePickerOpen() {
@@ -85,7 +95,7 @@ export default function MyProfile() {
         }}
       >
         <Box sx={{ px: { xs: 2, md: 6 } }}>
-          <Breadcrumbs
+          {/* <Breadcrumbs
             size="sm"
             aria-label="breadcrumbs"
             separator={<ChevronRightRoundedIcon />}
@@ -110,7 +120,7 @@ export default function MyProfile() {
             <Typography color="primary" sx={{ fontWeight: 500, fontSize: 12 }}>
               My profile
             </Typography>
-          </Breadcrumbs>
+          </Breadcrumbs> */}
           <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
             My profile
           </Typography>
@@ -146,7 +156,7 @@ export default function MyProfile() {
                 sx={{ flex: 1, minWidth: 120, borderRadius: '100%' }}
               >
                 <img
-                  src={authStore.auth?.profilePicture as string}
+                  src={profilePicture!}
                   loading="lazy"
                   alt=""
                 />

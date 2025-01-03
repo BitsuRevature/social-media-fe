@@ -3,11 +3,12 @@ import Box from "@mui/joy/Box";
 import Stack from "@mui/joy/Stack";
 import Typography from "@mui/joy/Typography";
 import { CommentType } from "../util/types";
-import { formateDate } from "../util/helper";
-import Button from "@mui/joy/Button";
+import { formatDate } from "../util/helper";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { deleteComment } from "../features/post/postSlice";
 import { useState } from "react";
+import { IconButton } from "@mui/joy";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 
 export default function Comment({ postId, comment }: { postId: number, comment: CommentType }) {
@@ -16,8 +17,8 @@ export default function Comment({ postId, comment }: { postId: number, comment: 
     const dispatch = useAppDispatch();
 
     const [show, setShow] = useState(true);
-    
-    
+
+
     function handleDelete() {
         dispatch(
             deleteComment({ postId, commentId: comment.id })
@@ -30,6 +31,7 @@ export default function Comment({ postId, comment }: { postId: number, comment: 
         show && <Stack
             direction="row"
             spacing={3}
+            paddingBlock={1}
             alignItems="center"
         >
             <AspectRatio
@@ -43,25 +45,18 @@ export default function Comment({ postId, comment }: { postId: number, comment: 
                     alt=""
                 />
             </AspectRatio>
-            <Box sx={{ mb: 1 }}>
+            <Box sx={{ mb: 1, flexGrow: 1 }}>
                 <Stack
                     direction="row"
-                    spacing={3}
-                    alignContent="center"
-                    justifyContent="space-between"
+                    spacing={1}
+                    alignItems="baseline"
+                    width={"300px"}
                 >
-                    <Stack
-                        direction="row"
-                        alignContent="center"
-                        justifyContent="space-between"
-                        width={"300px"}
-                    >
-                        <Typography level="title-md">{comment.user.username}</Typography>
+                    <Typography level="title-md">{comment.user.username}</Typography>
 
-                        <Typography level="body-sm">
-                            {formateDate(comment.createdAt)}
-                        </Typography>
-                    </Stack>
+                    <Typography level="body-sm">
+                        {formatDate(comment.createdAt)}
+                    </Typography>
 
                 </Stack>
                 <Typography level="body-sm">
@@ -70,15 +65,15 @@ export default function Comment({ postId, comment }: { postId: number, comment: 
             </Box>
             {
                 authStore.auth?.id == comment.user.id ? (
-                    <Button size="sm" variant="solid" color="danger"
+                    <IconButton color="danger"
                         style={{
                             position: "relative",
                             right: 0
                         }}
                         onClick={handleDelete}
                     >
-                        Delete Comment
-                    </Button>
+                        <DeleteForeverIcon />
+                    </IconButton>
                 ) : ""
             }
         </Stack>

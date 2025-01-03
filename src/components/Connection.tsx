@@ -4,9 +4,11 @@ import Card from "@mui/joy/Card";
 import Stack from "@mui/joy/Stack";
 import AspectRatio from "@mui/joy/AspectRatio";
 import Typography from "@mui/joy/Typography";
-import { Button, CardContent} from "@mui/joy";
+import { Button, CardContent } from "@mui/joy";
 import { CardActions } from "@mui/joy";
 import { follow, unFollow } from "../util/apiHelper";
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
 interface ConnectionProps {
     connection: UserType
@@ -77,7 +79,7 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection, following,
                                 }}
                                 onClick={handleUnfollow}
                             >
-                                Unfollow
+                                <PersonRemoveIcon sx={{ marginRight: 1 }} /> Unfollow
                             </Button> :
                             <Button size="sm" variant="solid" color="primary"
                                 style={{
@@ -86,7 +88,8 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection, following,
                                 }}
                                 onClick={handleFollow}
                             >
-                                Follow
+                                <PersonAddIcon sx={{ marginRight: 1 }} /> Follow
+
                             </Button>
                     }
                 </CardActions>

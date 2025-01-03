@@ -7,7 +7,7 @@ import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
 
-import { formateDate } from '../util/helper'
+import { formatDate } from '../util/helper'
 import { CommentType, PostType } from '../util/types';
 import Comment from './Comment';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
@@ -22,6 +22,7 @@ import { useState } from 'react';
 
 import AddIcon from '@mui/icons-material/AddRounded'
 import RemoveIcon from '@mui/icons-material/Remove';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { FormControl, Input } from '@mui/joy';
 
 
@@ -79,7 +80,7 @@ export default function Post({ post }: { post: PostType }) {
                     height: 25
                 }}
                 title={post.user.username}
-                subheader={formateDate(post.createdAt)}
+                subheader={formatDate(post.createdAt)}
             />
 
             <Divider />
@@ -90,11 +91,13 @@ export default function Post({ post }: { post: PostType }) {
                 sx={{ display: { xs: 'flex', md: 'flex' }, my: 1 }}
                 justifyContent="center"
             >
-                <CardMedia
-                    component="img"
-                    height={500}
-                    image={post.mediaURL}
-                />
+                {post.mediaURL &&
+                    <CardMedia
+                        component="img"
+                        height={500}
+                        image={post.mediaURL}
+                    />
+                }
                 <CardContent
                     sx={{
                         height: 25
@@ -108,18 +111,19 @@ export default function Post({ post }: { post: PostType }) {
                 <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
                     {
                         authStore.auth?.id == post.user.id ? (
-                            <Button
-                                size="sm" variant="solid" color="danger"
+                            <IconButton
+                                color="danger"
                                 onClick={handleDelete}
                             >
-                                Delete Post
-                            </Button>
+                                <DeleteForeverIcon />
+                            </IconButton>
                         ) : ""
                     }
                     <IconButton
+                        color={like ? "danger" : undefined}
                         onClick={handleLike}
                     >
-                        <FavoriteIcon sx={like ? { color: "red" } : {}} />
+                        <FavoriteIcon />
                     </IconButton>
                     {post.reactions.length}
                     <IconButton
@@ -127,7 +131,7 @@ export default function Post({ post }: { post: PostType }) {
                             setOpen(!open);
                         }}
                     >
-                        {!open ? <AddIcon /> : <RemoveIcon/>}
+                        {!open ? <AddIcon /> : <RemoveIcon />}
                     </IconButton>
 
 
