@@ -27,7 +27,7 @@ import { FormControl, Input } from '@mui/joy';
 
 
 export default function Post({ post }: { post: PostType }) {
-
+    console.log(post)
     const authStore = useAppSelector(store => store.auth);
     const dispatch = useAppDispatch();
 
@@ -35,7 +35,7 @@ export default function Post({ post }: { post: PostType }) {
 
     const [show, setShow] = useState(true);
     const [like, setLike] = useState(
-        authStore.auth?.id! in post.reactions
+        post.reactions.filter(r => r == authStore.auth?.id!).length > 0
     );
 
     const [open, setOpen] = useState(false);
@@ -121,6 +121,7 @@ export default function Post({ post }: { post: PostType }) {
                     >
                         <FavoriteIcon sx={like ? { color: "red" } : {}} />
                     </IconButton>
+                    {post.reactions.length}
                     <IconButton
                         onClick={() => {
                             setOpen(!open);
