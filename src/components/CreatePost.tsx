@@ -7,14 +7,14 @@ import Input from '@mui/joy/Input';
 import IconButton from '@mui/joy/IconButton';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
-import Breadcrumbs from '@mui/joy/Breadcrumbs';
-import Link from '@mui/joy/Link';
+// import Breadcrumbs from '@mui/joy/Breadcrumbs';
+// import Link from '@mui/joy/Link';
 import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
 
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+// import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+// import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import ImageIcon from '@mui/icons-material/Image';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -94,7 +94,7 @@ export default function CreatePost() {
                 }}
             >
                 <Box sx={{ px: { xs: 2, md: 6 } }}>
-                    <Breadcrumbs
+                    {/* <Breadcrumbs
                         size="sm"
                         aria-label="breadcrumbs"
                         separator={<ChevronRightRoundedIcon />}
@@ -108,7 +108,7 @@ export default function CreatePost() {
                         >
                             <HomeRoundedIcon />
                         </Link>
-                    </Breadcrumbs>
+                    </Breadcrumbs> */}
                     <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
                         Create A Post
                     </Typography>

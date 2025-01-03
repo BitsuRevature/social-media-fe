@@ -1,11 +1,11 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
+// import Breadcrumbs from '@mui/material/Breadcrumbs';
+// import Link from '@mui/material/Link';
 
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+// import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+// import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import Post from '../components/Post';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { PostType } from '../util/types';
@@ -42,7 +42,7 @@ export default function Posts() {
                 }}
             >
                 <Box sx={{ px: { xs: 2, md: 6 } }}>
-                    <Breadcrumbs
+                    {/* <Breadcrumbs
                         aria-label="breadcrumbs"
                         separator={<ChevronRightRoundedIcon />}
                         sx={{ pl: 0 }}
@@ -55,7 +55,7 @@ export default function Posts() {
                         >
                             <HomeRoundedIcon />
                         </Link>
-                    </Breadcrumbs>
+                    </Breadcrumbs> */}
                     <Typography component="h1" sx={{ mt: 1, mb: 2 }}>
                         For You
                     </Typography>
