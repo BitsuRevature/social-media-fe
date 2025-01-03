@@ -16,6 +16,8 @@ import CardOverflow from '@mui/joy/CardOverflow';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import ImageIcon from '@mui/icons-material/Image';
+import ClearIcon from '@mui/icons-material/Clear';
 import { ChangeEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../app/hooks';
@@ -27,7 +29,7 @@ export default function CreatePost() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const [mediaURL, setMediaURL] = useState("https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286");
+    const [mediaURL, setMediaURL] = useState("");
     const [fileDetails, setFileDetails] = useState<File | null>(null);
     const [uploading, setUploading] = useState(false);
 
@@ -50,6 +52,10 @@ export default function CreatePost() {
 
     function handleFilePickerOpen() {
         fileInputRef.current?.click();
+    }
+    function handleFilePickerClear() {
+        fileInputRef.current!.value = "";
+        setMediaURL("");
     }
 
     function handleCancel() {
@@ -118,24 +124,26 @@ export default function CreatePost() {
                         sx={{ display: { xs: 'none', md: 'flex' }, my: 1 }}
                     >
                         <Stack direction="column" spacing={1}>
-                            <AspectRatio
-                                ratio="1"
-                                minHeight={400}
-                                maxHeight={500}
-                                sx={{ flex: 1, minWidth: 120 }}
-                            >
-                                <img
-                                    src={mediaURL}
-                                    loading="lazy"
-                                    alt=""
-                                />
-                            </AspectRatio>
+                            {mediaURL &&
+                                <AspectRatio
+                                    ratio="1"
+                                    minHeight={400}
+                                    maxHeight={500}
+                                    sx={{ flex: 1, minWidth: 120 }}
+                                >
+                                    <img
+                                        src={mediaURL}
+                                        loading="lazy"
+                                        alt=""
+                                    />
+                                </AspectRatio>
+                            }
                             <IconButton
                                 aria-label="upload new picture"
                                 size="sm"
                                 variant="outlined"
                                 color="neutral"
-                                sx={{
+                                sx={mediaURL ? {
                                     bgcolor: 'background.body',
                                     position: 'absolute',
                                     zIndex: 2,
@@ -143,10 +151,10 @@ export default function CreatePost() {
                                     left: 30,
                                     top: 30,
                                     boxShadow: 'sm',
-                                }}
+                                } : {}}
                                 onClick={handleFilePickerOpen}
                             >
-                                <EditRoundedIcon />
+                                {mediaURL ? <EditRoundedIcon /> : <><ImageIcon /> Upload Image</>}
                                 <Input
                                     style={{
                                         display: "none"
@@ -154,6 +162,26 @@ export default function CreatePost() {
                                     type='file'
                                 ></Input>
                             </IconButton>
+                            {mediaURL &&
+                                <IconButton
+                                    aria-label="remove picture"
+                                    size="sm"
+                                    variant="outlined"
+                                    color="neutral"
+                                    sx={mediaURL ? {
+                                        bgcolor: 'background.body',
+                                        position: 'absolute',
+                                        zIndex: 2,
+                                        borderRadius: '50%',
+                                        left: 70,
+                                        top: 30,
+                                        boxShadow: 'sm',
+                                    } : {}}
+                                    onClick={handleFilePickerClear}
+                                >
+                                    <ClearIcon />
+                                </IconButton>
+                            }
 
                         </Stack>
                         <Stack spacing={2} sx={{ flexGrow: 1 }}>
