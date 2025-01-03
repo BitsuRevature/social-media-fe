@@ -22,6 +22,7 @@ import { useState } from 'react';
 
 import AddIcon from '@mui/icons-material/AddRounded'
 import RemoveIcon from '@mui/icons-material/Remove';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { FormControl, Input } from '@mui/joy';
 
 
@@ -108,25 +109,26 @@ export default function Post({ post }: { post: PostType }) {
                 <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
                     {
                         authStore.auth?.id == post.user.id ? (
-                            <Button
-                                size="sm" variant="solid" color="danger"
+                            <IconButton
+                                color="danger"
                                 onClick={handleDelete}
                             >
-                                Delete Post
-                            </Button>
+                                <DeleteForeverIcon />
+                            </IconButton>
                         ) : ""
                     }
                     <IconButton
+                        color={like ? "danger" : undefined}
                         onClick={handleLike}
                     >
-                        <FavoriteIcon sx={like ? { color: "red" } : {}} />
+                        <FavoriteIcon />
                     </IconButton>
                     <IconButton
                         onClick={() => {
                             setOpen(!open);
                         }}
                     >
-                        {!open ? <AddIcon /> : <RemoveIcon/>}
+                        {!open ? <AddIcon /> : <RemoveIcon />}
                     </IconButton>
 
 
