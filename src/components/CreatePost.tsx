@@ -39,7 +39,7 @@ export default function CreatePost() {
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-    function handelFileChange(event: ChangeEvent<HTMLInputElement>) {
+    function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
         if (file) {
             setMediaURL(file.name);
@@ -58,16 +58,16 @@ export default function CreatePost() {
 
     async function handleSave() {
         uploadFile(fileDetails, uploading, setUploading)
-        .then(url => {
-            dispatch(createPost({
-                content: content,
-                mediaURL: url as string
-            }))
-            setUploading(false);
-            navigate('/');
-        }).catch((err) => {
-            console.error(err);
-        })
+            .then(url => {
+                dispatch(createPost({
+                    content: content,
+                    mediaURL: url as string
+                }))
+                setUploading(false);
+                navigate('/');
+            }).catch((err) => {
+                console.error(err);
+            })
     }
 
     return (
@@ -249,7 +249,7 @@ export default function CreatePost() {
                 type="file"
                 ref={fileInputRef}
                 style={{ display: 'none' }} // Hides the file input
-                onChange={handelFileChange}
+                onChange={handleFileChange}
             />
         </Box>
     );

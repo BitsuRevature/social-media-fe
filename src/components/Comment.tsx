@@ -3,7 +3,7 @@ import Box from "@mui/joy/Box";
 import Stack from "@mui/joy/Stack";
 import Typography from "@mui/joy/Typography";
 import { CommentType } from "../util/types";
-import { formateDate } from "../util/helper";
+import { formatDate } from "../util/helper";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { deleteComment } from "../features/post/postSlice";
 import { useState } from "react";
@@ -55,7 +55,7 @@ export default function Comment({ postId, comment }: { postId: number, comment: 
                     <Typography level="title-md">{comment.user.username}</Typography>
 
                     <Typography level="body-sm">
-                        {formateDate(comment.createdAt)}
+                        {formatDate(comment.createdAt)}
                     </Typography>
 
                 </Stack>

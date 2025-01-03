@@ -7,7 +7,7 @@ import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
 
-import { formateDate } from '../util/helper'
+import { formatDate } from '../util/helper'
 import { CommentType, PostType } from '../util/types';
 import Comment from './Comment';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
@@ -80,7 +80,7 @@ export default function Post({ post }: { post: PostType }) {
                     height: 25
                 }}
                 title={post.user.username}
-                subheader={formateDate(post.createdAt)}
+                subheader={formatDate(post.createdAt)}
             />
 
             <Divider />
