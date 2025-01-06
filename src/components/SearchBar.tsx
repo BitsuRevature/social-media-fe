@@ -26,6 +26,9 @@ export default function SearchBar() {
       defaultValue={""}
       onChange={(e) => debouncedHandleChange(e.target.value)}
       startDecorator={<SearchIcon />} 
+      sx={{
+        width: "100%"
+      }}
     />          
   );
 }

@@ -12,6 +12,8 @@ import { PostType } from '../util/types';
 import { FormControl, IconButton, Input } from '@mui/joy';
 import SearchIcon from '@mui/icons-material/Search'
 import SearchBar from '../components/SearchBar';
+import { useEffect } from 'react';
+import { getPosts } from '../features/post/postSlice';
 
 export default function Posts() {
 
@@ -19,6 +21,10 @@ export default function Posts() {
 
     const dispatch = useAppDispatch();
 
+    // For getting post when we first load the page
+    useEffect(()=> {
+        dispatch(getPosts(""));
+    }, [])
     // const [posts, setPosts] = useState(postStore.posts);
 
 
