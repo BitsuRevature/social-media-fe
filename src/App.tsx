@@ -4,7 +4,7 @@ import { AuthContextType } from "./util/types.ts";
 import SignIn from './pages/SignIn.tsx';
 import SignUp from './pages/SignUp.tsx';
 import { useAppDispatch } from './app/hooks.ts';
-import { updateAuth } from './features/auth/authSlice.ts';
+import { logout, updateAuth } from './features/auth/authSlice.ts';
 import { Box, CircularProgress, CssBaseline, CssVarsProvider, GlobalStyles } from '@mui/joy';
 import Posts from './pages/Posts.tsx';
 import CreatePost from './components/CreatePost.tsx';
@@ -22,7 +22,13 @@ function App() {
     useEffect(() => {
         if (localStorage.getItem('user')) {
             const data: AuthContextType = JSON.parse(localStorage.getItem('user')!);
-            dispatch(updateAuth(data))
+            console.log(Date.now());
+            
+            if(data.exipreDate == undefined ||  Date.now() > data.exipreDate ){
+                dispatch(logout());
+            }else{
+                dispatch(updateAuth(data))
+            }
         }
         setLoading(false);
     }, [])

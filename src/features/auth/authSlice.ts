@@ -77,7 +77,8 @@ const authSlice = createSlice({
                 profilePicture: decodedToken.profilePicture,
                 firstname: decodedToken.firstname,
                 lastname: decodedToken.lastname,
-                bio: decodedToken.bio
+                bio: decodedToken.bio,
+                exipreDate: decodedToken.exp
             }
 
             localStorage.setItem('user', JSON.stringify(tokenToStore));
