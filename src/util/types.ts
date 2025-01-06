@@ -6,6 +6,7 @@ export type AuthContextType = {
     bio: string | null;
     firstname: string | null;
     lastname: string | null;
+    exipreDate: number  | undefined;
 }
 
 export type LoginType = {
