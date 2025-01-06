@@ -22,9 +22,8 @@ function App() {
     useEffect(() => {
         if (localStorage.getItem('user')) {
             const data: AuthContextType = JSON.parse(localStorage.getItem('user')!);
-            console.log(Date.now());
             
-            if(data.exipreDate == undefined ||  Date.now() > data.exipreDate ){
+            if(data.exipreDate == undefined ||  Date.now() > (data.exipreDate * 1000) ){
                 dispatch(logout());
             }else{
                 dispatch(updateAuth(data))
