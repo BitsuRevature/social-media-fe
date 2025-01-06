@@ -9,24 +9,17 @@ import Typography from '@mui/material/Typography';
 import Post from '../components/Post';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { PostType } from '../util/types';
-import { useEffect, useState } from 'react';
-import { getPosts } from '../features/post/postSlice';
 import { FormControl, IconButton, Input } from '@mui/joy';
 import SearchIcon from '@mui/icons-material/Search'
+import SearchBar from '../components/SearchBar';
 
 export default function Posts() {
 
     const postStore = useAppSelector((store) => store.post);
-    const [search, setSearch] = useState('');
-    const [clicked, setClicked] = useState(false);
 
     const dispatch = useAppDispatch();
 
     // const [posts, setPosts] = useState(postStore.posts);
-
-    useEffect(() => {
-        dispatch(getPosts(search));
-    }, [clicked]);
 
 
 
@@ -75,23 +68,10 @@ export default function Posts() {
                     sx={{
                         display: 'flex',
                         flexDirection: 'row',
-                        justifyContent: 'space-between',
+                        justifyContent: 'center',
                     }}
                 >
-                    <Input
-                        placeholder='Search'
-                        onChange={(e) => {
-                            setSearch(e.target.value)
-                        }}
-                        sx={{
-                            width: "100%"
-                        }}
-                    />
-                    <IconButton
-                        onClick={() => setClicked(!clicked)}
-                    >
-                        <SearchIcon />
-                    </IconButton>
+                    <SearchBar />
                 </FormControl>
                 {
                     postStore.isLoading ?
