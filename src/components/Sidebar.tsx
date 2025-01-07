@@ -75,6 +75,11 @@ export default function Sidebar() {
     navigate("/login",);
   }
 
+  function handleNavigation(route: string) {
+    closeSidebar();
+    navigate(route);
+  }
+
 
   return (
     <Sheet
@@ -161,7 +166,7 @@ export default function Sidebar() {
           <ListItem>
             <ListItemButton
               onClick={
-                () => navigate('/posts')
+                () => handleNavigation('/posts')
               }
             >
               <HomeRoundedIcon />
@@ -175,7 +180,7 @@ export default function Sidebar() {
           <ListItem>
             <ListItemButton
               onClick={
-                () => navigate('/posts/create')
+                () => handleNavigation('/posts/create')
               }
             >
               <AddRoundedIcon />
@@ -208,7 +213,7 @@ export default function Sidebar() {
                   <ListItemButton
 
                     onClick={
-                      () => navigate('/users/all')
+                      () => handleNavigation('/users/all')
                     }
                   >
                     All
@@ -217,7 +222,7 @@ export default function Sidebar() {
                 <ListItem>
                   <ListItemButton
                     onClick={
-                      () => navigate('/users/following')
+                      () => handleNavigation('/users/following')
                     }
                   >Following</ListItemButton>
                 </ListItem>
@@ -230,7 +235,7 @@ export default function Sidebar() {
       <Divider />
       <Box
         sx={{ display: 'flex', gap: 1, alignItems: 'center', cursor: 'pointer' }}
-        onClick={() => navigate('/profile')}
+        onClick={() => handleNavigation('/profile')}
       >
         <Avatar
           variant="outlined"
