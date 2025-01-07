@@ -211,20 +211,27 @@ export default function Sidebar() {
               <List sx={{ gap: 0.5 }}>
                 <ListItem sx={{ mt: 0.5 }}>
                   <ListItemButton
-
-                    onClick={
-                      () => handleNavigation('/users/all')
-                    }
-                  >
-                    All
-                  </ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton
                     onClick={
                       () => handleNavigation('/users/following')
                     }
                   >Following</ListItemButton>
+                </ListItem>
+                <ListItem>
+                  <ListItemButton
+                    onClick={
+                      () => handleNavigation('/users/followers')
+                    }
+                  >Followers</ListItemButton>
+                </ListItem>
+                <ListItem>
+                  <ListItemButton
+
+                    onClick={
+                      () => handleNavigation('/users/search')
+                    }
+                  >
+                    Search
+                  </ListItemButton>
                 </ListItem>
               </List>
             </Toggler>

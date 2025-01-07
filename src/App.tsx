@@ -10,9 +10,10 @@ import Posts from './pages/Posts.tsx';
 import CreatePost from './components/CreatePost.tsx';
 import Connections from './pages/Connections.tsx';
 import MyProfile from './components/MyProfile.tsx';
-import AllConnections from './components/AllConnections.tsx';
+import SearchConnections from './components/SearchConnections.tsx';
 import FollowingConnections from './components/FollowingConnections.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx';
+import FollowersConnections from './components/FollowersConnections.tsx';
 
 
 function App() {
@@ -22,10 +23,10 @@ function App() {
     useEffect(() => {
         if (localStorage.getItem('user')) {
             const data: AuthContextType = JSON.parse(localStorage.getItem('user')!);
-            
-            if(data.exipreDate == undefined ||  Date.now() > (data.exipreDate * 1000) ){
+
+            if (data.exipreDate == undefined || Date.now() > (data.exipreDate * 1000)) {
                 dispatch(logout());
-            }else{
+            } else {
                 dispatch(updateAuth(data))
             }
         }
@@ -68,8 +69,9 @@ function App() {
                         <Route path="/posts" element={<Posts />} />
                         <Route path="/posts/create" element={<CreatePost />} />
                         <Route element={<Connections />}>
-                            <Route path="/users/all" element={<AllConnections />} />
                             <Route path="/users/following" element={<FollowingConnections />} />
+                            <Route path="/users/followers" element={<FollowersConnections />} />
+                            <Route path="/users/search" element={<SearchConnections />} />
                         </Route>
                         <Route path="/profile" element={<MyProfile />} />
                     </Route>
