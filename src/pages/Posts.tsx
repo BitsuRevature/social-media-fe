@@ -3,26 +3,16 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import Post from '../components/Post';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { PostType } from '../util/types';
 import { FormControl } from '@mui/joy';
 import SearchBar from '../components/SearchBar';
-import { useEffect } from 'react';
-import { getPosts } from '../features/post/postSlice';
 
-export default function Posts() {
+type PostsProps = {
+    posts: PostType[],
+    heading: string,
+};
 
-    const postStore = useAppSelector((store) => store.post);
-
-    const dispatch = useAppDispatch();
-
-    // For getting post when we first load the page
-    useEffect(() => {
-        dispatch(getPosts(""));
-    }, [])
-
-
-
+export default function Posts({ posts, heading }: PostsProps) {
 
     return (
         <Box sx={{ flex: 1, width: '100%' }}>
@@ -36,7 +26,7 @@ export default function Posts() {
             >
                 <Box sx={{ px: { xs: 2, md: 6 } }}>
                     <Typography component="h1" sx={{ mt: 1, mb: 2 }}>
-                        Discover
+                        {heading}
                     </Typography>
                 </Box>
             </Box>
@@ -60,10 +50,10 @@ export default function Posts() {
                     <SearchBar />
                 </FormControl>
                 {
-                    postStore.isLoading ?
+                    !posts ?
                         <></> :
                         (
-                            postStore.posts.map((post: PostType) => {
+                            posts.map((post: PostType) => {
                                 return <Post key={post.id} post={post} />;
                             }
                             )

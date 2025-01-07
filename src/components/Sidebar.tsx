@@ -166,7 +166,7 @@ export default function Sidebar() {
           <ListItem>
             <ListItemButton
               onClick={
-                () => handleNavigation('/posts')
+                () => handleNavigation('/discover')
               }
             >
               <ExploreIcon />

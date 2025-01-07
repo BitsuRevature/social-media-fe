@@ -14,6 +14,7 @@ import SearchConnections from './components/SearchConnections.tsx';
 import FollowingConnections from './components/FollowingConnections.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx';
 import FollowersConnections from './components/FollowersConnections.tsx';
+import Discover from './pages/Discover.tsx';
 
 
 function App() {
@@ -66,7 +67,7 @@ function App() {
                     <Route path="/login" element={<SignIn />} />
                     <Route path="/register" element={<SignUp />} />
                     <Route element={<ProtectedRoute />}>
-                        <Route path="/posts" element={<Posts />} />
+                        <Route path="/discover" element={<Discover />} />
                         <Route path="/posts/create" element={<CreatePost />} />
                         <Route element={<Connections />}>
                             <Route path="/users/following" element={<FollowingConnections />} />
