@@ -7,14 +7,10 @@ import Input from '@mui/joy/Input';
 import IconButton from '@mui/joy/IconButton';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
-// import Breadcrumbs from '@mui/joy/Breadcrumbs';
-// import Link from '@mui/joy/Link';
 import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
 
-// import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-// import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import ImageIcon from '@mui/icons-material/Image';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -22,7 +18,7 @@ import { ChangeEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../app/hooks';
 import { createPost } from '../features/post/postSlice';
-import { uploadFile } from '../util/helper';
+import { checkFileSize, uploadFile } from '../util/helper';
 
 export default function CreatePost() {
 
@@ -44,16 +40,20 @@ export default function CreatePost() {
     function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
         if (file) {
-            setMediaURL(file.name);
-            setFileDetails(file);
-            const reader = new FileReader();
+            try {
+                checkFileSize(file)
 
-            // Read the file as a data URL
-            reader.onloadend = () => {
-                setMediaURL(reader.result as string);  // Set the image source to the result
-            };
-            // Read the file
-            reader.readAsDataURL(file);
+                setMediaURL(file.name);
+                setFileDetails(file);
+                const reader = new FileReader();
+
+                // Read the file as a data URL
+                reader.onloadend = () => {
+                    setMediaURL(reader.result as string);  // Set the image source to the result
+                };
+                // Read the file
+                reader.readAsDataURL(file);
+            } catch (e) { console.error(e) }
         }
     }
 
@@ -94,21 +94,6 @@ export default function CreatePost() {
                 }}
             >
                 <Box sx={{ px: { xs: 2, md: 6 } }}>
-                    {/* <Breadcrumbs
-                        size="sm"
-                        aria-label="breadcrumbs"
-                        separator={<ChevronRightRoundedIcon />}
-                        sx={{ pl: 0 }}
-                    >
-                        <Link
-                            underline="none"
-                            color="neutral"
-                            href="/"
-                            aria-label="Home"
-                        >
-                            <HomeRoundedIcon />
-                        </Link>
-                    </Breadcrumbs> */}
                     <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
                         Create A Post
                     </Typography>
@@ -282,6 +267,7 @@ export default function CreatePost() {
 
             <input
                 type="file"
+                accept=".jpg,.jpeg,.png,.gif"
                 ref={fileInputRef}
                 style={{ display: 'none' }} // Hides the file input
                 onChange={handleFileChange}

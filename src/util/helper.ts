@@ -8,8 +8,8 @@ export function formatDate(date: string) {
 }
 
 export async function uploadFile(file: File | null, uploading: boolean, setUploading: any) {
-
     if (!file || uploading) return;
+    checkFileSize(file);
 
     setUploading(true);
     const toastID = toast.loading("Uploading image...");
@@ -31,4 +31,24 @@ export async function uploadFile(file: File | null, uploading: boolean, setUploa
     })
     // Return download URL to save in database.
     return response.data.downloadURL;
+}
+
+export function checkFileSize(file: File, maxFileSize: number = 5 * 1025 * 1024) { // 5MB
+    if (file.size > maxFileSize) {
+        const errorMessage = `File too big! Files must be less than ${formatBytes(maxFileSize)}.`
+        toast.error(errorMessage);
+        throw new Error(errorMessage);
+    }
+}
+
+function formatBytes(bytes: number): string {
+    const units = ["B", "KB", "MB", "GB", "TB"];
+    let unitIndex = 0;
+
+    while (bytes >= 1024 && unitIndex < units.length - 1) {
+        bytes /= 1024;
+        unitIndex++;
+    }
+
+    return `${Math.round(bytes)}${units[unitIndex]}`;
 }
