@@ -55,7 +55,7 @@ export default function MyProfile() {
           };
           // Read the file
           reader.readAsDataURL(file);
-        })
+        });
     }
   }
 
@@ -347,6 +347,7 @@ export default function MyProfile() {
       </Stack>
       <input
         type="file"
+        accept=".jpg,.jpeg,.png,.gif"
         ref={fileInputRef}
         style={{ display: 'none' }} // Hides the file input
         onChange={handleFileChange}

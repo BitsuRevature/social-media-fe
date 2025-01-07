@@ -22,7 +22,7 @@ import { ChangeEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../app/hooks';
 import { createPost } from '../features/post/postSlice';
-import { uploadFile } from '../util/helper';
+import { checkFileSize, uploadFile } from '../util/helper';
 
 export default function CreatePost() {
 
@@ -44,16 +44,20 @@ export default function CreatePost() {
     function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
         if (file) {
-            setMediaURL(file.name);
-            setFileDetails(file);
-            const reader = new FileReader();
+            try {
+                checkFileSize(file)
 
-            // Read the file as a data URL
-            reader.onloadend = () => {
-                setMediaURL(reader.result as string);  // Set the image source to the result
-            };
-            // Read the file
-            reader.readAsDataURL(file);
+                setMediaURL(file.name);
+                setFileDetails(file);
+                const reader = new FileReader();
+
+                // Read the file as a data URL
+                reader.onloadend = () => {
+                    setMediaURL(reader.result as string);  // Set the image source to the result
+                };
+                // Read the file
+                reader.readAsDataURL(file);
+            } catch (e) { console.error(e) }
         }
     }
 
@@ -282,6 +286,7 @@ export default function CreatePost() {
 
             <input
                 type="file"
+                accept=".jpg,.jpeg,.png,.gif"
                 ref={fileInputRef}
                 style={{ display: 'none' }} // Hides the file input
                 onChange={handleFileChange}
