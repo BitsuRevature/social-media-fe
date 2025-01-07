@@ -1,15 +1,3 @@
-import { useEffect, useState } from "react";
-import {
-  Navigate,
-  Route,
-  Routes,
-  BrowserRouter as Router,
-} from "react-router-dom";
-import { AuthContextType } from "./util/types.ts";
-import SignIn from "./pages/SignIn.tsx";
-import SignUp from "./pages/SignUp.tsx";
-import { useAppDispatch } from "./app/hooks.ts";
-import { logout, updateAuth } from "./features/auth/authSlice.ts";
 import {
   Box,
   CircularProgress,
@@ -17,14 +5,25 @@ import {
   CssVarsProvider,
   GlobalStyles,
 } from "@mui/joy";
-import Posts from "./pages/Posts.tsx";
-import CreatePost from "./components/CreatePost.tsx";
-import Connections from "./pages/Connections.tsx";
-import MyProfile from "./components/MyProfile.tsx";
+import { useEffect, useState } from "react";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
+import { useAppDispatch } from "./app/hooks.ts";
 import AllConnections from "./components/AllConnections.tsx";
+import CreatePost from "./components/CreatePost.tsx";
 import FollowingConnections from "./components/FollowingConnections.tsx";
+import MyProfile from "./components/MyProfile.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
-import theme from "./styles/theme.ts";
+import { logout, updateAuth } from "./features/auth/authSlice.ts";
+import Connections from "./pages/Connections.tsx";
+import Posts from "./pages/Posts.tsx";
+import SignIn from "./pages/SignIn.tsx";
+import SignUp from "./pages/SignUp.tsx";
+import { AuthContextType } from "./util/types.ts";
 
 function App() {
   const dispatch = useAppDispatch();
