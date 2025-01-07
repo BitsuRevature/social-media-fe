@@ -1,16 +1,11 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-// import Breadcrumbs from '@mui/material/Breadcrumbs';
-// import Link from '@mui/material/Link';
 
-// import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-// import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import Post from '../components/Post';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { PostType } from '../util/types';
-import { FormControl, IconButton, Input } from '@mui/joy';
-import SearchIcon from '@mui/icons-material/Search'
+import { FormControl } from '@mui/joy';
 import SearchBar from '../components/SearchBar';
 import { useEffect } from 'react';
 import { getPosts } from '../features/post/postSlice';
@@ -22,10 +17,9 @@ export default function Posts() {
     const dispatch = useAppDispatch();
 
     // For getting post when we first load the page
-    useEffect(()=> {
+    useEffect(() => {
         dispatch(getPosts(""));
     }, [])
-    // const [posts, setPosts] = useState(postStore.posts);
 
 
 
@@ -41,20 +35,6 @@ export default function Posts() {
                 }}
             >
                 <Box sx={{ px: { xs: 2, md: 6 } }}>
-                    {/* <Breadcrumbs
-                        aria-label="breadcrumbs"
-                        separator={<ChevronRightRoundedIcon />}
-                        sx={{ pl: 0 }}
-                    >
-                        <Link
-                            underline="none"
-                            color="neutral"
-                            href="/"
-                            aria-label="Home"
-                        >
-                            <HomeRoundedIcon />
-                        </Link>
-                    </Breadcrumbs> */}
                     <Typography component="h1" sx={{ mt: 1, mb: 2 }}>
                         For You
                     </Typography>

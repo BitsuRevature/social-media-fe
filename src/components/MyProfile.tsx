@@ -9,14 +9,10 @@ import IconButton from '@mui/joy/IconButton';
 import Textarea from '@mui/joy/Textarea';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
-// import Breadcrumbs from '@mui/joy/Breadcrumbs';
-// import Link from '@mui/joy/Link';
 import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
 
-// import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-// import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import PersonIcon from '@mui/icons-material/Person';
 
@@ -95,34 +91,8 @@ export default function MyProfile() {
         }}
       >
         <Box sx={{ px: { xs: 2, md: 6 } }}>
-          {/* <Breadcrumbs
-            size="sm"
-            aria-label="breadcrumbs"
-            separator={<ChevronRightRoundedIcon />}
-            sx={{ pl: 0 }}
-          >
-            <Link
-              underline="none"
-              color="neutral"
-              href="#some-link"
-              aria-label="Home"
-            >
-              <HomeRoundedIcon />
-            </Link>
-            <Link
-              underline="hover"
-              color="neutral"
-              href="#some-link"
-              sx={{ fontSize: 12, fontWeight: 500 }}
-            >
-              Users
-            </Link>
-            <Typography color="primary" sx={{ fontWeight: 500, fontSize: 12 }}>
-              My profile
-            </Typography>
-          </Breadcrumbs> */}
           <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
-            My profile
+            My Profile
           </Typography>
         </Box>
       </Box>
@@ -147,7 +117,7 @@ export default function MyProfile() {
           <Stack
             direction="row"
             spacing={3}
-            sx={{ display: { xs: 'none', md: 'flex' }, my: 1 }}
+            sx={{ my: 1 }}
           >
             <Stack direction="column" spacing={1}>
               <AspectRatio
@@ -186,7 +156,7 @@ export default function MyProfile() {
                 <FormControl
                   sx={{ display: { sm: 'flex-column', md: 'flex-row' }, gap: 2 }}
                 >
-                  <Input size="sm" placeholder="First name" defaultValue={authStore.auth?.firstname as string}
+                  <Input size="sm" placeholder="First name" defaultValue={firstname as string}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => {
                       setFirstname(event?.target.value)
                     }}
@@ -195,7 +165,7 @@ export default function MyProfile() {
                 <FormControl
                   sx={{ display: { sm: 'flex-column', md: 'flex-row' }, gap: 2 }}
                 >
-                  <Input size="sm" placeholder="Last name" sx={{ flexGrow: 1 }} defaultValue={authStore.auth?.lastname as string}
+                  <Input size="sm" placeholder="Last name" sx={{ flexGrow: 1 }} defaultValue={lastname as string}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => {
                       setLastname(event?.target.value)
                     }}
@@ -216,91 +186,6 @@ export default function MyProfile() {
                 </FormControl>
               </Stack>
             </Stack>
-          </Stack>
-          <Stack
-            direction="column"
-            spacing={2}
-            sx={{ display: { xs: 'flex', md: 'none' }, my: 1 }}
-          >
-            <Stack direction="row" spacing={2}>
-              <Stack direction="column" spacing={1}>
-                <AspectRatio
-                  ratio="1"
-                  maxHeight={108}
-                  sx={{ flex: 1, minWidth: 108, borderRadius: '100%' }}
-                >
-                  <img
-                    src={authStore.auth?.profilePicture as string}
-                    loading="lazy"
-                    alt=""
-                  />
-                </AspectRatio>
-                <IconButton
-                  aria-label="upload new picture"
-                  size="sm"
-                  variant="outlined"
-                  color="neutral"
-                  sx={{
-                    bgcolor: 'background.body',
-                    position: 'absolute',
-                    zIndex: 2,
-                    borderRadius: '50%',
-                    left: 85,
-                    top: 180,
-                    boxShadow: 'sm',
-                  }}
-                  onClick={handleFilePickerOpen}
-                >
-                  <EditRoundedIcon />
-                </IconButton>
-              </Stack>
-              <Stack spacing={1} sx={{ flexGrow: 1 }}>
-                <FormLabel>Name</FormLabel>
-                <FormControl
-                  sx={{
-                    display: {
-                      sm: 'flex-column',
-                      md: 'flex-row',
-                    },
-                    gap: 2,
-                  }}
-                >
-                  <Input
-                    size="sm" placeholder="First name" defaultValue={authStore.auth?.firstname as string}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                      setFirstname(event?.target.value)
-                    }}
-                  />
-                </FormControl>
-
-                <FormControl
-                  sx={{
-                    display: {
-                      sm: 'flex-column',
-                      md: 'flex-row',
-                    },
-                    gap: 2,
-                  }}
-                >
-                  <Input size="sm" placeholder="Last name" defaultValue={authStore.auth?.lastname as string}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                      setLastname(event?.target.value)
-                    }}
-                  />
-                </FormControl>
-              </Stack>
-            </Stack>
-            <FormControl sx={{ flexGrow: 1 }}>
-              <FormLabel>User Name</FormLabel>
-              <Input
-                size="sm"
-                type="email"
-                startDecorator={<PersonIcon />}
-                placeholder="email"
-                defaultValue="siriwatk@test.com"
-                sx={{ flexGrow: 1 }}
-              />
-            </FormControl>
           </Stack>
           <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
             <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
@@ -328,7 +213,7 @@ export default function MyProfile() {
               size="sm"
               minRows={4}
               sx={{ mt: 1.5 }}
-              defaultValue={authStore.auth?.bio as string}
+              defaultValue={bio as string}
               onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
                 setBio(event?.target.value)
               }} />
