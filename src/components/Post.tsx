@@ -30,7 +30,6 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { FormControl, Input } from "@mui/joy";
 
 export default function Post({ post }: { post: PostType }) {
-  console.log(post);
   const authStore = useAppSelector((store) => store.auth);
   const dispatch = useAppDispatch();
 
