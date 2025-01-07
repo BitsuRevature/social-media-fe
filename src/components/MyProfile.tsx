@@ -9,14 +9,10 @@ import IconButton from '@mui/joy/IconButton';
 import Textarea from '@mui/joy/Textarea';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
-// import Breadcrumbs from '@mui/joy/Breadcrumbs';
-// import Link from '@mui/joy/Link';
 import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
 
-// import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-// import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import PersonIcon from '@mui/icons-material/Person';
 
@@ -95,32 +91,6 @@ export default function MyProfile() {
         }}
       >
         <Box sx={{ px: { xs: 2, md: 6 } }}>
-          {/* <Breadcrumbs
-            size="sm"
-            aria-label="breadcrumbs"
-            separator={<ChevronRightRoundedIcon />}
-            sx={{ pl: 0 }}
-          >
-            <Link
-              underline="none"
-              color="neutral"
-              href="#some-link"
-              aria-label="Home"
-            >
-              <HomeRoundedIcon />
-            </Link>
-            <Link
-              underline="hover"
-              color="neutral"
-              href="#some-link"
-              sx={{ fontSize: 12, fontWeight: 500 }}
-            >
-              Users
-            </Link>
-            <Typography color="primary" sx={{ fontWeight: 500, fontSize: 12 }}>
-              My profile
-            </Typography>
-          </Breadcrumbs> */}
           <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
             My Profile
           </Typography>

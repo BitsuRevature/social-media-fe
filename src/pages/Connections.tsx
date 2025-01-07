@@ -1,11 +1,7 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-// import Breadcrumbs from '@mui/material/Breadcrumbs';
-// import Link from '@mui/material/Link';
 
-// import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-// import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import { FunctionComponent, useState } from 'react';
 import { FormControl, Input } from '@mui/joy';
 import { Outlet, useLocation } from 'react-router-dom';
@@ -30,20 +26,6 @@ const Connections: FunctionComponent<ConnectionsProps> = () => {
         }}
       >
         <Box sx={{ px: { xs: 2, md: 6 } }}>
-          {/* <Breadcrumbs
-            aria-label="breadcrumbs"
-            separator={<ChevronRightRoundedIcon />}
-            sx={{ pl: 0 }}
-          >
-            <Link
-              underline="none"
-              color="neutral"
-              href="/"
-              aria-label="Home"
-            >
-              <HomeRoundedIcon />
-            </Link>
-          </Breadcrumbs> */}
           <Typography component="h1" sx={{ mt: 1, mb: 2 }}>
             {
               (() => {
