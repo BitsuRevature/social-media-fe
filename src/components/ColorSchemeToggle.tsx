@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { useColorScheme } from '@mui/joy/styles';
-import IconButton, { IconButtonProps } from '@mui/joy/IconButton';
+import * as React from "react";
+import { useColorScheme } from "@mui/joy/styles";
+import IconButton, { IconButtonProps } from "@mui/joy/IconButton";
 
-import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
-import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
+import LightModeIcon from "@mui/icons-material/LightMode";
 
 export default function ColorSchemeToggle(props: IconButtonProps) {
   const { onClick, sx, ...other } = props;
@@ -25,13 +25,12 @@ export default function ColorSchemeToggle(props: IconButtonProps) {
     );
   }
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setMode(mode === 'light' ? 'dark' : 'light');
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    setMode(mode === "light" ? "dark" : "light");
     onClick?.(event);
-
-    console.log(mode)
   };
-
 
   return (
     <IconButton
@@ -42,12 +41,12 @@ export default function ColorSchemeToggle(props: IconButtonProps) {
       {...props}
       onClick={handleClick}
       sx={[
-        mode === 'dark'
-          ? { '& > *:first-of-type': { display: 'none' } }
-          : { '& > *:first-of-type': { display: 'initial' } },
-        mode === 'light'
-          ? { '& > *:last-of-type': { display: 'none' } }
-          : { '& > *:last-of-type': { display: 'initial' } },
+        mode === "dark"
+          ? { "& > *:first-of-type": { display: "none" } }
+          : { "& > *:first-of-type": { display: "initial" } },
+        mode === "light"
+          ? { "& > *:last-of-type": { display: "none" } }
+          : { "& > *:last-of-type": { display: "initial" } },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
     >
