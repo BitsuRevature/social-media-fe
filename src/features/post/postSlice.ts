@@ -31,8 +31,8 @@ export const createPost = createAsyncThunk(
     'post/createPost',
     async(post: CreatePostType, thunkAPI) => {
         try{
-            await axios.post('/posts', post);
-            return;
+            const response = await axios.post('/posts', post);
+            return response.data;
         }catch(error: any){
             return thunkAPI.rejectWithValue({error: error.message})
         }
@@ -175,9 +175,10 @@ const postSlice = createSlice({
 
         // })
 
-        // builder.addCase(createPost.fulfilled, (state, action) => {
-            
-        // })
+        builder.addCase(createPost.fulfilled, (state, action) => {
+            const post = action.payload;
+            state.posts = [...state.posts, post];
+        })
 
         builder.addCase(createPost.rejected, () => {
             toast.error("Couldn't Create Post");

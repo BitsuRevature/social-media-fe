@@ -75,9 +75,10 @@ export default function CreatePost() {
                 dispatch(createPost({
                     content: content,
                     mediaURL: url as string
-                }))
-                setUploading(false);
-                navigate('/');
+                })).then(() => {
+                    setUploading(false);
+                    navigate('/');                    
+                })
             }).catch((err) => {
                 console.error(err);
             })
