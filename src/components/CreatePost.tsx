@@ -82,11 +82,11 @@ export default function CreatePost() {
             createPost({
               content: content,
               mediaURL: url as string,
-            }).then(() => {
-              setUploading(false);
-              navigate("/");
             })
-          );
+          ).then(() => {
+            setUploading(false);
+            navigate("/");
+          });
         })
         .catch((err) => {
           console.error(err);
