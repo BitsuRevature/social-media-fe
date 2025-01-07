@@ -71,6 +71,7 @@ export default function CreatePost() {
     navigate("/");
   }
 
+
   async function handleSave() {
     if (content.length < 1 && fileDetails === null) {
       toast.error("Post content cannot be empty");
