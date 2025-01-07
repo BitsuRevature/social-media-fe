@@ -246,7 +246,7 @@ export default function Sidebar() {
           <Typography level="title-sm">{`${authStore.auth?.firstname} ${authStore.auth?.lastname}`}</Typography>
           <Typography level="body-xs">{authStore.auth?.username}</Typography>
         </Box>
-        <IconButton size="sm" variant="plain" color="neutral" onClick={(e) => handleLogOut(e)}>
+        <IconButton size="sm" variant="plain" color="neutral" title="Logout" onClick={(e) => handleLogOut(e)} >
           <LogoutRoundedIcon />
         </IconButton>
       </Box>
