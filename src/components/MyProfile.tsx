@@ -122,7 +122,7 @@ export default function MyProfile() {
             </Typography>
           </Breadcrumbs> */}
           <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
-            My profile
+            My Profile
           </Typography>
         </Box>
       </Box>
