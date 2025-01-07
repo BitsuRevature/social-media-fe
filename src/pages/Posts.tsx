@@ -36,7 +36,7 @@ export default function Posts() {
             >
                 <Box sx={{ px: { xs: 2, md: 6 } }}>
                     <Typography component="h1" sx={{ mt: 1, mb: 2 }}>
-                        For You
+                        Discover
                     </Typography>
                 </Box>
             </Box>

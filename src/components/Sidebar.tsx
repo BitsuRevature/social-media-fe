@@ -10,7 +10,7 @@ import ListItemButton, { listItemButtonClasses } from '@mui/joy/ListItemButton';
 import ListItemContent from '@mui/joy/ListItemContent';
 import Typography from '@mui/joy/Typography';
 import Sheet from '@mui/joy/Sheet';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import ExploreIcon from '@mui/icons-material/Explore';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
 import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded';
@@ -169,10 +169,10 @@ export default function Sidebar() {
                 () => handleNavigation('/posts')
               }
             >
-              <HomeRoundedIcon />
+              <ExploreIcon />
 
               <ListItemContent>
-                <Typography level="title-sm">Home</Typography>
+                <Typography level="title-sm">Discover</Typography>
               </ListItemContent>
             </ListItemButton>
           </ListItem>
