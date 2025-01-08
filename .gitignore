@@ -30,3 +30,5 @@ firebaseConfigg.ts
 
 # MacOS
 .DS_Store
+
+src/components/__snapshots__
