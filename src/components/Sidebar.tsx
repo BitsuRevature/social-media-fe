@@ -10,6 +10,7 @@ import ListItemButton, { listItemButtonClasses } from '@mui/joy/ListItemButton';
 import ListItemContent from '@mui/joy/ListItemContent';
 import Typography from '@mui/joy/Typography';
 import Sheet from '@mui/joy/Sheet';
+import HomeIcon from '@mui/icons-material/Home';
 import ExploreIcon from '@mui/icons-material/Explore';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
@@ -166,6 +167,20 @@ export default function Sidebar() {
           <ListItem>
             <ListItemButton
               onClick={
+                () => handleNavigation('/feed')
+              }
+            >
+              <HomeIcon />
+
+              <ListItemContent>
+                <Typography level="title-sm">Feed</Typography>
+              </ListItemContent>
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem>
+            <ListItemButton
+              onClick={
                 () => handleNavigation('/discover')
               }
             >
@@ -176,6 +191,7 @@ export default function Sidebar() {
               </ListItemContent>
             </ListItemButton>
           </ListItem>
+
 
           <ListItem>
             <ListItemButton
