@@ -29,7 +29,7 @@ export default function SignIn() {
                 password: data.get('password') as string
             },
         )).then(() => {
-            navigate('/posts');
+            navigate('/feed');
         })
     }
 
