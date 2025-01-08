@@ -10,7 +10,8 @@ import ListItemButton, { listItemButtonClasses } from '@mui/joy/ListItemButton';
 import ListItemContent from '@mui/joy/ListItemContent';
 import Typography from '@mui/joy/Typography';
 import Sheet from '@mui/joy/Sheet';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import HomeIcon from '@mui/icons-material/Home';
+import ExploreIcon from '@mui/icons-material/Explore';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
 import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded';
@@ -166,16 +167,31 @@ export default function Sidebar() {
           <ListItem>
             <ListItemButton
               onClick={
-                () => handleNavigation('/posts')
+                () => handleNavigation('/feed')
               }
             >
-              <HomeRoundedIcon />
+              <HomeIcon />
 
               <ListItemContent>
-                <Typography level="title-sm">Home</Typography>
+                <Typography level="title-sm">Feed</Typography>
               </ListItemContent>
             </ListItemButton>
           </ListItem>
+
+          <ListItem>
+            <ListItemButton
+              onClick={
+                () => handleNavigation('/discover')
+              }
+            >
+              <ExploreIcon />
+
+              <ListItemContent>
+                <Typography level="title-sm">Discover</Typography>
+              </ListItemContent>
+            </ListItemButton>
+          </ListItem>
+
 
           <ListItem>
             <ListItemButton
@@ -211,20 +227,27 @@ export default function Sidebar() {
               <List sx={{ gap: 0.5 }}>
                 <ListItem sx={{ mt: 0.5 }}>
                   <ListItemButton
-
-                    onClick={
-                      () => handleNavigation('/users/all')
-                    }
-                  >
-                    All
-                  </ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton
                     onClick={
                       () => handleNavigation('/users/following')
                     }
                   >Following</ListItemButton>
+                </ListItem>
+                <ListItem>
+                  <ListItemButton
+                    onClick={
+                      () => handleNavigation('/users/followers')
+                    }
+                  >Followers</ListItemButton>
+                </ListItem>
+                <ListItem>
+                  <ListItemButton
+
+                    onClick={
+                      () => handleNavigation('/users/search')
+                    }
+                  >
+                    Search
+                  </ListItemButton>
                 </ListItem>
               </List>
             </Toggler>

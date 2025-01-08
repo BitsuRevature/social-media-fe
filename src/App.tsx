@@ -24,23 +24,26 @@ import Posts from "./pages/Posts.tsx";
 import SignIn from "./pages/SignIn.tsx";
 import SignUp from "./pages/SignUp.tsx";
 import { AuthContextType } from "./util/types.ts";
+import FollowersConnections from './components/FollowersConnections.tsx';
+import Discover from './pages/Discover.tsx';
+import Feed from './pages/Feed.tsx';
 
 function App() {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (localStorage.getItem("user")) {
-      const data: AuthContextType = JSON.parse(localStorage.getItem("user")!);
+    useEffect(() => {
+        if (localStorage.getItem('user')) {
+            const data: AuthContextType = JSON.parse(localStorage.getItem('user')!);
 
-      if (data.exipreDate == undefined || Date.now() > data.exipreDate * 1000) {
-        dispatch(logout());
-      } else {
-        dispatch(updateAuth(data));
-      }
-    }
-    setLoading(false);
-  }, []);
+            if (data.exipreDate == undefined || Date.now() > (data.exipreDate * 1000)) {
+                dispatch(logout());
+            } else {
+                dispatch(updateAuth(data))
+            }
+        }
+        setLoading(false);
+    }, [])
 
   if (loading)
     return (
@@ -60,36 +63,36 @@ function App() {
     );
 
   return (
-    <CssVarsProvider>
-      <CssBaseline />
-      <GlobalStyles
-        styles={{
-          ":root": {
-            "--Form-maxWidth": "800px",
-            "--Transition-duration": "0.4s", // set to `none` to disable transition
-          },
-        }}
-      />
-      <Router>
-        <Routes>
-          <Route path="/" element={<Navigate to="/posts" />} />
-          <Route path="/login" element={<SignIn />} />
-          <Route path="/register" element={<SignUp />} />
-          <Route element={<ProtectedRoute />}>
-            <Route path="/posts" element={<Posts />} />
-            <Route path="/posts/create" element={<CreatePost />} />
-            <Route element={<Connections />}>
-              <Route path="/users/all" element={<AllConnections />} />
-              <Route
-                path="/users/following"
-                element={<FollowingConnections />}
-              />
-            </Route>
-            <Route path="/profile" element={<MyProfile />} />
-          </Route>
-        </Routes>
-      </Router>
-    </CssVarsProvider>
+   <CssVarsProvider>
+            <CssBaseline />
+            <GlobalStyles
+                styles={{
+                    ':root': {
+                        '--Form-maxWidth': '800px',
+                        '--Transition-duration': '0.4s', // set to `none` to disable transition
+                    },
+                }}
+            />
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Navigate to="/feed" />} />
+                    <Route path="/login" element={<SignIn />} />
+                    <Route path="/register" element={<SignUp />} />
+                    <Route element={<ProtectedRoute />}>
+                        <Route path="/discover" element={<Discover />} />
+                        <Route path="/feed" element={<Feed />} />
+                        <Route path="/posts/create" element={<CreatePost />} />
+                        <Route element={<Connections />}>
+                            <Route path="/users/following" element={<FollowingConnections />} />
+                            <Route path="/users/followers" element={<FollowersConnections />} />
+                            <Route path="/users/search" element={<SearchConnections />} />
+                        </Route>
+                        <Route path="/profile" element={<MyProfile />} />
+                    </Route>
+                </Routes>
+            </Router>
+        </CssVarsProvider>
+    )
   );
 }
 
