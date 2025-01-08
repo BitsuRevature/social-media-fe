@@ -44,7 +44,7 @@ export default function Post({ post }: { post: PostType }) {
   const [open, setOpen] = useState(false);
 
   async function handleDelete() {
-    dispatch(deletePost(post.id)).then(() => {});
+    dispatch(deletePost(post.id)).then(() => { });
     setShow(false);
   }
 
@@ -80,7 +80,7 @@ export default function Post({ post }: { post: PostType }) {
     show && (
       <Card>
         <CardHeader
-          avatar={
+          avatar={post.user &&
             <Avatar
               src={post.user.profilePicture}
               alt={`${post.user.username}'s profile picture`}
@@ -89,7 +89,7 @@ export default function Post({ post }: { post: PostType }) {
           sx={{
             height: 25,
           }}
-          title={post.user.username}
+          title={post.user && post.user.username}
           subheader={formatDate(post.createdAt)}
         />
 
@@ -113,7 +113,7 @@ export default function Post({ post }: { post: PostType }) {
           </CardContent>
 
           <CardActions sx={{ alignSelf: "flex-end", pt: 2 }}>
-            {authStore.auth?.id == post.user.id ? (
+            {post.user && authStore.auth?.id == post.user.id ? (
               <IconButton color="danger" onClick={handleDelete}>
                 <DeleteForeverIcon />
               </IconButton>
