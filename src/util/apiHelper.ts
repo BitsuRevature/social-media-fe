@@ -25,36 +25,47 @@ export async function changeProfilePic(data: string) {
   }
 }
 
-export async function getAllConnections(search: string): Promise<UserType[]> {
-  try {
-    const response = await axios.get(`/users?search=${search}`);
-    // console.info("==============API HELPER=============== ALL ");
-    // console.info(response.data);
-
+export async function getAllUsers(search: string): Promise<UserType[]>{
+    try {
+        const response = await axios.get(`/users?search=${search}`)
+        console.info("==============API HELPER=============== ALL ")
+        console.info(response.data);
     return response.data;
   } catch (error) {
     throw error;
   }
 }
 
-export async function getUserConnections(search: string): Promise<UserType[]> {
-  try {
-    const response = await axios.get(`/users/following?search=${search}`);
-    // console.info("==============API HELPER=============== USER");
-    // console.info(response.data);
-
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+export async function getUserFollowing(search: string): Promise<UserType[]> {
+    try {
+        const response = await axios.get(`/users/following?search=${search}`)
+        console.info("==============API HELPER=============== USER")
+        console.info(response.data);
+        
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
 }
 
-export async function unFollow(id: number) {
-  try {
-    await axios.delete(`/users/following/${id}`);
-  } catch (error) {
-    throw error;
-  }
+export async function getUserFollowers(search: string): Promise<UserType[]> {
+    try {
+        const response = await axios.get(`/users/followers?search=${search}`)
+        console.info("==============API HELPER=============== USER")
+        console.info(response.data);
+        
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function unFollow(id: number){
+    try{
+        await axios.delete(`/users/following/${id}`)
+    }catch(error){
+        throw error;
+    }
 }
 
 export async function follow(id: number) {
