@@ -131,7 +131,7 @@ export default function Profile() {
             </>
           }
 
-          {username && username !== authStore.auth?.username &&
+          {userProfile && userProfile.username !== authStore.auth?.username &&
             <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
               <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
                 <FollowButton connection={userProfile as UserType} following={following} setFollowing={setFollowing} />
