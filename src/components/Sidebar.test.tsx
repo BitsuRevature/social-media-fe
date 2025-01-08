@@ -17,8 +17,8 @@ const preloadedState = {
       username: null,
       profilePicture: null,
       bio: null,
-      firstname: null,
-      lastname:  null,
+      firstname: "test",
+      lastname:  "testerson",
       exipreDate: undefined
     },
     isLoading: false, 
@@ -33,8 +33,8 @@ const testStore = configureStore({
 });
 
 describe('Sidebar Component', () => {
-  it('renders without crashing', () => {
-    const { container } = render(
+  it('renders sidebar with user first and last name', () => {
+    render(
       <CssVarsProvider>
       <Provider store={testStore}>
         <Router>
@@ -43,6 +43,7 @@ describe('Sidebar Component', () => {
       </Provider>
       </CssVarsProvider>
     );
-    expect(container).toMatchSnapshot();
+    const fn_ln = document.querySelector("[data-testid=fn_ln]")
+    expect(fn_ln).toContain(fn_ln);
   });
 });

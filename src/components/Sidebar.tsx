@@ -266,7 +266,7 @@ export default function Sidebar() {
           src={authStore.auth?.profilePicture as string}
         />
         <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography level="title-sm">{`${authStore.auth?.firstname} ${authStore.auth?.lastname}`}</Typography>
+          <Typography level="title-sm" data-testid="fn_ln">{`${authStore.auth?.firstname} ${authStore.auth?.lastname}`}</Typography>
           <Typography level="body-xs">{authStore.auth?.username}</Typography>
         </Box>
         <IconButton size="sm" variant="plain" color="neutral" title="Logout" onClick={(e) => handleLogOut(e)} >
