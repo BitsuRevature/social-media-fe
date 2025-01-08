@@ -67,3 +67,13 @@ export type UserBioType = {
     bio: string;
 }
 
+export type UserProfileType = {
+    id: number;
+    firstname: string;
+    lastname: string ;
+    username: string;
+    bio: string;
+    profilePicture: string;
+    posts: PostType[];
+}
+
