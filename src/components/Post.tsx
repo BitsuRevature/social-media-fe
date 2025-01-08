@@ -7,9 +7,12 @@ import Card from "@mui/joy/Card";
 import CardActions from "@mui/joy/CardActions";
 import CardOverflow from "@mui/joy/CardOverflow";
 
-import { formatDate } from "../util/helper";
-import { CommentType, PostType } from "../util/types";
-import Comment from "./Comment";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import Avatar from "@mui/joy/Avatar";
+import IconButton from "@mui/joy/IconButton";
+import { CardContent, CardMedia } from "@mui/material";
+import CardHeader from "@mui/material/CardHeader/CardHeader";
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   addComment,
@@ -17,20 +20,17 @@ import {
   likePost,
   unLikePost,
 } from "../features/post/postSlice";
-import CardHeader from "@mui/material/CardHeader/CardHeader";
-import Avatar from "@mui/joy/Avatar";
-import { CardContent, CardMedia } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import IconButton from "@mui/joy/IconButton";
-import { useState } from "react";
+import { formatDate } from "../util/helper";
+import { CommentType, PostType } from "../util/types";
+import Comment from "./Comment";
 
 import AddIcon from "@mui/icons-material/AddRounded";
-import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import RemoveIcon from "@mui/icons-material/Remove";
 import { FormControl, Input } from "@mui/joy";
+import { toast } from "react-toastify";
 
 export default function Post({ post }: { post: PostType }) {
-  console.log(post);
   const authStore = useAppSelector((store) => store.auth);
   const dispatch = useAppDispatch();
 
@@ -63,13 +63,17 @@ export default function Post({ post }: { post: PostType }) {
   }
 
   async function handleAddComment() {
-    dispatch(
-      addComment({
-        postId: post.id,
-        content: commentInput,
-      })
-    );
-    setOpen(false);
+    if (commentInput.length < 1) {
+      toast.error("Comment cannot be empty.");
+    } else {
+      dispatch(
+        addComment({
+          postId: post.id,
+          content: commentInput,
+        })
+      );
+      setOpen(false);
+    }
   }
 
   return (

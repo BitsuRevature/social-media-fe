@@ -1,25 +1,36 @@
-import { useEffect, useState } from 'react'
-import { Navigate, Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import {
+  Box,
+  CircularProgress,
+  CssBaseline,
+  CssVarsProvider,
+  GlobalStyles,
+} from "@mui/joy";
+import { useEffect, useState } from "react";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
+import { useAppDispatch } from "./app/hooks.ts";
+import AllConnections from "./components/AllConnections.tsx";
+import CreatePost from "./components/CreatePost.tsx";
+import FollowingConnections from "./components/FollowingConnections.tsx";
+import MyProfile from "./components/MyProfile.tsx";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import { logout, updateAuth } from "./features/auth/authSlice.ts";
+import Connections from "./pages/Connections.tsx";
+import Posts from "./pages/Posts.tsx";
+import SignIn from "./pages/SignIn.tsx";
+import SignUp from "./pages/SignUp.tsx";
 import { AuthContextType } from "./util/types.ts";
-import SignIn from './pages/SignIn.tsx';
-import SignUp from './pages/SignUp.tsx';
-import { useAppDispatch } from './app/hooks.ts';
-import { logout, updateAuth } from './features/auth/authSlice.ts';
-import { Box, CircularProgress, CssBaseline, CssVarsProvider, GlobalStyles } from '@mui/joy';
-import CreatePost from './components/CreatePost.tsx';
-import Connections from './pages/Connections.tsx';
-import MyProfile from './components/MyProfile.tsx';
-import SearchConnections from './components/SearchConnections.tsx';
-import FollowingConnections from './components/FollowingConnections.tsx';
-import ProtectedRoute from './components/ProtectedRoute.tsx';
 import FollowersConnections from './components/FollowersConnections.tsx';
 import Discover from './pages/Discover.tsx';
 import Feed from './pages/Feed.tsx';
 
-
 function App() {
-    const dispatch = useAppDispatch();
-    const [loading, setLoading] = useState(true);
+  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (localStorage.getItem('user')) {
@@ -34,24 +45,25 @@ function App() {
         setLoading(false);
     }, [])
 
-    if (loading) return (
-        <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            position="fixed"
-            top={0}
-            left={0}
-            width="100%"
-            height="100%"
-            bgcolor="rgba(255, 255, 255, 0.7)"
-        >
-            <CircularProgress size={"lg"} />
-        </Box>
+  if (loading)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        position="fixed"
+        top={0}
+        left={0}
+        width="100%"
+        height="100%"
+        bgcolor="rgba(255, 255, 255, 0.7)"
+      >
+        <CircularProgress size={"lg"} />
+      </Box>
     );
 
-    return (
-        <CssVarsProvider>
+  return (
+   <CssVarsProvider>
             <CssBaseline />
             <GlobalStyles
                 styles={{
@@ -81,6 +93,7 @@ function App() {
             </Router>
         </CssVarsProvider>
     )
+  );
 }
 
-export default App
+export default App;
