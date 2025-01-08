@@ -16,14 +16,16 @@ export default function FollowButton({ connection, following, setFollowing }: Fo
         return following.some((item) => item.id == connection.id)
     }
 
-    async function handleUnfollow() {
+    async function handleUnfollow(e: React.MouseEvent) {
+        e.stopPropagation();
         unFollow(connection.id)
             .then(() => {
                 setFollowing(following.filter(item => item.id != connection.id))
             })
     }
 
-    async function handleFollow() {
+    async function handleFollow(e: React.MouseEvent) {
+        e.stopPropagation();
         follow(connection.id)
             .then(() => {
                 setFollowing([...following, connection])
@@ -38,7 +40,7 @@ export default function FollowButton({ connection, following, setFollowing }: Fo
                         position: "relative",
                         right: 0
                     }}
-                    onClick={handleUnfollow}
+                    onClick={(e) => handleUnfollow(e)}
                 >
                     <PersonRemoveIcon sx={{ marginRight: 1 }} /> Unfollow
                 </Button> :
@@ -47,7 +49,7 @@ export default function FollowButton({ connection, following, setFollowing }: Fo
                         position: "relative",
                         right: 0
                     }}
-                    onClick={handleFollow}
+                    onClick={(e) => handleFollow(e)}
                 >
                     <PersonAddIcon sx={{ marginRight: 1 }} /> Follow
 

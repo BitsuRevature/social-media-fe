@@ -8,6 +8,7 @@ import { CardContent } from "@mui/joy";
 import { CardActions } from "@mui/joy";
 
 import FollowButton from "./FollowButton";
+import { useNavigate } from "react-router-dom";
 
 interface ConnectionProps {
     connection: UserType
@@ -16,9 +17,13 @@ interface ConnectionProps {
 }
 
 const Connection: FunctionComponent<ConnectionProps> = ({ connection, following, setFollowing }: ConnectionProps) => {
+    const navigate = useNavigate();
 
     return (
-        <Card>
+        <Card
+            onClick={() => navigate(`/profile/${connection.username}`)}
+            sx={{ cursor: "pointer" }}
+        >
             <Stack
                 direction={"row"}
                 spacing={3}
