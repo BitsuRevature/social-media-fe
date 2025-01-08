@@ -33,14 +33,13 @@ export default function EditProfile() {
   const [profilePicture, setProfilePicture] = useState(authStore.auth?.profilePicture)
   const [bio, setBio] = useState(authStore.auth?.bio);
 
-  const [uploading, setUploading] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (file) {
-      uploadFile(file, uploading, setUploading)
+      uploadFile(file)
         .then(async (url) => {
           await changeProfilePic(url as string);
           dispatch(updateProfilePic(url))
