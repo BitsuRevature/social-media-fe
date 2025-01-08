@@ -15,7 +15,7 @@ import {
 import { useAppDispatch } from "./app/hooks.ts";
 import CreatePost from "./components/CreatePost.tsx";
 import FollowingConnections from "./components/FollowingConnections.tsx";
-import MyProfile from "./components/MyProfile.tsx";
+import EditProfile from "./components/EditProfile.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import { logout, updateAuth } from "./features/auth/authSlice.ts";
 import Connections from "./pages/Connections.tsx";
@@ -26,6 +26,7 @@ import FollowersConnections from './components/FollowersConnections.tsx';
 import Discover from './pages/Discover.tsx';
 import Feed from './pages/Feed.tsx';
 import SearchConnections from "./components/SearchConnections.tsx";
+import Profile from "./pages/Profile.tsx";
 
 function App() {
     const dispatch = useAppDispatch();
@@ -86,7 +87,9 @@ function App() {
                             <Route path="/users/followers" element={<FollowersConnections />} />
                             <Route path="/users/search" element={<SearchConnections />} />
                         </Route>
-                        <Route path="/profile" element={<MyProfile />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/profile/:username" element={<Profile />} />
+                        <Route path="/profile/edit" element={<EditProfile />} />
                     </Route>
                 </Routes>
             </Router>
