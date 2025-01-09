@@ -9,12 +9,14 @@ import { deleteComment } from "../features/post/postSlice";
 import { useState } from "react";
 import { IconButton } from "@mui/joy";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { useNavigate } from "react-router-dom";
 
 
 export default function Comment({ postId, comment }: { postId: number, comment: CommentType }) {
 
     const authStore = useAppSelector(store => store.auth);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const [show, setShow] = useState(true);
 
@@ -35,6 +37,7 @@ export default function Comment({ postId, comment }: { postId: number, comment: 
             alignItems="center"
         >
             <AspectRatio
+                onClick={() => navigate(`/profile/${comment.user.username}`)}
                 ratio="1"
                 maxHeight={40}
                 sx={{ flex: 1, minWidth: 40, maxWidth: 40, borderRadius: '100%' }}
@@ -52,7 +55,12 @@ export default function Comment({ postId, comment }: { postId: number, comment: 
                     alignItems="baseline"
                     width={"300px"}
                 >
-                    <Typography level="title-md">{comment.user.username}</Typography>
+                    <Typography
+                        onClick={() => navigate(`/profile/${comment.user.username}`)}
+                        level="title-md"
+                    >
+                        {comment.user.username}
+                    </Typography>
 
                     <Typography level="body-sm">
                         {formatDate(comment.createdAt)}
