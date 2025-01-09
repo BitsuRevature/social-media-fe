@@ -70,7 +70,7 @@ export default function Profile() {
         }}
       >
         <Card>
-          <Stack direction="row" justifyContent="space-between">
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Typography level="title-md">Personal info</Typography>
             {!username &&
               <IconButton onClick={() => navigate('/profile/edit')}>
