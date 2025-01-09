@@ -114,7 +114,7 @@ export default function Post({ post }: { post: PostType }) {
               paddingLeft: 0,
             }}
           >
-            <Typography>{post.content}</Typography>
+            <Typography data-testid={"postContent"}>{post.content}</Typography>
           </CardContent>
 
           <CardActions sx={{ alignSelf: "flex-end", pt: 2 }}>

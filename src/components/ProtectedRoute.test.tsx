@@ -7,20 +7,18 @@ import authReducer from '../features/auth/authSlice';
 import {
   CssVarsProvider,
 } from "@mui/joy";
-
-
-const preloadedState = {
-    auth: null
-    }
-  const testStore = configureStore({
-    reducer: ()=>null,
-    preloadedState, 
-  });
+import { preloadedState as mockUserState } from '../../testMocks';
 
   
   describe('Protected route', () => {
     it('does not render without user info from auth store', () => {
-      expect(() => render(
+
+        const testStore = configureStore({
+            reducer: ()=>null,
+            preloadedState: {}, 
+        }); 
+
+    expect(() => render(
         <CssVarsProvider>
         <Provider store={testStore}>
           <Router>
@@ -29,6 +27,27 @@ const preloadedState = {
         </Provider>
         </CssVarsProvider>
       )).toThrow();
+    });
+
+    it('renders a protected route with valid user info from auth store', () => {
+          const testStore = configureStore({
+            reducer: {
+              auth: authReducer,
+            },
+            preloadedState: mockUserState, 
+          });
+
+        render(
+            <CssVarsProvider>
+            <Provider store={testStore}>
+            <Router>
+                <ProtectedRoute />
+            </Router>
+            </Provider>
+            </CssVarsProvider>
+        )
+        const fn_ln = document.querySelector("[data-testid=fn_ln]");
+        expect(fn_ln!.textContent).toBe("test testerson");
     });
   });
   

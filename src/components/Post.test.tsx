@@ -1,24 +1,24 @@
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Sidebar from './Sidebar';
+import Post from './Post';
 import {
   CssVarsProvider,
 } from "@mui/joy";
-import { testStore } from '../../testMocks';
+import { testStore, mockPost } from '../../testMocks'
 
-describe('Sidebar Component', () => {
-  it('renders sidebar with user first and last name', () => {
+describe('Post component', () => {
+  it('renders post component with supplied mock data', () => {
     render(
       <CssVarsProvider>
       <Provider store={testStore}>
         <Router>
-          <Sidebar />
+          <Post post={mockPost}/>
         </Router>
       </Provider>
       </CssVarsProvider>
     );
-    const fn_ln = document.querySelector("[data-testid=fn_ln]");
-    expect(fn_ln!.textContent).toBe("test testerson");
+    const pc = document.querySelector("[data-testid=postContent]");
+    expect(pc!.textContent).toBe("mock post content");
   });
 });
