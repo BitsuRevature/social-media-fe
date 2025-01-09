@@ -8,7 +8,7 @@ import CardActions from "@mui/joy/CardActions";
 import CardOverflow from "@mui/joy/CardOverflow";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import Avatar from "@mui/joy/Avatar";
+import { Avatar } from "@mui/joy";
 import IconButton from "@mui/joy/IconButton";
 import { CardContent, CardMedia } from "@mui/material";
 import CardHeader from "@mui/material/CardHeader/CardHeader";

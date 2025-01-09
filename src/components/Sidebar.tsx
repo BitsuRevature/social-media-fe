@@ -1,6 +1,6 @@
 import * as React from 'react';
 import GlobalStyles from '@mui/joy/GlobalStyles';
-import Avatar from '@mui/joy/Avatar';
+import { Avatar } from '@mui/joy';
 import Box from '@mui/joy/Box';
 import Divider from '@mui/joy/Divider';
 import IconButton from '@mui/joy/IconButton';
@@ -256,6 +256,7 @@ export default function Sidebar() {
           variant="outlined"
           size="sm"
           src={authStore.auth?.profilePicture as string}
+          alt={"Your profile picture"}
         />
         <Box sx={{ minWidth: 0, flex: 1 }}>
           <Typography level="title-sm" data-testid="fn_ln">{`${authStore.auth?.firstname} ${authStore.auth?.lastname}`}</Typography>

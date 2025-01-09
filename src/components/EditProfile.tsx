@@ -1,4 +1,3 @@
-import AspectRatio from '@mui/joy/AspectRatio';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
@@ -21,6 +20,7 @@ import { updateBio, updatePI, updateProfilePic } from '../features/auth/authSlic
 import { uploadFile } from '../util/helper';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { Avatar } from '@mui/joy';
 
 export default function EditProfile() {
 
@@ -124,17 +124,11 @@ export default function EditProfile() {
             sx={{ my: 1 }}
           >
             <Stack direction="column" spacing={1}>
-              <AspectRatio
-                ratio="1"
-                maxHeight={200}
-                sx={{ flex: 1, minWidth: 120, borderRadius: '100%' }}
-              >
-                <img
-                  src={profilePicture!}
-                  loading="lazy"
-                  alt=""
-                />
-              </AspectRatio>
+              <Avatar
+                src={profilePicture as string}
+                alt={"Your profile picture"}
+                sx={{ width: 200, height: 200 }}
+              />
               <IconButton
                 aria-label="upload new picture"
                 size="sm"

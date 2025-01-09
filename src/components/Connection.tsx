@@ -2,9 +2,8 @@ import { FunctionComponent } from "react";
 import { UserType } from "../util/types";
 import Card from "@mui/joy/Card";
 import Stack from "@mui/joy/Stack";
-import AspectRatio from "@mui/joy/AspectRatio";
 import Typography from "@mui/joy/Typography";
-import { CardContent } from "@mui/joy";
+import { Avatar, CardContent } from "@mui/joy";
 import { CardActions } from "@mui/joy";
 
 import FollowButton from "./FollowButton";
@@ -36,16 +35,10 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection, following,
                             alignItems: "center"
                         }}
                     >
-                        <AspectRatio
-                            ratio="1"
-                            maxHeight={40}
-                            sx={{ flex: 1, minWidth: 40, maxWidth: 40, borderRadius: '100%' }}
-                        >
-                            <img
-                                src={connection.profilePicture}
-                                alt={connection.username}
-                            />
-                        </AspectRatio>
+                        <Avatar
+                            src={connection.profilePicture as string}
+                            alt={`${connection.username}'s profile picture`}
+                        />
                         <div>
                             <Typography level="h4">{connection.username}</Typography>
                             <Typography level="title-sm">{connection.bio}</Typography>
