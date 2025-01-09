@@ -142,45 +142,49 @@ export default function Post({ post }: { post: PostType }) {
           </CardActions>
         </Stack>
 
-        <CardOverflow sx={{ borderTop: "1px solid", borderColor: "divider" }}>
-          {open && (
-            <CardContent>
-              <Stack spacing={2} sx={{ flexGrow: 1 }}>
-                <Stack spacing={1}>
-                  <FormControl
-                    sx={{
-                      display: { sm: "flex-column", md: "flex-row" },
-                      gap: 2,
-                    }}
-                  >
-                    <Input
-                      size="sm"
-                      placeholder="Add new comment"
-                      name="content"
-                      defaultValue={"" as string}
-                      onChange={(e) => {
-                        setCommentInput(e.target.value);
+        {(open || post.comments.length > 0) &&
+          <CardOverflow sx={{ borderTop: "1px solid", borderColor: "divider" }}>
+            {open && (
+              <CardContent>
+                <Stack spacing={2} sx={{ flexGrow: 1 }}>
+                  <Stack spacing={1}>
+                    <FormControl
+                      sx={{
+                        display: { sm: "flex-column", md: "flex-row" },
+                        gap: 2,
                       }}
-                      required
-                    />
-                  </FormControl>
-                  <Button size="sm" variant="solid" onClick={handleAddComment}>
-                    Add Comment
-                  </Button>
+                    >
+                      <Input
+                        size="sm"
+                        placeholder="Add new comment"
+                        name="content"
+                        defaultValue={"" as string}
+                        onChange={(e) => {
+                          setCommentInput(e.target.value);
+                        }}
+                        required
+                      />
+                    </FormControl>
+                    <Button size="sm" variant="solid" onClick={handleAddComment}>
+                      Add Comment
+                    </Button>
+                  </Stack>
                 </Stack>
-              </Stack>
-            </CardContent>
-          )}
-          <CardContent
-            sx={{ paddingInline: 0 }}
-          >
-            {post.comments.map((comment: CommentType) => {
-              return (
-                <Comment key={comment.id} comment={comment} postId={post.id} />
-              );
-            })}
-          </CardContent>
-        </CardOverflow>
+              </CardContent>
+            )}
+            {post.comments.length > 0 &&
+              <CardContent
+                sx={{ paddingInline: 0 }}
+              >
+                {post.comments.map((comment: CommentType) => {
+                  return (
+                    <Comment key={comment.id} comment={comment} postId={post.id} />
+                  );
+                })}
+              </CardContent>
+            }
+          </CardOverflow>
+        }
       </Card>
     )
   );
