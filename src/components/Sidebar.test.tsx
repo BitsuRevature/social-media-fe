@@ -43,7 +43,7 @@ describe('Sidebar Component', () => {
       </Provider>
       </CssVarsProvider>
     );
-    const fn_ln = document.querySelector("[data-testid=fn_ln]")
-    expect(fn_ln).toContain(fn_ln);
+    const fn_ln = document.querySelector("[data-testid=fn_ln]");
+    expect(fn_ln!.textContent).toBe("test testerson");
   });
 });
