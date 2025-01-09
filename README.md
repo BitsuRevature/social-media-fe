@@ -1,50 +1,98 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Social Media Front End
+This project is a web application built using TypeScript, JavaScript, React, and Tailwind CSS. It includes features such as user authentication, profile management, and post creation. The application interacts with a backend API for data storage and retrieval.
 
-Currently, two official plugins are available:
+## React Router Documentation
+This project uses React Router to handle client-side routing. Below is an explanation of how React Router is used in this project:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-  **Setup**:
+React Router is set up in the App.tsx file, where the BrowserRouter component wraps the main App component.
+- **Routes Configuration**:
+The routes are configured in the App.tsx file using the Routes and Route components from React Router.
+- **Route Components**:
+Each route corresponds to a specific component that is rendered when the route is accessed.
 
-## Expanding the ESLint configuration
+## Redux
+In this project, Redux is used to manage the state of the application, particularly for handling posts and authentication. Here's a brief explanation of how Redux works in this project:  
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Post State
+- **State Management**: The state is managed in a slice called postSlice. The initial state includes an array of posts, a loading flag, and an array of loading IDs.  
+- **Async Actions**: Redux Toolkit's createAsyncThunk is used to handle asynchronous actions such as fetching posts, creating posts, deleting posts, adding comments, and liking/unliking posts. These thunks handle API calls using Axios and manage the state based on the API responses.  
+- **Reducers**: The slice includes reducers to handle the state changes based on the actions dispatched. The extraReducers field is used to handle the different states (pending, fulfilled, rejected) of the async actions.  
+- **Notifications**: The project uses react-toastify to show notifications for different actions like loading, success, and error states.
 
-- Configure the top-level `parserOptions` property like this:
+### Auth State
+- **State Management**: The state is managed in a slice called authSlice. The initial state includes properties such as user, isAuthenticated, isLoading, and error.  
+- **Async Actions**: Redux Toolkit's createAsyncThunk is used to handle asynchronous actions such as logging in, logging out, and registering users. These thunks handle API calls using Axios and manage the state based on the API responses.  
+- **Reducers**: The slice includes reducers to handle the state changes based on the actions dispatched. The extraReducers field is used to handle the different states (pending, fulfilled, rejected) of the async actions.  
+- **Notifications**: The project uses react-toastify to show notifications for different actions like loading, success, and error states.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## CI/CD Pipeline:
+This Jenkins pipeline automates the process of building, testing, and deploying a Java Spring Boot application. Here is a step-by-step explanation of each stage:  
+
+### Pipeline Overview
+- **Agent**: Specifies that the pipeline can run on any available Jenkins agent.
+- **Environment**: Defines environment variables, including AWS credentials, Docker credentials, and database connection details.
+### Stages
+#### Checkout Code:
+- Checks out the source code from the Git repository.
+#### Build and push docker image:
+- Builds a Docker image for the application.
+- Tags the Docker image.
+- Logs into Docker Hub using the provided credentials.
+- Pushes the Docker image to Docker Hub.
+#### Remote into docker runner ec2, pull and run image:
+- Connects to a remote EC2 instance using SSH.
+- Stops and removes any running container named be.
+- Pulls the latest Docker image from Docker Hub.
+
+## Run Locally
+To run the project locally, follow these steps:  
+### Prerequisites
+- Ensure you have Node.js and npm installed on your machine.
+- Ensure you have Docker installed if you plan to use Docker for running the application.
+### Steps
+- **Clone the Repository**  
+```shell
+git clone https://github.com/BitsuRevature/social-media-fe.git
+cd social-media-fe
+```
+- **Install Dependencies**
+```shell
+npm install
+```
+- **Run the Application**
+```shell
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+**Access the Application Open your browser and navigate to http://localhost:3000.**  
+### Using Docker
+- Build the Docker Image
+```shell
+docker build -t social-media-fe .
+- Run the Docker Container 
 ```
+```shell 
+docker run -p 3000:3000 social-media-fe
+```
+**Access the Application Open your browser and navigate to http://localhost:3000.**  
+**These steps will help you set up and run the project locally on your machine.**
+
+## Technologies Used
+
+| Technology        | Description                                                          |
+|-------------------|----------------------------------------------------------------------|
+| TypeScript        | A strongly typed programming language that builds on JavaScript.     |
+| React             | A JavaScript library for building user interfaces.                   |
+| Tailwind CSS      | A utility-first CSS framework for rapid UI development.              |
+| Axios             | A promise-based HTTP client for the browser and Node.js.             |
+| React Toastify    | A library to add notifications to your React app.                    |
+| MUI (Material-UI) | A popular React UI framework with a comprehensive set of components. |
+| VS Code           | Integrated development environment (IDE)                             |
+| Git               | Version control system                                               |
+| GitHub            | Platform for version control and collaboration                       |
+| Vi-Test           | Testing framework for React with Vite                                |
+| Docker            | Containerization platform                                            |
+| Docker Hub        | Cloud-based repository for Docker images                             |
+| Jenkins           | Continuous integration and delivery tool                             |
