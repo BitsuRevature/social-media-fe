@@ -8,7 +8,7 @@ import CardActions from "@mui/joy/CardActions";
 import CardOverflow from "@mui/joy/CardOverflow";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import Avatar from "@mui/joy/Avatar";
+import { Avatar } from "@mui/joy";
 import IconButton from "@mui/joy/IconButton";
 import { CardContent, CardMedia } from "@mui/material";
 import CardHeader from "@mui/material/CardHeader/CardHeader";
@@ -29,6 +29,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { FormControl, Input } from "@mui/joy";
 import { toast } from "react-toastify";
+import LinkToProfile from "./LinkToProfile";
 
 export default function Post({ post }: { post: PostType }) {
   const authStore = useAppSelector((store) => store.auth);
@@ -79,19 +80,22 @@ export default function Post({ post }: { post: PostType }) {
   return (
     show && (
       <Card>
-        <CardHeader
-          avatar={post.user &&
-            <Avatar
-              src={post.user.profilePicture}
-              alt={`${post.user.username}'s profile picture`}
-            />
-          }
-          sx={{
-            height: 25,
-          }}
-          title={post.user && post.user.username}
-          subheader={formatDate(post.createdAt)}
-        />
+        <LinkToProfile username={post.user.username}>
+          <CardHeader
+            avatar={post.user &&
+              <Avatar
+                src={post.user.profilePicture}
+                alt={`${post.user.username}'s profile picture`}
+              />
+            }
+            sx={{
+              height: 25,
+              paddingLeft: 0
+            }}
+            title={post.user && post.user.username}
+            subheader={formatDate(post.createdAt)}
+          />
+        </LinkToProfile>
 
         <Divider />
 
@@ -107,6 +111,7 @@ export default function Post({ post }: { post: PostType }) {
           <CardContent
             sx={{
               height: 25,
+              paddingLeft: 0,
             }}
           >
             <Typography>{post.content}</Typography>
@@ -137,43 +142,49 @@ export default function Post({ post }: { post: PostType }) {
           </CardActions>
         </Stack>
 
-        <CardOverflow sx={{ borderTop: "1px solid", borderColor: "divider" }}>
-          {open && (
-            <CardContent>
-              <Stack spacing={2} sx={{ flexGrow: 1 }}>
-                <Stack spacing={1}>
-                  <FormControl
-                    sx={{
-                      display: { sm: "flex-column", md: "flex-row" },
-                      gap: 2,
-                    }}
-                  >
-                    <Input
-                      size="sm"
-                      placeholder="Add new comment"
-                      name="content"
-                      defaultValue={"" as string}
-                      onChange={(e) => {
-                        setCommentInput(e.target.value);
+        {(open || post.comments.length > 0) &&
+          <CardOverflow sx={{ borderTop: "1px solid", borderColor: "divider" }}>
+            {open && (
+              <CardContent>
+                <Stack spacing={2} sx={{ flexGrow: 1 }}>
+                  <Stack spacing={1}>
+                    <FormControl
+                      sx={{
+                        display: { sm: "flex-column", md: "flex-row" },
+                        gap: 2,
                       }}
-                      required
-                    />
-                  </FormControl>
-                  <Button size="sm" variant="solid" onClick={handleAddComment}>
-                    Add Comment
-                  </Button>
+                    >
+                      <Input
+                        size="sm"
+                        placeholder="Add new comment"
+                        name="content"
+                        defaultValue={"" as string}
+                        onChange={(e) => {
+                          setCommentInput(e.target.value);
+                        }}
+                        required
+                      />
+                    </FormControl>
+                    <Button size="sm" variant="solid" onClick={handleAddComment}>
+                      Add Comment
+                    </Button>
+                  </Stack>
                 </Stack>
-              </Stack>
-            </CardContent>
-          )}
-          <CardContent>
-            {post.comments.map((comment: CommentType) => {
-              return (
-                <Comment key={comment.id} comment={comment} postId={post.id} />
-              );
-            })}
-          </CardContent>
-        </CardOverflow>
+              </CardContent>
+            )}
+            {post.comments.length > 0 &&
+              <CardContent
+                sx={{ paddingInline: 0 }}
+              >
+                {post.comments.map((comment: CommentType) => {
+                  return (
+                    <Comment key={comment.id} comment={comment} postId={post.id} />
+                  );
+                })}
+              </CardContent>
+            }
+          </CardOverflow>
+        }
       </Card>
     )
   );

@@ -1,4 +1,3 @@
-import AspectRatio from '@mui/joy/AspectRatio';
 import Box from '@mui/joy/Box';
 import Divider from '@mui/joy/Divider';
 import FormLabel from '@mui/joy/FormLabel';
@@ -17,7 +16,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { UserProfileType, UserType } from '../util/types';
 import FollowButton from '../components/FollowButton';
 import Posts from './Posts';
-import { IconButton } from '@mui/joy';
+import { Avatar, IconButton } from '@mui/joy';
 
 export default function Profile() {
 
@@ -70,7 +69,7 @@ export default function Profile() {
         }}
       >
         <Card>
-          <Stack direction="row" justifyContent="space-between">
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Typography level="title-md">Personal info</Typography>
             {!username &&
               <IconButton onClick={() => navigate('/profile/edit')}>
@@ -86,19 +85,11 @@ export default function Profile() {
             spacing={3}
             sx={{ my: 1 }}
           >
-            <Stack direction="column" spacing={1}>
-              <AspectRatio
-                ratio="1"
-                maxHeight={200}
-                sx={{ flex: 1, minWidth: 120, borderRadius: '100%' }}
-              >
-                <img
-                  src={userProfile?.profilePicture!}
-                  loading="lazy"
-                  alt=""
-                />
-              </AspectRatio>
-            </Stack>
+            <Avatar
+              src={userProfile?.profilePicture}
+              alt={`${userProfile?.username}'s profile picture`}
+              sx={{ width: 200, height: 200 }}
+            />
             <Stack spacing={2} sx={{ flexGrow: 1 }}>
               <Stack spacing={1}>
                 <FormLabel>Name</FormLabel>

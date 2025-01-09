@@ -4,17 +4,16 @@ import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
-import IconButton from '@mui/joy/IconButton';
-import Link from '@mui/joy/Link';
+import MuiLink from '@mui/joy/Link';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
-import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import ColorSchemeToggle from '../components/ColorSchemeToggle';
 import axios from 'axios';
+import BalayHubLogo from '../components/BalayHubLogo';
 
 axios.defaults.baseURL = "http://ec2-3-137-181-232.us-east-2.compute.amazonaws.com/api/v1";
 
@@ -22,17 +21,19 @@ export default function SignUp() {
 
     const navigate = useNavigate();
     const [error, setError] = useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [firstname, setFirstname] = useState("");
+    const [lastname, setLastname] = useState("");
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget as HTMLFormElement);
-
         try {
             const registerData = {
-                username: data.get('username') as string,
-                password: data.get('password') as string,
-                firstname: data.get('firstname') as string,
-                lastname: data.get('lastname') as string,
+                username: username,
+                password: password,
+                firstname: firstname,
+                lastname: lastname,
             };
             await axios.post('/auth/register', registerData);
             navigate('/login');
@@ -77,12 +78,7 @@ export default function SignUp() {
                         component="header"
                         sx={{ py: 3, display: 'flex', justifyContent: 'space-between' }}
                     >
-                        <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
-                            <IconButton variant="soft" color="primary" size="sm">
-                                <BadgeRoundedIcon />
-                            </IconButton>
-                            <Typography level="title-lg">Company logo</Typography>
-                        </Box>
+                        <BalayHubLogo />
                         <ColorSchemeToggle />
                     </Box>
                     <Box
@@ -115,8 +111,10 @@ export default function SignUp() {
                                 </Typography>
                                 <Typography level="body-sm">
                                     Already Have an Account?{' '}
-                                    <Link href="/login" level="title-sm">
-                                        Sign in!
+                                    <Link to="/login" >
+                                        <MuiLink level="title-sm">
+                                            Sign in!
+                                        </MuiLink>
                                     </Link>
                                 </Typography>
                             </Stack>
@@ -137,22 +135,22 @@ export default function SignUp() {
                             >
                                 <FormControl required>
                                     <FormLabel>User Name</FormLabel>
-                                    <Input type="text" name="username" />
+                                    <Input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
                                 </FormControl>
                                 <FormControl required>
                                     <FormLabel>First Name</FormLabel>
-                                    <Input type="text" name="firstname" />
+                                    <Input type="text" name="firstname" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
                                 </FormControl>
                                 <FormControl required>
                                     <FormLabel>Last Name</FormLabel>
-                                    <Input type="text" name="lastname" />
+                                    <Input type="text" name="lastname" value={lastname} onChange={(e) => setLastname(e.target.value)} />
                                 </FormControl>
                                 <FormControl required>
                                     <FormLabel>Password</FormLabel>
-                                    <Input type="password" name="password" />
+                                    <Input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                                 </FormControl>
                                 <Stack sx={{ gap: 4, mt: 2 }}>
-                                    <Button type="submit" fullWidth>
+                                    <Button type="submit" fullWidth disabled={!(username && firstname && lastname && password)}>
                                         Sign up
                                     </Button>
                                 </Stack>
@@ -161,7 +159,7 @@ export default function SignUp() {
                     </Box>
                     <Box component="footer" sx={{ py: 3 }}>
                         <Typography level="body-xs" sx={{ textAlign: 'center' }}>
-                            © Social Media {new Date().getFullYear()}
+                            © BalayHub {new Date().getFullYear()}
                         </Typography>
                     </Box>
                 </Box>

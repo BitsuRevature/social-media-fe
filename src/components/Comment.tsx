@@ -1,4 +1,3 @@
-import AspectRatio from "@mui/joy/AspectRatio";
 import Box from "@mui/joy/Box";
 import Stack from "@mui/joy/Stack";
 import Typography from "@mui/joy/Typography";
@@ -7,8 +6,9 @@ import { formatDate } from "../util/helper";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { deleteComment } from "../features/post/postSlice";
 import { useState } from "react";
-import { IconButton } from "@mui/joy";
+import { Avatar, IconButton } from "@mui/joy";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import LinkToProfile from "./LinkToProfile";
 
 
 export default function Comment({ postId, comment }: { postId: number, comment: CommentType }) {
@@ -34,17 +34,12 @@ export default function Comment({ postId, comment }: { postId: number, comment: 
             paddingBlock={1}
             alignItems="center"
         >
-            <AspectRatio
-                ratio="1"
-                maxHeight={40}
-                sx={{ flex: 1, minWidth: 40, maxWidth: 40, borderRadius: '100%' }}
-            >
-                <img
-                    src={comment.user.profilePicture}
-                    loading="lazy"
-                    alt=""
+            <LinkToProfile username={comment.user.username}>
+                <Avatar
+                    src={comment.user.profilePicture as string}
+                    alt={`${comment.user.username}'s profile picture`}
                 />
-            </AspectRatio>
+            </LinkToProfile>
             <Box sx={{ mb: 1, flexGrow: 1 }}>
                 <Stack
                     direction="row"
@@ -52,7 +47,11 @@ export default function Comment({ postId, comment }: { postId: number, comment: 
                     alignItems="baseline"
                     width={"300px"}
                 >
-                    <Typography level="title-md">{comment.user.username}</Typography>
+                    <LinkToProfile username={comment.user.username}>
+                        <Typography level="title-md">
+                            {comment.user.username}
+                        </Typography>
+                    </LinkToProfile>
 
                     <Typography level="body-sm">
                         {formatDate(comment.createdAt)}
