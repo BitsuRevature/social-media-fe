@@ -202,7 +202,6 @@ export default function Sidebar() {
 
           <ListItem nested>
             <Toggler
-              defaultExpanded
               renderToggle={({ open, setOpen }) => (
                 <ListItemButton onClick={() => setOpen(!open)}>
                   <GroupRoundedIcon />
