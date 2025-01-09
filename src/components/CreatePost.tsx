@@ -279,7 +279,7 @@ export default function CreatePost() {
               >
                 Cancel
               </Button>
-              <Button size="sm" variant="solid" onClick={handleSave}>
+              <Button size="sm" variant="solid" onClick={handleSave} disabled={content.length < 1 && fileDetails === null}>
                 Save
               </Button>
             </CardActions>
