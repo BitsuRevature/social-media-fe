@@ -135,7 +135,7 @@ export default function SignIn() {
                     </Box>
                     <Box component="footer" sx={{ py: 3 }}>
                         <Typography level="body-xs" sx={{ textAlign: 'center' }}>
-                            © Social Media {new Date().getFullYear()}
+                            © BalayHub {new Date().getFullYear()}
                         </Typography>
                     </Box>
                 </Box>
