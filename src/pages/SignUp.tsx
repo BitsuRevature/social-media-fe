@@ -21,17 +21,19 @@ export default function SignUp() {
 
     const navigate = useNavigate();
     const [error, setError] = useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [firstname, setFirstname] = useState("");
+    const [lastname, setLastname] = useState("");
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget as HTMLFormElement);
-
         try {
             const registerData = {
-                username: data.get('username') as string,
-                password: data.get('password') as string,
-                firstname: data.get('firstname') as string,
-                lastname: data.get('lastname') as string,
+                username: username,
+                password: password,
+                firstname: firstname,
+                lastname: lastname,
             };
             await axios.post('/auth/register', registerData);
             navigate('/login');
@@ -133,22 +135,22 @@ export default function SignUp() {
                             >
                                 <FormControl required>
                                     <FormLabel>User Name</FormLabel>
-                                    <Input type="text" name="username" />
+                                    <Input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
                                 </FormControl>
                                 <FormControl required>
                                     <FormLabel>First Name</FormLabel>
-                                    <Input type="text" name="firstname" />
+                                    <Input type="text" name="firstname" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
                                 </FormControl>
                                 <FormControl required>
                                     <FormLabel>Last Name</FormLabel>
-                                    <Input type="text" name="lastname" />
+                                    <Input type="text" name="lastname" value={lastname} onChange={(e) => setLastname(e.target.value)} />
                                 </FormControl>
                                 <FormControl required>
                                     <FormLabel>Password</FormLabel>
-                                    <Input type="password" name="password" />
+                                    <Input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                                 </FormControl>
                                 <Stack sx={{ gap: 4, mt: 2 }}>
-                                    <Button type="submit" fullWidth>
+                                    <Button type="submit" fullWidth disabled={!(username && firstname && lastname && password)}>
                                         Sign up
                                     </Button>
                                 </Stack>

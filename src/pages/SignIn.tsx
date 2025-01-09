@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
@@ -13,19 +12,22 @@ import { login } from '../features/auth/authSlice';
 import ColorSchemeToggle from '../components/ColorSchemeToggle';
 import { Link, useNavigate } from 'react-router-dom';
 import BalayHubLogo from '../components/BalayHubLogo';
+import { useState } from 'react';
 
 export default function SignIn() {
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget as HTMLFormElement);
         dispatch(login(
             {
-                username: data.get('username') as string,
-                password: data.get('password') as string
+                username: username,
+                password: password,
             },
         )).then(() => {
             navigate('/feed');
@@ -119,14 +121,14 @@ export default function SignIn() {
                             >
                                 <FormControl required>
                                     <FormLabel>User Name</FormLabel>
-                                    <Input type="text" name="username" />
+                                    <Input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
                                 </FormControl>
                                 <FormControl required>
                                     <FormLabel>Password</FormLabel>
-                                    <Input type="password" name="password" />
+                                    <Input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                                 </FormControl>
                                 <Stack sx={{ gap: 4, mt: 2 }}>
-                                    <Button type="submit" fullWidth>
+                                    <Button type="submit" fullWidth disabled={!(username && password)}>
                                         Sign in
                                     </Button>
                                 </Stack>
