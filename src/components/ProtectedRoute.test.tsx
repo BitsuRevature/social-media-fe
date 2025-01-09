@@ -7,18 +7,15 @@ import authReducer from '../features/auth/authSlice';
 import {
   CssVarsProvider,
 } from "@mui/joy";
-
+import { preloadedState as mockUserState } from '../../testMocks';
 
   
   describe('Protected route', () => {
     it('does not render without user info from auth store', () => {
 
-        const preloadedState = {
-            uth: null
-            }
         const testStore = configureStore({
             reducer: ()=>null,
-            preloadedState, 
+            preloadedState: {}, 
         }); 
 
     expect(() => render(
@@ -33,28 +30,11 @@ import {
     });
 
     it('renders a protected route with valid user info from auth store', () => {
-
-        const preloadedState = {
-            auth: {
-              auth: {
-                token: null,
-                id: null,
-                username: null,
-                profilePicture: null,
-                bio: null,
-                firstname: "test",
-                lastname:  "testerson",
-                exipreDate: undefined
-              },
-              isLoading: false, 
-            },
-          };
-          
           const testStore = configureStore({
             reducer: {
               auth: authReducer,
             },
-            preloadedState, 
+            preloadedState: mockUserState, 
           });
 
         render(
