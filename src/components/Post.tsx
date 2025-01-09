@@ -29,10 +29,12 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { FormControl, Input } from "@mui/joy";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function Post({ post }: { post: PostType }) {
   const authStore = useAppSelector((store) => store.auth);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [commentInput, setCommentInput] = useState("");
 
@@ -80,6 +82,7 @@ export default function Post({ post }: { post: PostType }) {
     show && (
       <Card>
         <CardHeader
+          onClick={() => navigate(`/profile/${post.user.username}`)}
           avatar={post.user &&
             <Avatar
               src={post.user.profilePicture}
@@ -88,6 +91,7 @@ export default function Post({ post }: { post: PostType }) {
           }
           sx={{
             height: 25,
+            cursor: "pointer",
           }}
           title={post.user && post.user.username}
           subheader={formatDate(post.createdAt)}
