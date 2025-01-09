@@ -21,6 +21,7 @@ import { uploadFile } from '../util/helper';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Avatar } from '@mui/joy';
+import { Badge } from '@mui/joy';
 
 export default function EditProfile() {
 
@@ -124,29 +125,34 @@ export default function EditProfile() {
             sx={{ my: 1 }}
           >
             <Stack direction="column" spacing={1}>
-              <Avatar
-                src={profilePicture as string}
-                alt={"Your profile picture"}
-                sx={{ width: 200, height: 200 }}
-              />
-              <IconButton
-                aria-label="upload new picture"
-                size="sm"
-                variant="outlined"
-                color="neutral"
-                sx={{
-                  bgcolor: 'background.body',
-                  position: 'absolute',
-                  zIndex: 2,
-                  borderRadius: '50%',
-                  left: 100,
-                  top: 170,
-                  boxShadow: 'sm',
-                }}
-                onClick={handleFilePickerOpen}
+              <Badge
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                badgeInset={30}
+                badgeContent={
+                  <IconButton
+                    aria-label="upload new picture"
+                    size="sm"
+                    variant="outlined"
+                    color="neutral"
+                    sx={{
+                      bgcolor: 'background.body',
+                      position: 'absolute',
+                      zIndex: 2,
+                      borderRadius: '50%',
+                      boxShadow: 'sm',
+                    }}
+                    onClick={handleFilePickerOpen}
+                  >
+                    <EditRoundedIcon />
+                  </IconButton>
+                }
               >
-                <EditRoundedIcon />
-              </IconButton>
+                <Avatar
+                  src={profilePicture as string}
+                  alt={"Your profile picture"}
+                  sx={{ width: 200, height: 200 }}
+                />
+              </Badge>
             </Stack>
             <Stack spacing={2} sx={{ flexGrow: 1 }}>
               <Stack spacing={1}>
