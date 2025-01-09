@@ -4,17 +4,16 @@ import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
-import IconButton from '@mui/joy/IconButton';
 import Link from '@mui/joy/Link';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
-import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import ColorSchemeToggle from '../components/ColorSchemeToggle';
 import axios from 'axios';
+import BalayHubLogo from '../components/BalayHubLogo';
 
 axios.defaults.baseURL = "http://ec2-3-137-181-232.us-east-2.compute.amazonaws.com/api/v1";
 
@@ -77,12 +76,7 @@ export default function SignUp() {
                         component="header"
                         sx={{ py: 3, display: 'flex', justifyContent: 'space-between' }}
                     >
-                        <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
-                            <IconButton variant="soft" color="primary" size="sm">
-                                <BadgeRoundedIcon />
-                            </IconButton>
-                            <Typography level="title-lg">Company logo</Typography>
-                        </Box>
+                        <BalayHubLogo />
                         <ColorSchemeToggle />
                     </Box>
                     <Box

@@ -14,7 +14,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import ExploreIcon from '@mui/icons-material/Explore';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
-import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 
@@ -23,8 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { logout } from '../features/auth/authSlice';
 import ColorSchemeToggle from './ColorSchemeToggle';
-
-
+import BalayHubLogo from './BalayHubLogo';
 
 
 function Toggler({
@@ -135,12 +133,7 @@ export default function Sidebar() {
         onClick={() => closeSidebar()}
       />
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-          <IconButton variant="soft" color="primary" size="sm">
-            <BrightnessAutoRoundedIcon />
-          </IconButton>
-          <Typography level="title-lg">Social Media</Typography>
-        </Box>
+        <BalayHubLogo />
         <ColorSchemeToggle />
       </Box>
       <Divider />

@@ -4,16 +4,15 @@ import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
-import IconButton from '@mui/joy/IconButton';
 import Link from '@mui/joy/Link';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
-import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
 import { useAppDispatch } from '../app/hooks';
 import { login } from '../features/auth/authSlice';
 import ColorSchemeToggle from '../components/ColorSchemeToggle';
 import { useNavigate } from 'react-router-dom';
+import BalayHubLogo from '../components/BalayHubLogo';
 
 export default function SignIn() {
 
@@ -64,12 +63,7 @@ export default function SignIn() {
                         component="header"
                         sx={{ py: 3, display: 'flex', justifyContent: 'space-between' }}
                     >
-                        <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
-                            <IconButton variant="soft" color="primary" size="sm">
-                                <BadgeRoundedIcon />
-                            </IconButton>
-                            <Typography level="title-lg">Company logo</Typography>
-                        </Box>
+                        <BalayHubLogo />
                         <ColorSchemeToggle />
                     </Box>
                     <Box
