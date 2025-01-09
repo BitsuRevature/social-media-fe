@@ -90,6 +90,7 @@ export default function Post({ post }: { post: PostType }) {
             }
             sx={{
               height: 25,
+              paddingLeft: 0
             }}
             title={post.user && post.user.username}
             subheader={formatDate(post.createdAt)}
