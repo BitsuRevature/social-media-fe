@@ -4,11 +4,11 @@ import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
-import Link from '@mui/joy/Link';
+import MuiLink from '@mui/joy/Link';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import ColorSchemeToggle from '../components/ColorSchemeToggle';
@@ -109,8 +109,10 @@ export default function SignUp() {
                                 </Typography>
                                 <Typography level="body-sm">
                                     Already Have an Account?{' '}
-                                    <Link href="/login" level="title-sm">
-                                        Sign in!
+                                    <Link to="/login" >
+                                        <MuiLink level="title-sm">
+                                            Sign in!
+                                        </MuiLink>
                                     </Link>
                                 </Typography>
                             </Stack>

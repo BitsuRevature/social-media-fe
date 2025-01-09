@@ -4,14 +4,14 @@ import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
-import Link from '@mui/joy/Link';
+import MuiLink from '@mui/joy/Link';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
 import { useAppDispatch } from '../app/hooks';
 import { login } from '../features/auth/authSlice';
 import ColorSchemeToggle from '../components/ColorSchemeToggle';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import BalayHubLogo from '../components/BalayHubLogo';
 
 export default function SignIn() {
@@ -96,8 +96,10 @@ export default function SignIn() {
                                 </Typography>
                                 <Typography level="body-sm">
                                     Are you new here?{' '}
-                                    <Link href="/register" level="title-sm">
-                                        Sign up!
+                                    <Link to="/register" >
+                                        <MuiLink level="title-sm">
+                                            Sign in!
+                                        </MuiLink>
                                     </Link>
                                 </Typography>
                             </Stack>
