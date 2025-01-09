@@ -111,6 +111,7 @@ export default function Post({ post }: { post: PostType }) {
           <CardContent
             sx={{
               height: 25,
+              paddingLeft: 0,
             }}
           >
             <Typography>{post.content}</Typography>
