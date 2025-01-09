@@ -1,5 +1,5 @@
 import axios from "../config/axiosConfig.ts";
-import { UserBioType, UserPIType, UserType } from "./types";
+import { UserBioType, UserPIType, UserProfileType, UserType } from "./types";
 
 export async function changePIInfo(data: UserPIType) {
   try {
@@ -71,6 +71,16 @@ export async function unFollow(id: number){
 export async function follow(id: number) {
   try {
     await axios.post(`/users/following/${id}`);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getUserDetails(username: String): Promise<UserProfileType> {
+  try {
+    const response = await axios.get(`/users/${username}`);
+    console.log(response);
+    return response.data;
   } catch (error) {
     throw error;
   }

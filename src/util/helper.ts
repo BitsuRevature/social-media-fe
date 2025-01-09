@@ -7,11 +7,10 @@ export function formatDate(date: string) {
     return new Date(date).toLocaleDateString([], options);
 }
 
-export async function uploadFile(file: File | null, uploading: boolean, setUploading: any) {
-    if (!file || uploading) return;
+export async function uploadFile(file: File | null) {
+    if (!file) return;
     checkFileSize(file);
 
-    setUploading(true);
     const toastID = toast.loading("Uploading image...");
     // Request a pre-signed URL from the backend
     const response = await axiosInstance.get(`/s3/generate-presigned-url?fileName=${file.name}&contentType=${file.type}`);

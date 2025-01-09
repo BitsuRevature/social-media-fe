@@ -10,8 +10,6 @@ import Textarea from '@mui/joy/Textarea';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
 import Card from '@mui/joy/Card';
-import CardActions from '@mui/joy/CardActions';
-import CardOverflow from '@mui/joy/CardOverflow';
 
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import PersonIcon from '@mui/icons-material/Person';
@@ -21,9 +19,12 @@ import { ChangeEvent, useRef, useState } from 'react';
 import { changeBio, changePIInfo, changeProfilePic } from '../util/apiHelper';
 import { updateBio, updatePI, updateProfilePic } from '../features/auth/authSlice';
 import { uploadFile } from '../util/helper';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-export default function MyProfile() {
+export default function EditProfile() {
 
+  const navigate = useNavigate();
   const authStore = useAppSelector(store => store.auth);
   const dispatch = useAppDispatch()
 
@@ -32,14 +33,13 @@ export default function MyProfile() {
   const [profilePicture, setProfilePicture] = useState(authStore.auth?.profilePicture)
   const [bio, setBio] = useState(authStore.auth?.bio);
 
-  const [uploading, setUploading] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (file) {
-      uploadFile(file, uploading, setUploading)
+      uploadFile(file)
         .then(async (url) => {
           await changeProfilePic(url as string);
           dispatch(updateProfilePic(url))
@@ -59,25 +59,29 @@ export default function MyProfile() {
     fileInputRef.current?.click();
   }
 
-  async function handlePISave() {
+  function handleSave() {
+    const toastID = toast.loading("Updating profile...");
+    const bioData = {
+      bio: bio as string
+    }
+    const updatedBio = changeBio(bioData).then(() => {
+      dispatch(updateBio(bioData));
+    })
 
-    const data = {
+    const piData = {
       firstname: firstname as string,
       lastname: lastname as string
     }
 
-    changePIInfo(data).then(() => {
-      dispatch(updatePI(data))
-    })
-  }
+    const updatedPI = changePIInfo(piData).then(() => {
+      dispatch(updatePI(piData));
+    });
 
-  async function handleBioSave() {
-    const data = {
-      bio: bio as string
-    };
-    changeBio(data).then(() => {
-      dispatch(updateBio(data))
-    })
+    Promise.all([updatedBio, updatedPI]).then(() => {
+      toast.done(toastID);
+      toast.success("Profile updated!");
+      navigate('/profile');
+    });
   }
 
   return (
@@ -92,7 +96,7 @@ export default function MyProfile() {
       >
         <Box sx={{ px: { xs: 2, md: 6 } }}>
           <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
-            My Profile
+            Edit Profile
           </Typography>
         </Box>
       </Box>
@@ -187,18 +191,6 @@ export default function MyProfile() {
               </Stack>
             </Stack>
           </Stack>
-          <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
-            <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
-              <Button size="sm" variant="outlined" color="neutral">
-                Cancel
-              </Button>
-              <Button size="sm" variant="solid"
-                onClick={handlePISave}
-              >
-                Save
-              </Button>
-            </CardActions>
-          </CardOverflow>
         </Card>
         <Card>
           <Box sx={{ mb: 1 }}>
@@ -218,17 +210,8 @@ export default function MyProfile() {
                 setBio(event?.target.value)
               }} />
           </Stack>
-          <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
-            <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
-              <Button size="sm" variant="outlined" color="neutral">
-                Cancel
-              </Button>
-              <Button size="sm" variant="solid" onClick={handleBioSave}>
-                Save
-              </Button>
-            </CardActions>
-          </CardOverflow>
         </Card>
+        <Button onClick={handleSave}>Save</Button>
       </Stack>
       <input
         type="file"

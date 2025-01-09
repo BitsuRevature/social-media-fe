@@ -4,11 +4,11 @@ import Card from "@mui/joy/Card";
 import Stack from "@mui/joy/Stack";
 import AspectRatio from "@mui/joy/AspectRatio";
 import Typography from "@mui/joy/Typography";
-import { Button, CardContent } from "@mui/joy";
+import { CardContent } from "@mui/joy";
 import { CardActions } from "@mui/joy";
-import { follow, unFollow } from "../util/apiHelper";
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+
+import FollowButton from "./FollowButton";
+import { useNavigate } from "react-router-dom";
 
 interface ConnectionProps {
     connection: UserType
@@ -17,28 +17,13 @@ interface ConnectionProps {
 }
 
 const Connection: FunctionComponent<ConnectionProps> = ({ connection, following, setFollowing }: ConnectionProps) => {
-
-    function checkIfFollowing(): boolean {
-        return following.some((item) => item.id == connection.id)
-    }
-
-    async function handleUnfollow() {
-        unFollow(connection.id)
-            .then(() => {
-                setFollowing(following.filter(item => item.id != connection.id))
-            })
-    }
-
-    async function handleFollow() {
-        follow(connection.id)
-            .then(() => {
-                setFollowing([...following, connection])
-            })
-    }
-
+    const navigate = useNavigate();
 
     return (
-        <Card>
+        <Card
+            onClick={() => navigate(`/profile/${connection.username}`)}
+            sx={{ cursor: "pointer" }}
+        >
             <Stack
                 direction={"row"}
                 spacing={3}
@@ -70,28 +55,7 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection, following,
                     </div>
                 </CardContent>
                 <CardActions>
-                    {
-                        checkIfFollowing() ?
-                            <Button size="sm" variant="solid" color="danger"
-                                style={{
-                                    position: "relative",
-                                    right: 0
-                                }}
-                                onClick={handleUnfollow}
-                            >
-                                <PersonRemoveIcon sx={{ marginRight: 1 }} /> Unfollow
-                            </Button> :
-                            <Button size="sm" variant="solid" color="primary"
-                                style={{
-                                    position: "relative",
-                                    right: 0
-                                }}
-                                onClick={handleFollow}
-                            >
-                                <PersonAddIcon sx={{ marginRight: 1 }} /> Follow
-
-                            </Button>
-                    }
+                    <FollowButton connection={connection} following={following} setFollowing={setFollowing} />
                 </CardActions>
             </Stack>
         </Card>
