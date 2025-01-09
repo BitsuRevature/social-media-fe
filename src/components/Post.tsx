@@ -171,7 +171,9 @@ export default function Post({ post }: { post: PostType }) {
               </Stack>
             </CardContent>
           )}
-          <CardContent>
+          <CardContent
+            sx={{ paddingInline: 0 }}
+          >
             {post.comments.map((comment: CommentType) => {
               return (
                 <Comment key={comment.id} comment={comment} postId={post.id} />
