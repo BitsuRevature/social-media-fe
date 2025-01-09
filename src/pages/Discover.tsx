@@ -16,7 +16,7 @@ export default function Discover() {
 
     return (
         <>
-            {!postStore.isLoading && <Posts posts={postStore.posts} heading="Discover" />}
+            {<Posts posts={postStore.posts} heading="Discover" />}
         </>
     )
 }

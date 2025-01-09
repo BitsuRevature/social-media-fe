@@ -27,6 +27,18 @@ export const getPosts = createAsyncThunk(
     }
 )
 
+export const getFeed = createAsyncThunk(
+    'post/getFeed',
+    async (search: string, thunkAPI) => {
+        try {
+            const response = await axios.get(`/posts/feed?search=${search}`);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue({ error: error.message });
+        }
+    }
+)
+
 export const createPost = createAsyncThunk(
     'post/createPost',
     async(post: CreatePostType, thunkAPI) => {
@@ -241,6 +253,23 @@ const postSlice = createSlice({
 
         builder.addCase(addComment.rejected, () => {
             toast.error("Couldn't Create Comment");
+        })
+
+        builder.addCase(getFeed.pending, (state) => {
+            state.isLoading = true;
+            state.loadingId.push(toast.loading("Loading Posts"))
+        })
+
+
+        builder.addCase(getFeed.fulfilled, (state, action) => {
+            state.posts = action.payload;
+            state.isLoading = false;
+            state.loadingId.forEach(id => toast.done(id));
+        })
+
+        builder.addCase(getFeed.rejected, (state) => {
+            state.isLoading = false;
+            toast.error("Couldn't Load Posts");
         })
 
 

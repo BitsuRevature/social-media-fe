@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
 import Posts from "./Posts";
-import axios from "../config/axiosConfig";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { getFeed } from "../features/post/postSlice";
 
 export default function Feed() {
     const [isLoading, setIsLoading] = useState(true);
-    const [posts, setPosts] = useState([]);
+    const posts = useAppSelector(store => store.post.posts)
+    const dispatch = useAppDispatch();
+
 
     // For getting post when we first load the page
     useEffect(() => {
-        axios.get('/posts/feed?search=')
-            .then(res => {
-                setPosts(res.data);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
+        dispatch(getFeed(""))
+        setIsLoading(false);
     }, [])
 
     return (

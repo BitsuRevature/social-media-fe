@@ -6,6 +6,8 @@ import Post from '../components/Post';
 import { PostType } from '../util/types';
 import { FormControl } from '@mui/joy';
 import SearchBar from '../components/SearchBar';
+import { useAppDispatch } from '../app/hooks';
+import { getFeed, getPosts } from '../features/post/postSlice';
 
 type PostsProps = {
     posts: PostType[],
@@ -13,6 +15,15 @@ type PostsProps = {
 };
 
 export default function Posts({ posts, heading }: PostsProps) {
+
+    const dispatch = useAppDispatch();
+
+    function onSearch(term: string) {
+        if (heading === "Feed")
+            dispatch(getFeed(term))
+        else if (heading === "Discover")
+            dispatch(getPosts(term));
+    }
 
     return (
         <Box sx={{ flex: 1, width: '100%' }}>
@@ -47,7 +58,7 @@ export default function Posts({ posts, heading }: PostsProps) {
                         justifyContent: 'center',
                     }}
                 >
-                    <SearchBar />
+                    <SearchBar onChange={onSearch} />
                 </FormControl>
                 {
                     !posts ?
