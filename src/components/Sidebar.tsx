@@ -16,7 +16,7 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
 import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import PostAddIcon from '@mui/icons-material/PostAdd';
 
 import { closeSidebar } from '../util/utils';
 import { useNavigate } from 'react-router-dom';
@@ -199,7 +199,7 @@ export default function Sidebar() {
                 () => handleNavigation('/posts/create')
               }
             >
-              <AddRoundedIcon />
+              <PostAddIcon />
 
               <ListItemContent>
                 <Typography level="title-sm">Create Post</Typography>
