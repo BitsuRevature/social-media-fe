@@ -148,7 +148,12 @@ export default function EditProfile() {
             <Stack direction="column" spacing={1}>
               <Badge
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                badgeInset={30}
+                badgeInset={"8% 0"}
+                sx={{
+                  '& .MuiBadge-badge': {
+                    transform: 'translate(-35%, -35%)',
+                  },
+                }}
                 badgeContent={
                   <IconButton
                     aria-label="upload new picture"
@@ -158,7 +163,6 @@ export default function EditProfile() {
                     sx={{
                       bgcolor: 'background.body',
                       position: 'absolute',
-                      zIndex: 2,
                       borderRadius: '50%',
                       boxShadow: 'sm',
                     }}
@@ -233,7 +237,7 @@ export default function EditProfile() {
           </Stack>
         </Card>
         <Button onClick={handleSave}>Save</Button>
-      </Stack>
+      </Stack >
       <input
         type="file"
         accept=".jpg,.jpeg,.png,.gif"
@@ -241,6 +245,6 @@ export default function EditProfile() {
         style={{ display: 'none' }} // Hides the file input
         onChange={handleFileChange}
       />
-    </Box>
+    </Box >
   );
 }
