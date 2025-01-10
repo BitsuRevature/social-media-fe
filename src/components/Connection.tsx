@@ -11,11 +11,9 @@ import LinkToProfile from "./LinkToProfile";
 
 interface ConnectionProps {
     connection: UserType
-    following: UserType[]
-    setFollowing: any
 }
 
-const Connection: FunctionComponent<ConnectionProps> = ({ connection, following, setFollowing }: ConnectionProps) => {
+const Connection: FunctionComponent<ConnectionProps> = ({ connection}: ConnectionProps) => {
 
     return (
         <LinkToProfile username={connection.username}>
@@ -45,7 +43,7 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection, following,
                         </div>
                     </CardContent>
                     <CardActions>
-                        <FollowButton connection={connection} following={following} setFollowing={setFollowing} />
+                        <FollowButton connection={connection} />
                     </CardActions>
                 </Stack>
             </Card>
