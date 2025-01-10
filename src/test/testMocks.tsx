@@ -1,6 +1,6 @@
-import { PostType, UserType } from './src/util/types';
+import { PostType, UserType } from '../util/types';
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './src/features/auth/authSlice';
+import authReducer from '../features/auth/authSlice';
 
 export const preloadedState = {
     auth: {

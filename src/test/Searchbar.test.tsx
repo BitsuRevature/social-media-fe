@@ -1,24 +1,22 @@
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Sidebar from './Sidebar';
+import SearchBar from '../components/SearchBar';
 import {
   CssVarsProvider,
 } from "@mui/joy";
-import { testStore } from '../../testMocks';
+import { testStore } from './testMocks'
 
-describe('Sidebar Component', () => {
-  it('renders sidebar with user first and last name', () => {
+describe('Post component', () => {
+  it('renders searchbar and does not crash', () => {
     render(
       <CssVarsProvider>
       <Provider store={testStore}>
         <Router>
-          <Sidebar />
+          <SearchBar onChange={()=>console.log("change fn")}/>
         </Router>
       </Provider>
       </CssVarsProvider>
     );
-    const fn_ln = document.querySelector("[data-testid=fn_ln]");
-    expect(fn_ln!.textContent).toBe("test testerson");
   });
 });

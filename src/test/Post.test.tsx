@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Post from './Post';
+import Post from '../components/Post';
 import {
   CssVarsProvider,
 } from "@mui/joy";
-import { testStore, mockPost } from '../../testMocks'
+import { testStore, mockPost } from './testMocks'
 
 describe('Post component', () => {
   it('renders post component with supplied mock data', () => {
