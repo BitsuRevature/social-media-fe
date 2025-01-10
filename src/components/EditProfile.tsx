@@ -22,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Avatar } from '@mui/joy';
 import { Badge } from '@mui/joy';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 export default function EditProfile() {
 
@@ -85,6 +86,10 @@ export default function EditProfile() {
     });
   }
 
+  function handleBack() {
+    navigate("/profile")
+  }
+
   return (
     <Box sx={{ flex: 1, width: '100%' }}>
       <Box
@@ -95,7 +100,23 @@ export default function EditProfile() {
           zIndex: 9995,
         }}
       >
-        <Box sx={{ px: { xs: 2, md: 6 } }}>
+        <Box sx={{
+          px: { xs: 2, md: 6 },
+          display: "flex",
+          alignItems: "center",
+          gap: "1rem"
+        }}>
+          <IconButton
+            aria-label="Go Back"
+            sx={{
+              height: "3rem"
+            }}
+            variant="outlined"
+            color="neutral"
+            onClick={handleBack}
+          >
+            <KeyboardBackspaceIcon />
+          </IconButton>
           <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
             Edit Profile
           </Typography>
