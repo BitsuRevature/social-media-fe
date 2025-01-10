@@ -82,5 +82,5 @@ export type PagedUserType = {
     totalPages: number,
     currentPage: number,
     size: number,
-    hasNex: number
+    hasNext: number
 }

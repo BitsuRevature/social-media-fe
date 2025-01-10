@@ -25,7 +25,7 @@ export async function changeProfilePic(data: string) {
   }
 }
 
-export async function getAllUsers(search: string, page: number, size: number): Promise<PagedUserType[]> {
+export async function getAllUsers(search: string, page: number, size: number): Promise<PagedUserType> {
   try {
     const response = await axios.get(`/users?search=${search}&page=${page}&size=${size}`)
     console.info("==============API HELPER=============== ALL ")
