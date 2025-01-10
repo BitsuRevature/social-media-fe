@@ -26,7 +26,6 @@ export default function Profile() {
   const navigate = useNavigate();
 
   const [userProfile, setUserProfile] = useState<UserProfileType>();
-  const [following, setFollowing]: [UserType[], any] = useState([]);
 
   useEffect(() => {
     if (username === authStore.auth?.username) {
@@ -36,10 +35,6 @@ export default function Profile() {
         setUserProfile(u);
       })
     }
-    getUserFollowing("")
-      .then((data) => {
-        setFollowing(data);
-      })
   }, [authStore, navigate]);
 
   return (
@@ -125,7 +120,7 @@ export default function Profile() {
           {userProfile && userProfile.username !== authStore.auth?.username &&
             <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
               <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
-                <FollowButton connection={userProfile as UserType} following={following} setFollowing={setFollowing} />
+                <FollowButton connection={userProfile as UserType} />
               </CardActions>
             </CardOverflow>
           }

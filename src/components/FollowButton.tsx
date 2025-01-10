@@ -1,26 +1,36 @@
 import { Button } from "@mui/joy"
-import { follow, unFollow } from "../util/apiHelper"
+import { checkIfFollowing, follow, unFollow } from "../util/apiHelper"
 import { UserType } from "../util/types"
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import { useEffect, useState } from "react";
 
 type FollowButtonProps = {
     connection: UserType
-    following: UserType[]
-    setFollowing: any
+    // following: UserType[]
+    // setFollowing: any
 }
 
-export default function FollowButton({ connection, following, setFollowing }: FollowButtonProps) {
+export default function FollowButton({ connection }: FollowButtonProps) {
 
-    function checkIfFollowing(): boolean {
-        return following.some((item) => item.id == connection.id)
-    }
+    const [isFollowing, setIsFollowing] = useState(false);
+
+    useEffect(() => {
+        checkIfFollowing(connection.id).then(
+            (data) => {
+                console.log(data)
+                setIsFollowing(data);
+            }
+        )
+    }, [])
+
 
     async function handleUnfollow(e: React.MouseEvent) {
         e.stopPropagation();
         unFollow(connection.id)
             .then(() => {
-                setFollowing(following.filter(item => item.id != connection.id))
+                // setFollowing(following.filter(item => item.id != connection.id))
+                setIsFollowing(false);
             })
     }
 
@@ -28,13 +38,15 @@ export default function FollowButton({ connection, following, setFollowing }: Fo
         e.stopPropagation();
         follow(connection.id)
             .then(() => {
-                setFollowing([...following, connection])
+                // setFollowing([...following, connection])
+                setIsFollowing(true);
             })
     }
 
     return (
         <>
-            {checkIfFollowing() ?
+        {/* {isFollowing} */}
+            {isFollowing ?
                 <Button size="sm" variant="solid" color="danger"
                     style={{
                         position: "relative",

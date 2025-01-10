@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getAllUsers, getUserFollowing } from "../util/apiHelper"
+import { getAllUsers } from "../util/apiHelper"
 import { PagedUserType, UserType } from '../util/types';
 import Connection from "./Connection";
 import { useAppSelector } from "../app/hooks";
@@ -12,7 +12,6 @@ export default function SearchConnections() {
     const authStore = useAppSelector(store => store.auth);
     const { search } = useOutletContext<{ search: string }>();
     const [connections, setConnections]: [UserType[], any] = useState([]);
-    const [following, setFollowing]: [UserType[], any] = useState([]);
     const [page, setPage]: [number, any] = useState(0);
     const [size, setSize]: [number, any] = useState(5);
     const [hasNext, setHasNext]: [boolean, any] = useState(false);
@@ -24,10 +23,6 @@ export default function SearchConnections() {
                 setConnections(data.users.filter(c => c.id != authStore.auth?.id));
                 setHasNext(data.hasNext);
                 setTotalPages(data.totalPages);
-            })
-        getUserFollowing(search)
-            .then((data) => {
-                setFollowing(data)
             })
     }, [search, page])
 
@@ -49,7 +44,7 @@ export default function SearchConnections() {
         <>
             {connections.map((connection: UserType) => {
                 return (
-                    <Connection key={connection.id} connection={connection} following={following} setFollowing={setFollowing} />
+                    <Connection key={connection.id} connection={connection} />
                 )
             })}
 

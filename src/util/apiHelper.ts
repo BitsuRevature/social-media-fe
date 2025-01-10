@@ -36,7 +36,7 @@ export async function getAllUsers(search: string, page: number, size: number): P
   }
 }
 
-export async function getUserFollowing(search: string): Promise<UserType[]> {
+export async function getUserFollowing(search: string): Promise<PagedUserType> {
   try {
     const response = await axios.get(`/users/following?search=${search}`)
     console.info("==============API HELPER=============== USER")
@@ -48,7 +48,7 @@ export async function getUserFollowing(search: string): Promise<UserType[]> {
   }
 }
 
-export async function getUserFollowers(search: string): Promise<UserType[]> {
+export async function getUserFollowers(search: string): Promise<PagedUserType> {
   try {
     const response = await axios.get(`/users/followers?search=${search}`)
     console.info("==============API HELPER=============== USER")
@@ -82,6 +82,15 @@ export async function getUserDetails(username: String): Promise<UserProfileType>
     console.log(response);
     return response.data;
   } catch (error) {
+    throw error;
+  }
+}
+
+export async function checkIfFollowing(id: number): Promise<boolean>{
+  try{
+    const res = await axios.get(`/users/following/check/${id}`)
+    return res.data;
+  }catch(error){
     throw error;
   }
 }
