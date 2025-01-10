@@ -23,7 +23,7 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection, following,
                 <Stack
                     direction={"row"}
                     spacing={3}
-                    sx={{ display: { xs: 'flex', md: 'flex' }, my: 1 }}
+                    sx={{ display: { xs: 'flex', md: 'flex' }}}
                     alignItems={"center"}
                     justifyContent={"space-between"}
                 >
