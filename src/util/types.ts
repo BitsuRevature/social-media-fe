@@ -77,3 +77,10 @@ export type UserProfileType = {
     posts: PostType[];
 }
 
+export type PagedUserType = {
+    users: UserType[],
+    totalPages: number,
+    currentPage: number,
+    size: number,
+    hasNext: number
+}
