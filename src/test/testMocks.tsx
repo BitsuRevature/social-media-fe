@@ -1,15 +1,19 @@
-import { PostType, UserType } from '../util/types';
+import { PostType, UserType, CommentType } from '../util/types';
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/authSlice';
+
+export const mockUser = {
+  username: 'testuser',
+  profilePicture: "",
+  bio: "",
+  id: 9999
+} as UserType;
 
 export const preloadedState = {
     auth: {
       auth: {
         token: null,
-        id: null,
-        username: null,
-        profilePicture: null,
-        bio: null,
+        ...mockUser,
         firstname: "test",
         lastname:  "testerson",
         exipreDate: undefined
@@ -24,9 +28,7 @@ export const testStore = configureStore({
     },
     preloadedState, 
   });
-  
-export const mockUser = {} as UserType;
-  
+
 export const mockPost = {
       content: "mock post content",
       createdAt: Date.now().toString(),
@@ -37,3 +39,9 @@ export const mockPost = {
       user: mockUser
   } as PostType;
 
+export const mockComment = {
+  content: "test comment",
+  createdAt: Date.now().toString(),
+  user: mockUser,
+  id: 9999
+} as CommentType;

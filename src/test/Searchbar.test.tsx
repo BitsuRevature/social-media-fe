@@ -6,10 +6,11 @@ import {
   CssVarsProvider,
 } from "@mui/joy";
 import { testStore } from './testMocks'
+import { assert } from 'vitest';
 
-describe('Post component', () => {
+describe('Search Bar', () => {
   it('renders searchbar and does not crash', () => {
-    render(
+    const renderContainer = () => render(
       <CssVarsProvider>
       <Provider store={testStore}>
         <Router>
@@ -18,5 +19,6 @@ describe('Post component', () => {
       </Provider>
       </CssVarsProvider>
     );
+    assert.doesNotThrow(renderContainer);
   });
 });

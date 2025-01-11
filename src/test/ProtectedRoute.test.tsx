@@ -20,11 +20,11 @@ import { preloadedState as mockUserState } from './testMocks';
 
     expect(() => render(
         <CssVarsProvider>
-        <Provider store={testStore}>
-          <Router>
-            <ProtectedRoute />
-          </Router>
-        </Provider>
+          <Provider store={testStore}>
+            <Router>
+              <ProtectedRoute />
+            </Router>
+          </Provider>
         </CssVarsProvider>
       )).toThrow();
     });
@@ -39,11 +39,11 @@ import { preloadedState as mockUserState } from './testMocks';
 
         render(
             <CssVarsProvider>
-            <Provider store={testStore}>
-            <Router>
-                <ProtectedRoute />
-            </Router>
-            </Provider>
+              <Provider store={testStore}>
+              <Router>
+                  <ProtectedRoute />
+              </Router>
+              </Provider>
             </CssVarsProvider>
         )
         const fn_ln = document.querySelector("[data-testid=fn_ln]");
