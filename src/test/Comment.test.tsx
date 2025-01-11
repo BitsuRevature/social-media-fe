@@ -11,11 +11,11 @@ import { assert } from 'vitest';
 describe('Comment Component', () => {
     const renderContainer = () => render(
         <CssVarsProvider>
-        <Provider store={testStore}>
-          <Router>
-            <Comment postId={mockPost.id} comment={mockComment}/>
-          </Router>
-        </Provider>
+          <Provider store={testStore}>
+            <Router>
+              <Comment postId={mockPost.id} comment={mockComment}/>
+            </Router>
+          </Provider>
         </CssVarsProvider>
       );
 

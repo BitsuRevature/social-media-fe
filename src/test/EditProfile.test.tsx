@@ -20,11 +20,11 @@ describe('Search Bar', () => {
       });
       const renderContainer = () => render(
         <CssVarsProvider>
-        <Provider store={testStore}>
-            <Router>
-            <EditProfile />
-            </Router>
-        </Provider>
+            <Provider store={testStore}>
+                <Router>
+                <EditProfile />
+                </Router>
+            </Provider>
         </CssVarsProvider>
         );
 
