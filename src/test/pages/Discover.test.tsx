@@ -8,7 +8,7 @@ import {
 import { testPostStore } from '../testMocks'
 import { assert } from 'vitest';
 
-describe('Search Bar', () => {
+describe('Discover Page', () => {
   it('renders Discover page and does not crash', () => {
     const renderContainer = () => render(
       <CssVarsProvider>

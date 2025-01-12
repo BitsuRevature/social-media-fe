@@ -38,6 +38,7 @@ export const preloadedPostState = {
     loadingId: []
 }
 
+//my vscode linter says this is wrong but it works
 export const testPostStore = configureStore({
   reducer: {
     post: postReducer

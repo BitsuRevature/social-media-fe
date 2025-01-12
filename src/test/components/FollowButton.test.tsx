@@ -8,7 +8,7 @@ import {
 import { testStore, mockUser } from '../testMocks'
 import { assert } from 'vitest';
 
-describe('Search Bar', () => {
+describe('Follow Button', () => {
   it('renders FollowButton component and does not crash', () => {
     const renderContainer = () => render(
       <CssVarsProvider>

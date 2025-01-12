@@ -1,20 +1,20 @@
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Connections from '../../pages/Connections';
+import Feed from '../../pages/Feed';
 import {
   CssVarsProvider,
 } from "@mui/joy";
-import { testStore } from '../testMocks'
+import { testPostStore } from '../testMocks'
 import { assert } from 'vitest';
 
-describe('Connection Page', () => {
-  it('renders Connections Page and does not crash', () => {
+describe('Feed Page', () => {
+  it('renders Feed page and does not crash', () => {
     const renderContainer = () => render(
       <CssVarsProvider>
-      <Provider store={testStore}>
+      <Provider store={testPostStore}>
         <Router>
-          <Connections />
+          <Feed />
         </Router>
       </Provider>
       </CssVarsProvider>

@@ -128,7 +128,7 @@ export default function SignIn() {
                                     <Input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                                 </FormControl>
                                 <Stack sx={{ gap: 4, mt: 2 }}>
-                                    <Button type="submit" fullWidth disabled={!(username && password)}>
+                                    <Button type="submit" fullWidth disabled={!(username && password)} data-testid="testSubmitBtn">
                                         Sign in
                                     </Button>
                                 </Stack>

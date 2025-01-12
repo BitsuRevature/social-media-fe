@@ -8,7 +8,7 @@ import {
 import { testStore } from '../testMocks'
 import { assert } from 'vitest';
 
-describe('Search Bar', () => {
+describe('Search Connections', () => {
   it('renders SearchConnections component and does not crash', () => {
     const renderContainer = () => render(
       <CssVarsProvider>
