@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import ProtectedRoute from '../components/ProtectedRoute';
+import ProtectedRoute from '../../components/ProtectedRoute';
 import { configureStore } from '@reduxjs/toolkit';
 import {
   CssVarsProvider,
 } from "@mui/joy";
-import { testStore } from './testMocks';
+import { testStore } from '../testMocks';
 
   
   describe('Protected route', () => {

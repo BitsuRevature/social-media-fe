@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import BalayHubLogo from '../components/BalayHubLogo';
+import BalayHubLogo from '../../components/BalayHubLogo';
 import {
   CssVarsProvider,
 } from "@mui/joy";
-import { testStore } from './testMocks'
+import { testStore } from '../testMocks'
 import { assert } from 'vitest';
 
 describe('BalayHub component', () => {

@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Comment from '../components/Comment';
+import Comment from '../../components/Comment';
 import {
   CssVarsProvider,
 } from "@mui/joy";
-import { testStore, mockPost, mockComment } from './testMocks';
+import { testStore, mockPost, mockComment } from '../testMocks';
 import { assert } from 'vitest';
 
 describe('Comment Component', () => {

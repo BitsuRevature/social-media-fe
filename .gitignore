@@ -32,3 +32,5 @@ firebaseConfigg.ts
 .DS_Store
 
 src/components/__snapshots__
+
+src/test/testAssets/

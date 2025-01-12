@@ -1,14 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-/* import ProtectedRoute from '../components/ProtectedRoute'; */
-import EditProfile from '../components/EditProfile';
+import EditProfile from '../../components/EditProfile';
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from '../features/auth/authSlice';
+import authReducer from '../../features/auth/authSlice';
 import {
   CssVarsProvider,
 } from "@mui/joy";
-import { preloadedState as mockUserState } from './testMocks';
+import { preloadedState as mockUserState } from '../testMocks';
 import { assert } from 'vitest';
 
 describe('Search Bar', () => {

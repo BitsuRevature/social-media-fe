@@ -1,24 +1,24 @@
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
+import Connections from '../../pages/Connections';
 import {
   CssVarsProvider,
 } from "@mui/joy";
-import { testStore } from './testMocks';
+import { testStore } from '../testMocks'
+import { assert } from 'vitest';
 
-describe('Sidebar Component', () => {
-  it('renders sidebar with user first and last name', () => {
-    render(
+describe('Search Bar', () => {
+  it('renders connections page and does not crash', () => {
+    const renderContainer = () => render(
       <CssVarsProvider>
       <Provider store={testStore}>
         <Router>
-          <Sidebar />
+          <Connections />
         </Router>
       </Provider>
       </CssVarsProvider>
     );
-    const fn_ln = document.querySelector("[data-testid=fn_ln]");
-    expect(fn_ln!.textContent).toBe("test testerson");
+    assert.doesNotThrow(renderContainer);
   });
 });

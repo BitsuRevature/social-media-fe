@@ -1,6 +1,8 @@
 import { PostType, UserType, CommentType } from '../util/types';
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/authSlice';
+import { checkFileSize } from '../util/helper';
+import { ChangeEvent } from 'react';
 
 export const mockUser = {
   username: 'testuser',
@@ -45,3 +47,23 @@ export const mockComment = {
   user: mockUser,
   id: 9999
 } as CommentType;
+
+export function mockHandleFileChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (file) {
+      try {
+        checkFileSize(file);
+        const reader = new FileReader();
+
+        // Read the file as a data URL
+        reader.onloadend = () => {
+          console.log('done "uploading"') // remove upload functionality for testing
+        };
+        // Read the file
+        reader.readAsDataURL(file);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }
+
