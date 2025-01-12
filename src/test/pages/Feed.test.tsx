@@ -19,6 +19,7 @@ describe('Feed Page', () => {
       </Provider>
       </CssVarsProvider>
     );
+    console.log(testPostStore.getState())
     assert.doesNotThrow(renderContainer);
   });
 });

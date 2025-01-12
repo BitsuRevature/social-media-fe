@@ -1,7 +1,7 @@
 import { PostType, UserType, CommentType } from '../util/types';
-import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/authSlice';
 import postReducer from '../features/post/postSlice';
+import { configureStore } from '@reduxjs/toolkit';
 import { checkFileSize } from '../util/helper';
 import { ChangeEvent } from 'react';
 
@@ -11,6 +11,7 @@ export const mockUser = {
   bio: "",
   id: 9999
 } as UserType;
+
 
 export const preloadedState = {
     auth: {
@@ -33,18 +34,20 @@ export const testStore = configureStore({
   });
 
 export const preloadedPostState = {
-    posts: [],
-    isLoading: false,
-    loadingId: []
+  posts: [],
+  isLoading: false,
+  loadingId: []
 }
 
-//my vscode linter says this is wrong but it works
+//vscode linter says this is wrong but it is correct
 export const testPostStore = configureStore({
   reducer: {
-    post: postReducer
+    //@ts-ignore
+    post: postReducer,
   },
   preloadedState: preloadedPostState
 })
+
 
 export const mockPost = {
       content: "mock post content",

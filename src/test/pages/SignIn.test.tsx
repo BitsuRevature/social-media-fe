@@ -36,7 +36,8 @@ describe('Sign In Page', () => {
     const submitBtn = screen.getByTestId("testSubmitBtn") as HTMLButtonElement;
     expect(submitBtn.disabled).toBe(true);
     });
-  it('will allow submit withusername and password', async() => {
+
+  it('will allow submit with username and password', async() => {
     renderContainer();
     const submitBtn = screen.getByTestId("testSubmitBtn") as HTMLButtonElement;
     const username = screen.getByTestId("testUserName").firstChild as HTMLInputElement;
