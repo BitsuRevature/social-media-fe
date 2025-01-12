@@ -9,7 +9,6 @@ import { testStore } from '../testMocks'
 import { assert } from 'vitest';
 
 describe('Profile Page', () => {
-    console.log(testStore)
   it('renders Profile page and does not crash', () => {
     const renderContainer = () => render(
       <CssVarsProvider>

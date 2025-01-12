@@ -121,11 +121,11 @@ export default function SignIn() {
                             >
                                 <FormControl required>
                                     <FormLabel>User Name</FormLabel>
-                                    <Input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                                    <Input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} data-testid="testUserName"/>
                                 </FormControl>
                                 <FormControl required>
                                     <FormLabel>Password</FormLabel>
-                                    <Input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                    <Input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} data-testid="testPassword"/>
                                 </FormControl>
                                 <Stack sx={{ gap: 4, mt: 2 }}>
                                     <Button type="submit" fullWidth disabled={!(username && password)} data-testid="testSubmitBtn">
