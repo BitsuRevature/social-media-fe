@@ -1,6 +1,7 @@
 import { PostType, UserType, CommentType } from '../util/types';
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/authSlice';
+import postReducer from '../features/post/postSlice';
 import { checkFileSize } from '../util/helper';
 import { ChangeEvent } from 'react';
 
@@ -30,6 +31,19 @@ export const testStore = configureStore({
     },
     preloadedState, 
   });
+
+export const preloadedPostState = {
+    posts: [],
+    isLoading: false,
+    loadingId: []
+}
+
+export const testPostStore = configureStore({
+  reducer: {
+    post: postReducer
+  },
+  preloadedState: preloadedPostState
+})
 
 export const mockPost = {
       content: "mock post content",

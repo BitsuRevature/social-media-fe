@@ -7,16 +7,10 @@ import authReducer from '../../features/auth/authSlice';
 import {
   CssVarsProvider,
 } from "@mui/joy";
-import { preloadedState as mockUserState } from '../testMocks';
+import { preloadedState as mockUserState, testStore } from '../testMocks';
 import { assert } from 'vitest';
 
-describe('Search Bar', () => {
-    const testStore = configureStore({
-        reducer: {
-          auth: authReducer,
-        },
-        preloadedState: mockUserState, 
-      });
+describe('Edit Profile', () => {
       const renderContainer = () => render(
         <CssVarsProvider>
             <Provider store={testStore}>
