@@ -5,7 +5,7 @@ import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import { useEffect, useState } from "react";
 import { data } from "react-router-dom";
-import { getFriendRequests, checkIsFriend, sendFriendRequest, unfriend, checkIsFriendRequest, acceptFriendRequest, declineFriendRequest } from "../util/apiHelper"
+import { getFriendRequests, checkIsFriend, sendFriendRequest, unfriend, checkIsFriendRequest, acceptFriendRequest, declineFriendRequest, checkSentFriendRequest } from "../util/apiHelper"
 
 type FriendButtonProps = {
     connection: UserType;
@@ -17,7 +17,8 @@ type FriendButtonProps = {
 export default function FriendButton({ connection }: FriendButtonProps) {
     const [isFriend, setIsFriend] = useState(false);
     const [hasFriendRequest, setFriendRequest] = useState(false);
-    const [isPending, setIsPending] = useState(false);
+
+    const [sentFriendRequest, setSentFriendRequest] = useState(false);
 
     useEffect(() => {
         checkIsFriend(connection.id).then((data) => {
@@ -28,12 +29,18 @@ export default function FriendButton({ connection }: FriendButtonProps) {
             setFriendRequest(data);
         })
 
+
+        checkSentFriendRequest(connection.id, "PENDING").then((data) => {
+            setSentFriendRequest(data);
+        })
+
     }, [])
 
     function handleFriend(e: React.MouseEvent) {
         e.stopPropagation();
         sendFriendRequest(connection.id).then(() => {
-            setIsFriend(true);
+            // setIsFriend(true);
+            setSentFriendRequest(true);
         })
     }
     function handleUnFriend(e: React.MouseEvent) {
@@ -42,16 +49,16 @@ export default function FriendButton({ connection }: FriendButtonProps) {
             setIsFriend(false);
         })
     }
-    function handleAcceptFriendRequest(e: React.MouseEvent){
+    function handleAcceptFriendRequest(e: React.MouseEvent) {
         e.stopPropagation();
-        acceptFriendRequest(connection.id).then(()=>{
+        acceptFriendRequest(connection.id).then(() => {
             setFriendRequest(false);
             setIsFriend(true);
         })
     }
-    function handleDeclineFriendRequest(e: React.MouseEvent){
+    function handleDeclineFriendRequest(e: React.MouseEvent) {
         e.stopPropagation();
-        declineFriendRequest(connection.id).then(()=>{
+        declineFriendRequest(connection.id).then(() => {
             setFriendRequest(false);
             setIsFriend(false);
         })
@@ -93,23 +100,28 @@ export default function FriendButton({ connection }: FriendButtonProps) {
                         </Button>
                     </>
                     :
+                    sentFriendRequest ?
+                        <Button size="sm" variant="solid" color="neutral"  disabled
+                            style={{
+                                position: "relative",
+                                right: 0
+                            }}
 
-                    <Button size="sm" variant="solid" color="primary"
-                        style={{
-                            position: "relative",
-                            right: 0
-                        }}
-                        onClick={(e) => handleFriend(e)}
-                    >
-                        <PersonAddIcon sx={{ marginRight: 1 }} /> Add Friend
+                        >
+                            <HourglassBottomIcon sx={{ marginRight: 1 }} /> Pending
+                        </Button>
+                        :
+                        <Button size="sm" variant="solid" color="primary"
+                            style={{
+                                position: "relative",
+                                right: 0
+                            }}
+                            onClick={(e) => handleFriend(e)}
+                        >
+                            <PersonAddIcon sx={{ marginRight: 1 }} /> Add Friend
 
-                    </Button>
-
-
-
+                        </Button>
             }
-
-
         </>
     )
 }

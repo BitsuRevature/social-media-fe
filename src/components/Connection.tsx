@@ -3,7 +3,7 @@ import { UserType } from "../util/types";
 import Card from "@mui/joy/Card";
 import Stack from "@mui/joy/Stack";
 import Typography from "@mui/joy/Typography";
-import { Avatar, CardContent } from "@mui/joy";
+import { Avatar, CardContent, Divider } from "@mui/joy";
 import { CardActions } from "@mui/joy";
 
 import FollowButton from "./FollowButton";
@@ -47,7 +47,8 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection}: Connectio
                     <CardActions>
                         <FriendButton
                             connection={connection}
-                        />
+                        /> 
+                        <Divider orientation="vertical"/>
                         <FollowButton connection={connection} />
                     </CardActions>
                 </Stack>

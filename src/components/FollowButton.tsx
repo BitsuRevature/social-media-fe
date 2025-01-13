@@ -1,8 +1,8 @@
 import { Button } from "@mui/joy"
 import { checkIfFollowing, follow, unFollow } from "../util/apiHelper"
 import { UserType } from "../util/types"
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 import { useEffect, useState } from "react";
 
 type FollowButtonProps = {
@@ -54,7 +54,7 @@ export default function FollowButton({ connection }: FollowButtonProps) {
                     }}
                     onClick={(e) => handleUnfollow(e)}
                 >
-                    <PersonRemoveIcon sx={{ marginRight: 1 }} /> Unfollow
+                    <RemoveCircleOutlineRoundedIcon sx={{ marginRight: 1 }} /> Unfollow
                 </Button> :
                 <Button size="sm" variant="solid" color="primary"
                     style={{
@@ -63,7 +63,7 @@ export default function FollowButton({ connection }: FollowButtonProps) {
                     }}
                     onClick={(e) => handleFollow(e)}
                 >
-                    <PersonAddIcon sx={{ marginRight: 1 }} /> Follow
+                    <AddCircleOutlineRoundedIcon sx={{ marginRight: 1 }} /> Follow
 
                 </Button>
             }

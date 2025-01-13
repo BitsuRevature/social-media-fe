@@ -1,6 +1,6 @@
 import axios from "../config/axiosConfig.ts";
-import { UserBioType, UserPIType, UserProfileType, UserType, FriendRequestType } from "./types";
-import { PagedUserType, UserBioType, UserPIType, UserProfileType, UserType } from "./types";
+import { UserBioType, UserPIType, UserProfileType, UserType,PagedUserType} from "./types";
+
 
 export async function changePIInfo(data: UserPIType) {
   try {
@@ -129,6 +129,10 @@ export async function checkIsFriendRequest(userId: number, status: string): Prom
   return response.data;
 }
 
+export async function checkSentFriendRequest(userId: number, status: string): Promise<boolean> {
+  const response = await axios.get(`/friends/sent-friend-request/${userId}/${status}`);
+  return response.data;
+}
 export async function checkIfFollowing(id: number): Promise<boolean>{
   try{
     const res = await axios.get(`/users/following/check/${id}`)

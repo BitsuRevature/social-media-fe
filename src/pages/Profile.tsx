@@ -120,11 +120,13 @@ export default function Profile() {
 
           {userProfile && userProfile.username !== authStore.auth?.username &&
             <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
-              <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
+              <CardActions sx={{ alignSelf: 'flex-end', pt: 2  }}>
                 <FollowButton connection={userProfile as UserType} />
+                <Divider orientation="vertical"/>
                 <FriendButton
                     connection={userProfile as UserType}
                 />
+
               </CardActions>
             </CardOverflow>
           }
