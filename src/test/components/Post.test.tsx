@@ -25,6 +25,7 @@ describe("Post component", () => {
       likeIcon: screen.getByTestId("FavoriteIcon"),
       removeIcon: screen.findByTestId("RemoveIcon"),
       commentInput: screen.findByPlaceholderText(/new comment/i),
+      addComment: screen.findByRole("button", { name: /add comment/i }),
     };
   };
 
@@ -48,5 +49,15 @@ describe("Post component", () => {
 
     expect(commentBox).toBeInTheDocument();
     expect(removeAction).toBeInTheDocument();
+  });
+
+  it("should not allow user to add an empty comment", async () => {
+    const { user, addIcon, commentInput, addComment } = renderComponent();
+    user.click(addIcon);
+    const commentBox = await commentInput;
+    const addBtn = await addComment;
+    expect(addBtn).toBeInTheDocument();
+    user.click(addBtn);
+    expect(commentBox).toBeInTheDocument();
   });
 });
