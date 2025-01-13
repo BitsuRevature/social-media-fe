@@ -9,7 +9,7 @@ export const mockUser = {
   username: 'testuser',
   profilePicture: "",
   bio: "",
-  id: 9999
+  id: 1
 } as UserType;
 
 
