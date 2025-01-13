@@ -45,7 +45,7 @@ export default function FollowButton({ connection }: FollowButtonProps) {
 
     return (
         <>
-        {/* {isFollowing} */}
+            {/* {isFollowing} */}
             {isFollowing ?
                 <Button size="sm" variant="solid" color="danger"
                     style={{

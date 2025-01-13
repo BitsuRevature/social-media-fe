@@ -4,37 +4,31 @@ import { UserType } from '../util/types';
 import Connection from "./Connection";
 import { useOutletContext } from "react-router-dom";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Box, IconButton } from "@mui/joy";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { Box, IconButton, Typography } from "@mui/joy";
 
 export default function FollowingConnections() {
     const { search } = useOutletContext<{ search: string }>();
     const [following, setFollowing]: [UserType[], any] = useState([]);
     const [page, setPage]: [number, any] = useState(0);
-    const [size, setSize]: [number, any] = useState(5);
+    const [size]: [number, any] = useState(5);
     const [hasNext, setHasNext]: [boolean, any] = useState(false);
     const [totalPages, setTotalPages]: [number, any] = useState(0);
 
     useEffect(() => {
-        getUserFollowing(search)
+        getUserFollowing(search, page, size)
             .then((data) => {
                 setFollowing(data.users)
                 setHasNext(data.hasNext);
                 setTotalPages(data.totalPages);
             })
-    }, [search])
+    }, [search, page])
 
     function handlePrev() {
-        if (page == 0) {
-            return;
-        }
         setPage(page - 1);
     }
 
     function handleNext() {
-        if (!hasNext) {
-            return;
-        }
         setPage(page + 1);
     }
 
@@ -49,16 +43,19 @@ export default function FollowingConnections() {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    userSelect: "false",
                 }}
             >
                 <IconButton
                     onClick={handlePrev}
+                    disabled={page == 0}
                 >
-                    <ArrowBackIosIcon />
+                    <ArrowBackIosNewIcon />
                 </IconButton>
-                {`${page + 1}/${totalPages}`}
+                <Typography sx={{ userSelect: "none" }}>{`${page + 1}/${totalPages}`}</Typography>
                 <IconButton
                     onClick={handleNext}
+                    disabled={!hasNext}
                 >
                     <ArrowForwardIosIcon />
                 </IconButton>
