@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react"
 import { getAllUsers } from "../util/apiHelper"
-import { PagedUserType, UserType } from '../util/types';
+import { UserType } from '../util/types';
 import Connection from "./Connection";
 import { useAppSelector } from "../app/hooks";
 import { useOutletContext } from "react-router-dom";
-import { Box, IconButton } from "@mui/joy";
+import { Box, IconButton, Typography } from "@mui/joy";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 export default function SearchConnections() {
     const authStore = useAppSelector(store => store.auth);
     const { search } = useOutletContext<{ search: string }>();
     const [connections, setConnections]: [UserType[], any] = useState([]);
     const [page, setPage]: [number, any] = useState(0);
-    const [size, setSize]: [number, any] = useState(5);
+    const [size]: [number, any] = useState(5);
     const [hasNext, setHasNext]: [boolean, any] = useState(false);
     const [totalPages, setTotalPages]: [number, any] = useState(0);
 
@@ -27,16 +27,10 @@ export default function SearchConnections() {
     }, [search, page])
 
     function handlePrev() {
-        if(page == 0){
-            return;
-        }
         setPage(page - 1);
     }
 
     function handleNext() {
-        if(!hasNext){
-            return;
-        }
         setPage(page + 1);
     }
 
@@ -53,16 +47,19 @@ export default function SearchConnections() {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    userSelect: "false",
                 }}
             >
                 <IconButton
                     onClick={handlePrev}
+                    disabled={page == 0}
                 >
-                    <ArrowBackIosIcon />
+                    <ArrowBackIosNewIcon />
                 </IconButton>
-                {`${page + 1}/${totalPages}`}
+                <Typography sx={{ userSelect: "none" }}>{totalPages <= 0 ? '0/0' : `${page + 1}/${totalPages}`}</Typography>
                 <IconButton
                     onClick={handleNext}
+                    disabled={!hasNext}
                 >
                     <ArrowForwardIosIcon />
                 </IconButton>
