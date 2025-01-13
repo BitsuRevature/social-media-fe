@@ -27,7 +27,6 @@ export default function CreatePost() {
 
   const [mediaURL, setMediaURL] = useState("");
   const [fileDetails, setFileDetails] = useState<File | null>(null);
-  const [uploading, setUploading] = useState(false);
 
   const [content, setContent] = useState("");
 
@@ -76,7 +75,7 @@ export default function CreatePost() {
     if (content.length < 1 && fileDetails === null) {
       toast.error("Post content cannot be empty");
     } else {
-      uploadFile(fileDetails, uploading, setUploading)
+      uploadFile(fileDetails)
         .then((url) => {
           dispatch(
             createPost({
@@ -84,7 +83,6 @@ export default function CreatePost() {
               mediaURL: url as string,
             })
           ).then(() => {
-            setUploading(false);
             navigate("/");
           });
         })
@@ -145,14 +143,14 @@ export default function CreatePost() {
                 sx={
                   mediaURL
                     ? {
-                        bgcolor: "background.body",
-                        position: "absolute",
-                        zIndex: 2,
-                        borderRadius: "50%",
-                        left: 30,
-                        top: 30,
-                        boxShadow: "sm",
-                      }
+                      bgcolor: "background.body",
+                      position: "absolute",
+                      zIndex: 2,
+                      borderRadius: "50%",
+                      left: 30,
+                      top: 30,
+                      boxShadow: "sm",
+                    }
                     : {}
                 }
                 onClick={handleFilePickerOpen}
@@ -180,14 +178,14 @@ export default function CreatePost() {
                   sx={
                     mediaURL
                       ? {
-                          bgcolor: "background.body",
-                          position: "absolute",
-                          zIndex: 2,
-                          borderRadius: "50%",
-                          left: 70,
-                          top: 30,
-                          boxShadow: "sm",
-                        }
+                        bgcolor: "background.body",
+                        position: "absolute",
+                        zIndex: 2,
+                        borderRadius: "50%",
+                        left: 70,
+                        top: 30,
+                        boxShadow: "sm",
+                      }
                       : {}
                   }
                   onClick={handleFilePickerClear}
@@ -281,7 +279,7 @@ export default function CreatePost() {
               >
                 Cancel
               </Button>
-              <Button size="sm" variant="solid" onClick={handleSave}>
+              <Button size="sm" variant="solid" onClick={handleSave} disabled={content.length < 1 && fileDetails === null}>
                 Save
               </Button>
             </CardActions>
@@ -295,6 +293,7 @@ export default function CreatePost() {
         ref={fileInputRef}
         style={{ display: "none" }} // Hides the file input
         onChange={handleFileChange}
+        data-testid="testFileInput"
       />
     </Box>
   );

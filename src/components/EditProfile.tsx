@@ -1,4 +1,3 @@
-import AspectRatio from '@mui/joy/AspectRatio';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
@@ -21,6 +20,9 @@ import { updateBio, updatePI, updateProfilePic } from '../features/auth/authSlic
 import { uploadFile } from '../util/helper';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { Avatar } from '@mui/joy';
+import { Badge } from '@mui/joy';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 export default function EditProfile() {
 
@@ -84,6 +86,10 @@ export default function EditProfile() {
     });
   }
 
+  function handleBack() {
+    navigate("/profile")
+  }
+
   return (
     <Box sx={{ flex: 1, width: '100%' }}>
       <Box
@@ -94,7 +100,23 @@ export default function EditProfile() {
           zIndex: 9995,
         }}
       >
-        <Box sx={{ px: { xs: 2, md: 6 } }}>
+        <Box sx={{
+          px: { xs: 2, md: 6 },
+          display: "flex",
+          alignItems: "center",
+          gap: "1rem"
+        }}>
+          <IconButton
+            aria-label="Go Back"
+            sx={{
+              height: "3rem"
+            }}
+            variant="outlined"
+            color="neutral"
+            onClick={handleBack}
+          >
+            <KeyboardBackspaceIcon />
+          </IconButton>
           <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
             Edit Profile
           </Typography>
@@ -124,35 +146,38 @@ export default function EditProfile() {
             sx={{ my: 1 }}
           >
             <Stack direction="column" spacing={1}>
-              <AspectRatio
-                ratio="1"
-                maxHeight={200}
-                sx={{ flex: 1, minWidth: 120, borderRadius: '100%' }}
-              >
-                <img
-                  src={profilePicture!}
-                  loading="lazy"
-                  alt=""
-                />
-              </AspectRatio>
-              <IconButton
-                aria-label="upload new picture"
-                size="sm"
-                variant="outlined"
-                color="neutral"
+              <Badge
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                badgeInset={"8% 0"}
                 sx={{
-                  bgcolor: 'background.body',
-                  position: 'absolute',
-                  zIndex: 2,
-                  borderRadius: '50%',
-                  left: 100,
-                  top: 170,
-                  boxShadow: 'sm',
+                  '& .MuiBadge-badge': {
+                    transform: 'translate(-35%, -35%)',
+                  },
                 }}
-                onClick={handleFilePickerOpen}
+                badgeContent={
+                  <IconButton
+                    aria-label="upload new picture"
+                    size="sm"
+                    variant="outlined"
+                    color="neutral"
+                    sx={{
+                      bgcolor: 'background.body',
+                      position: 'absolute',
+                      borderRadius: '50%',
+                      boxShadow: 'sm',
+                    }}
+                    onClick={handleFilePickerOpen}
+                  >
+                    <EditRoundedIcon />
+                  </IconButton>
+                }
               >
-                <EditRoundedIcon />
-              </IconButton>
+                <Avatar
+                  src={profilePicture as string}
+                  alt={"Your profile picture"}
+                  sx={{ width: 200, height: 200 }}
+                />
+              </Badge>
             </Stack>
             <Stack spacing={2} sx={{ flexGrow: 1 }}>
               <Stack spacing={1}>
@@ -212,7 +237,7 @@ export default function EditProfile() {
           </Stack>
         </Card>
         <Button onClick={handleSave}>Save</Button>
-      </Stack>
+      </Stack >
       <input
         type="file"
         accept=".jpg,.jpeg,.png,.gif"
@@ -220,6 +245,6 @@ export default function EditProfile() {
         style={{ display: 'none' }} // Hides the file input
         onChange={handleFileChange}
       />
-    </Box>
+    </Box >
   );
 }

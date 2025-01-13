@@ -1,6 +1,6 @@
 import * as React from 'react';
 import GlobalStyles from '@mui/joy/GlobalStyles';
-import Avatar from '@mui/joy/Avatar';
+import { Avatar } from '@mui/joy';
 import Box from '@mui/joy/Box';
 import Divider from '@mui/joy/Divider';
 import IconButton from '@mui/joy/IconButton';
@@ -14,17 +14,15 @@ import HomeIcon from '@mui/icons-material/Home';
 import ExploreIcon from '@mui/icons-material/Explore';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
-import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import PostAddIcon from '@mui/icons-material/PostAdd';
 
 import { closeSidebar } from '../util/utils';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { logout } from '../features/auth/authSlice';
 import ColorSchemeToggle from './ColorSchemeToggle';
-
-
+import BalayHubLogo from './BalayHubLogo';
 
 
 function Toggler({
@@ -135,12 +133,7 @@ export default function Sidebar() {
         onClick={() => closeSidebar()}
       />
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-          <IconButton variant="soft" color="primary" size="sm">
-            <BrightnessAutoRoundedIcon />
-          </IconButton>
-          <Typography level="title-lg">Social Media</Typography>
-        </Box>
+        <BalayHubLogo />
         <ColorSchemeToggle />
       </Box>
       <Divider />
@@ -199,7 +192,7 @@ export default function Sidebar() {
                 () => handleNavigation('/posts/create')
               }
             >
-              <AddRoundedIcon />
+              <PostAddIcon />
 
               <ListItemContent>
                 <Typography level="title-sm">Create Post</Typography>
@@ -209,7 +202,6 @@ export default function Sidebar() {
 
           <ListItem nested>
             <Toggler
-              defaultExpanded
               renderToggle={({ open, setOpen }) => (
                 <ListItemButton onClick={() => setOpen(!open)}>
                   <GroupRoundedIcon />
@@ -271,9 +263,10 @@ export default function Sidebar() {
           variant="outlined"
           size="sm"
           src={authStore.auth?.profilePicture as string}
+          alt={"Your profile picture"}
         />
         <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography level="title-sm">{`${authStore.auth?.firstname} ${authStore.auth?.lastname}`}</Typography>
+          <Typography level="title-sm" data-testid="fn_ln">{`${authStore.auth?.firstname} ${authStore.auth?.lastname}`}</Typography>
           <Typography level="body-xs">{authStore.auth?.username}</Typography>
         </Box>
         <IconButton size="sm" variant="plain" color="neutral" title="Logout" onClick={(e) => handleLogOut(e)} >

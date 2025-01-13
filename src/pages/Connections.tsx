@@ -3,8 +3,9 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { FunctionComponent, useState } from 'react';
-import { FormControl, Input } from '@mui/joy';
+import { FormControl } from '@mui/joy';
 import { Outlet, useLocation } from 'react-router-dom';
+import SearchBar from '../components/SearchBar';
 
 interface ConnectionsProps {
 
@@ -48,12 +49,7 @@ const Connections: FunctionComponent<ConnectionsProps> = () => {
         }}
       >
         <FormControl id="free-solo-demo" >
-          <Input
-            placeholder='Search'
-            onChange={(e) => {
-              setSearch(e.target.value)
-            }}
-          />
+          <SearchBar onChange={setSearch} />
         </FormControl>
 
         <Outlet context={{ search }} />

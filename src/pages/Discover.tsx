@@ -13,10 +13,10 @@ export default function Discover() {
     useEffect(() => {
         dispatch(getPosts(""));
     }, [])
-
+    console.log(postStore)
     return (
         <>
-            {!postStore.isLoading && <Posts posts={postStore.posts} heading="Discover" />}
+            {<Posts posts={postStore.posts} heading="Discover" />}
         </>
     )
 }

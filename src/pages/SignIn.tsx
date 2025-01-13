@@ -1,32 +1,33 @@
-import * as React from 'react';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
-import IconButton from '@mui/joy/IconButton';
-import Link from '@mui/joy/Link';
+import MuiLink from '@mui/joy/Link';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
-import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
 import { useAppDispatch } from '../app/hooks';
 import { login } from '../features/auth/authSlice';
 import ColorSchemeToggle from '../components/ColorSchemeToggle';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import BalayHubLogo from '../components/BalayHubLogo';
+import { useState } from 'react';
 
 export default function SignIn() {
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget as HTMLFormElement);
         dispatch(login(
             {
-                username: data.get('username') as string,
-                password: data.get('password') as string
+                username: username,
+                password: password,
             },
         )).then(() => {
             navigate('/feed');
@@ -64,12 +65,7 @@ export default function SignIn() {
                         component="header"
                         sx={{ py: 3, display: 'flex', justifyContent: 'space-between' }}
                     >
-                        <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
-                            <IconButton variant="soft" color="primary" size="sm">
-                                <BadgeRoundedIcon />
-                            </IconButton>
-                            <Typography level="title-lg">Company logo</Typography>
-                        </Box>
+                        <BalayHubLogo />
                         <ColorSchemeToggle />
                     </Box>
                     <Box
@@ -102,8 +98,10 @@ export default function SignIn() {
                                 </Typography>
                                 <Typography level="body-sm">
                                     Are you new here?{' '}
-                                    <Link href="/register" level="title-sm">
-                                        Sign up!
+                                    <Link to="/register" >
+                                        <MuiLink level="title-sm">
+                                            Sign in!
+                                        </MuiLink>
                                     </Link>
                                 </Typography>
                             </Stack>
@@ -123,14 +121,14 @@ export default function SignIn() {
                             >
                                 <FormControl required>
                                     <FormLabel>User Name</FormLabel>
-                                    <Input type="text" name="username" />
+                                    <Input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} data-testid="testUserName"/>
                                 </FormControl>
                                 <FormControl required>
                                     <FormLabel>Password</FormLabel>
-                                    <Input type="password" name="password" />
+                                    <Input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} data-testid="testPassword"/>
                                 </FormControl>
                                 <Stack sx={{ gap: 4, mt: 2 }}>
-                                    <Button type="submit" fullWidth>
+                                    <Button type="submit" fullWidth disabled={!(username && password)} data-testid="testSubmitBtn">
                                         Sign in
                                     </Button>
                                 </Stack>
@@ -139,7 +137,7 @@ export default function SignIn() {
                     </Box>
                     <Box component="footer" sx={{ py: 3 }}>
                         <Typography level="body-xs" sx={{ textAlign: 'center' }}>
-                            © Social Media {new Date().getFullYear()}
+                            © BalayHub {new Date().getFullYear()}
                         </Typography>
                     </Box>
                 </Box>

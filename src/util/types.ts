@@ -84,3 +84,10 @@ export type FriendRequestType = {
     username: string;
     status: "PENDING" | "ACCEPTED" | "DECLINED";
 };
+export type PagedUserType = {
+    users: UserType[],
+    totalPages: number,
+    currentPage: number,
+    size: number,
+    hasNext: number
+}
