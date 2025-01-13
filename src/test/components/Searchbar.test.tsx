@@ -28,17 +28,7 @@ describe("Search Bar", () => {
   };
 
   it("renders searchbar and does not crash", () => {
-    const renderContainer = () =>
-      render(
-        <CssVarsProvider>
-          <Provider store={testStore}>
-            <Router>
-              <SearchBar onChange={() => console.log("change fn")} />
-            </Router>
-          </Provider>
-        </CssVarsProvider>
-      );
-    assert.doesNotThrow(renderContainer);
+    assert.doesNotThrow(renderComponent);
   });
 
   it("should render a searchBox", () => {
