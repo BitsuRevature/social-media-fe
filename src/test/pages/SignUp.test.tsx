@@ -1,24 +1,24 @@
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Post from './Post';
+import SignIn from '../../pages/SignIn';
 import {
   CssVarsProvider,
 } from "@mui/joy";
-import { testStore, mockPost } from '../../testMocks'
+import { testStore } from '../testMocks'
+import { assert } from 'vitest';
 
-describe('Post component', () => {
-  it('renders post component with supplied mock data', () => {
-    render(
+describe('Sign Up', () => {
+  it('renders Sign Up page and does not crash', () => {
+    const renderContainer = () => render(
       <CssVarsProvider>
       <Provider store={testStore}>
         <Router>
-          <Post post={mockPost}/>
+          <SignIn />
         </Router>
       </Provider>
       </CssVarsProvider>
     );
-    const pc = document.querySelector("[data-testid=postContent]");
-    expect(pc!.textContent).toBe("mock post content");
+    assert.doesNotThrow(renderContainer);
   });
 });

@@ -293,6 +293,7 @@ export default function CreatePost() {
         ref={fileInputRef}
         style={{ display: "none" }} // Hides the file input
         onChange={handleFileChange}
+        data-testid="testFileInput"
       />
     </Box>
   );
