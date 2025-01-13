@@ -52,7 +52,7 @@ export default function FollowingConnections() {
                 >
                     <ArrowBackIosNewIcon />
                 </IconButton>
-                <Typography sx={{ userSelect: "none" }}>{`${page + 1}/${totalPages}`}</Typography>
+                <Typography sx={{ userSelect: "none" }}>{totalPages <= 0 ? '0/0' : `${page + 1}/${totalPages}`}</Typography>
                 <IconButton
                     onClick={handleNext}
                     disabled={!hasNext}
