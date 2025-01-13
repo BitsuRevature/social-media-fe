@@ -8,15 +8,19 @@ import { CardContent } from "@mui/joy";
 import { CardActions } from "@mui/joy";
 
 import FollowButton from "./FollowButton";
+import FriendButton from "./FriendButtons";
 import { useNavigate } from "react-router-dom";
 
 interface ConnectionProps {
     connection: UserType
-    following: UserType[]
-    setFollowing: any
+    following?: UserType[]
+    setFollowing?: React.Dispatch<React.SetStateAction<UserType[]>>;
+    friendRequests?: any[];
+    setFriendRequests?: any;
+    onUnfriend?: (connectionId: number) => Promise<void>;
 }
 
-const Connection: FunctionComponent<ConnectionProps> = ({ connection, following, setFollowing }: ConnectionProps) => {
+const Connection: FunctionComponent<ConnectionProps> = ({ connection, following, setFollowing ,friendRequests, setFriendRequests, onUnfriend,  }: ConnectionProps) => {
     const navigate = useNavigate();
 
     return (
@@ -55,7 +59,14 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection, following,
                     </div>
                 </CardContent>
                 <CardActions>
-                    <FollowButton connection={connection} following={following} setFollowing={setFollowing} />
+                        <FriendButton
+                            connection={connection}
+                        />
+                        <FollowButton
+                            connection={connection}
+                            following={following || []} // Provide default value
+                            setFollowing={setFollowing}
+                        />
                 </CardActions>
             </Stack>
         </Card>

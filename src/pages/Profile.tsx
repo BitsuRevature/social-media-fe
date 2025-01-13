@@ -12,12 +12,13 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { useAppSelector } from '../app/hooks';
 import { useEffect, useState } from 'react';
-import { getUserDetails, getUserFollowing } from '../util/apiHelper';
+import { getUserDetails, getUserFollowing, getFriendRequests, unfriend } from '../util/apiHelper';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UserProfileType, UserType } from '../util/types';
 import FollowButton from '../components/FollowButton';
 import Posts from './Posts';
 import { IconButton } from '@mui/joy';
+import FriendButton from '../components/FriendButtons';
 
 export default function Profile() {
 
@@ -28,6 +29,8 @@ export default function Profile() {
 
   const [userProfile, setUserProfile] = useState<UserProfileType>();
   const [following, setFollowing]: [UserType[], any] = useState([]);
+  const [friendRequests, setFriendRequests]: [any[], any] = useState([]);
+
 
   useEffect(() => {
     if (username === authStore.auth?.username) {
@@ -40,8 +43,17 @@ export default function Profile() {
     getUserFollowing("")
       .then((data) => {
         setFollowing(data);
-      })
+      });
+
+      getFriendRequests().then((data) => {
+        setFriendRequests(data);
+      });
+
   }, [authStore, navigate]);
+  const handleUnfriend = async (connectionId: number) => {
+    await unfriend(connectionId);
+    setFriendRequests(friendRequests.filter((req) => req.Id !== connectionId));
+  };
 
   return (
     <Box sx={{ flex: 1, width: '100%' }}>
@@ -135,6 +147,9 @@ export default function Profile() {
             <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
               <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
                 <FollowButton connection={userProfile as UserType} following={following} setFollowing={setFollowing} />
+                <FriendButton
+                    connection={userProfile as UserType}
+                />
               </CardActions>
             </CardOverflow>
           }

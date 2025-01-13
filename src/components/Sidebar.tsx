@@ -241,6 +241,13 @@ export default function Sidebar() {
                 </ListItem>
                 <ListItem>
                   <ListItemButton
+                    onClick={
+                      () => handleNavigation('/users/friends')
+                    }
+                  >Friends</ListItemButton>
+                </ListItem>
+                <ListItem>
+                  <ListItemButton
 
                     onClick={
                       () => handleNavigation('/users/search')

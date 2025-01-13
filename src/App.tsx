@@ -27,6 +27,7 @@ import Discover from './pages/Discover.tsx';
 import Feed from './pages/Feed.tsx';
 import SearchConnections from "./components/SearchConnections.tsx";
 import Profile from "./pages/Profile.tsx";
+import FriendsConnections from "./components/FriendConnections.tsx";
 
 function App() {
     const dispatch = useAppDispatch();
@@ -85,6 +86,7 @@ function App() {
                         <Route element={<Connections />}>
                             <Route path="/users/following" element={<FollowingConnections />} />
                             <Route path="/users/followers" element={<FollowersConnections />} />
+                            <Route path="/users/friends" element={<FriendsConnections />} />
                             <Route path="/users/search" element={<SearchConnections />} />
                         </Route>
                         <Route path="/profile" element={<Profile />} />
