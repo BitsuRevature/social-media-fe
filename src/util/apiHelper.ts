@@ -36,9 +36,9 @@ export async function getAllUsers(search: string, page: number, size: number): P
   }
 }
 
-export async function getUserFollowing(search: string): Promise<PagedUserType> {
+export async function getUserFollowing(search: string, page: number, size: number): Promise<PagedUserType> {
   try {
-    const response = await axios.get(`/users/following?search=${search}`)
+    const response = await axios.get(`/users/following?search=${search}&page=${page}&size=${size}`)
     console.info("==============API HELPER=============== USER")
     console.info(response.data);
 
@@ -48,9 +48,9 @@ export async function getUserFollowing(search: string): Promise<PagedUserType> {
   }
 }
 
-export async function getUserFollowers(search: string): Promise<PagedUserType> {
+export async function getUserFollowers(search: string, page: number, size: number): Promise<PagedUserType> {
   try {
-    const response = await axios.get(`/users/followers?search=${search}`)
+    const response = await axios.get(`/users/followers?search=${search}&page=${page}&size=${size}`)
     console.info("==============API HELPER=============== USER")
     console.info(response.data);
 
