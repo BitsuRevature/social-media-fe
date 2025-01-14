@@ -81,6 +81,10 @@ export default function Sidebar() {
     })
   }, [])
 
+  React.useEffect(() => {
+    setFriendRequestCount(userStore.friendRequests.length);
+  }, [userStore.friendRequests])
+
 
   function handleLogOut(e: React.MouseEvent) {
     e.stopPropagation();
@@ -265,7 +269,7 @@ export default function Sidebar() {
                           transform: 'translate(-100%, -50%)',
                         },
                       }}
-                      invisible={!friendRequestCount || friendRequestCount === 0}
+                      invisible={!friendRequestCount}
                     >
                       Friends
                     </Badge>

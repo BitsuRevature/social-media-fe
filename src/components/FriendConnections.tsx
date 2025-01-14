@@ -23,7 +23,7 @@ export default function FriendsConnections() {
             setFriendRequests(userStore.friendRequests);
         })
 
-    }, [])
+    }, [userStore.friendRequests])
 
     return (
         <>
