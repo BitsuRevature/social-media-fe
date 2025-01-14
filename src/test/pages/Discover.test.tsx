@@ -5,14 +5,14 @@ import Discover from '../../pages/Discover';
 import {
   CssVarsProvider,
 } from "@mui/joy";
-import { testPostStore } from '../testMocks'
+import { testStore } from '../testMocks'
 import { assert } from 'vitest';
 
 describe('Discover Page', () => {
   it('renders Discover page and does not crash', () => {
     const renderContainer = () => render(
       <CssVarsProvider>
-      <Provider store={testPostStore}>
+      <Provider store={testStore}>
         <Router>
           <Discover />
         </Router>
