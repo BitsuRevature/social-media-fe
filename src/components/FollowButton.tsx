@@ -18,7 +18,6 @@ export default function FollowButton({ connection }: FollowButtonProps) {
     useEffect(() => {
         checkIfFollowing(connection.id).then(
             (data) => {
-                console.log(data)
                 setIsFollowing(data);
             }
         )
