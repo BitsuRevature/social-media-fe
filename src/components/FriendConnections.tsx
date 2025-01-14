@@ -26,19 +26,7 @@ export default function FriendsConnections() {
     }, [])
 
     return (
-        <div>
-            <h2>Your Friends</h2>
-            {friends.length > 0 ? (
-                friends.map(friend => (
-                    <Connection
-                        key={friend.id}
-                        connection={friend}
-                    />
-                ))
-            ) : (
-                <p>No friends yet.</p>
-            )}
-
+        <>
             <h2>Friend Requests</h2>
             {friendRequests.length > 0 ? (
                 friendRequests.map(request => (
@@ -50,6 +38,18 @@ export default function FriendsConnections() {
             ) : (
                 <p>No pending friend requests.</p>
             )}
-        </div>
+
+            <h2>Your Friends</h2>
+            {friends.length > 0 ? (
+                friends.map(friend => (
+                    <Connection
+                        key={friend.id}
+                        connection={friend}
+                    />
+                ))
+            ) : (
+                <p>No friends yet.</p>
+            )}
+        </>
     );
 }
