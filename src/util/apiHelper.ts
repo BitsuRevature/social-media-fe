@@ -80,7 +80,6 @@ export async function follow(id: number) {
 export async function getUserDetails(username: String): Promise<UserProfileType> {
   try {
     const response = await axios.get(`/users/${username}`);
-    console.log(response);
     return response.data;
   } catch (error) {
     throw error;

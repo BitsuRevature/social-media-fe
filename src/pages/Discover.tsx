@@ -13,7 +13,7 @@ export default function Discover() {
     useEffect(() => {
         dispatch(getPosts(""));
     }, [])
-    console.log(postStore)
+
     return (
         <>
             {<Posts posts={postStore.posts} heading="Discover" />}

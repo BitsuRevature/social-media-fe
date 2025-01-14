@@ -22,7 +22,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Avatar } from '@mui/joy';
 import { Badge } from '@mui/joy';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 export default function EditProfile() {
 
@@ -106,17 +105,6 @@ export default function EditProfile() {
           alignItems: "center",
           gap: "1rem"
         }}>
-          <IconButton
-            aria-label="Go Back"
-            sx={{
-              height: "3rem"
-            }}
-            variant="outlined"
-            color="neutral"
-            onClick={handleBack}
-          >
-            <KeyboardBackspaceIcon />
-          </IconButton>
           <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
             Edit Profile
           </Typography>
@@ -236,7 +224,10 @@ export default function EditProfile() {
               }} />
           </Stack>
         </Card>
-        <Button onClick={handleSave}>Save</Button>
+        <Box display="flex" gap="1em" sx={{ flexDirection: { xs: 'column', sm: 'row' } }}>
+          <Button onClick={handleSave} sx={{ flex: 1 }}>Save</Button>
+          <Button onClick={handleBack} color="neutral" sx={{ flex: 1 }}>Cancel</Button>
+        </Box>
       </Stack >
       <input
         type="file"

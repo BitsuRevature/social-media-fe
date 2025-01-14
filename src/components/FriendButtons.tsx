@@ -5,6 +5,9 @@ import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import { useEffect, useState } from "react";
 import { checkIsFriend, sendFriendRequest, unfriend, checkIsFriendRequest, acceptFriendRequest, declineFriendRequest, checkSentFriendRequest } from "../util/apiHelper"
+import { fetchFriendRequests } from "../features/user/userSlice";
+import { useAppDispatch } from "../app/hooks";
+
 
 type FriendButtonProps = {
     connection: UserType;
@@ -14,9 +17,10 @@ type FriendButtonProps = {
 };
 
 export default function FriendButton({ connection }: FriendButtonProps) {
-    const [isFriend, setIsFriend] = useState(false);
-    const [hasFriendRequest, setFriendRequest] = useState(false);
+    const dispatch = useAppDispatch();
 
+    const [isFriend, setIsFriend] = useState<boolean>();
+    const [hasFriendRequest, setFriendRequest] = useState(false);
     const [sentFriendRequest, setSentFriendRequest] = useState(false);
 
     useEffect(() => {
@@ -27,7 +31,6 @@ export default function FriendButton({ connection }: FriendButtonProps) {
         checkIsFriendRequest(connection.id, "PENDING").then((data) => {
             setFriendRequest(data);
         })
-
 
         checkSentFriendRequest(connection.id, "PENDING").then((data) => {
             setSentFriendRequest(data);
@@ -42,7 +45,7 @@ export default function FriendButton({ connection }: FriendButtonProps) {
             setSentFriendRequest(true);
         })
     }
-    function handleUnFriend(e: React.MouseEvent) {
+    function handleUnfriend(e: React.MouseEvent) {
         e.stopPropagation();
         unfriend(connection.id).then(() => {
             setIsFriend(false);
@@ -53,6 +56,7 @@ export default function FriendButton({ connection }: FriendButtonProps) {
         acceptFriendRequest(connection.id).then(() => {
             setFriendRequest(false);
             setIsFriend(true);
+            updateFriendRequestState();
         })
     }
     function handleDeclineFriendRequest(e: React.MouseEvent) {
@@ -60,66 +64,75 @@ export default function FriendButton({ connection }: FriendButtonProps) {
         declineFriendRequest(connection.id).then(() => {
             setFriendRequest(false);
             setIsFriend(false);
+            updateFriendRequestState();
         })
+    }
+
+    function updateFriendRequestState() {
+        dispatch(fetchFriendRequests())
     }
 
 
     return (
         <>
-            {isFriend ?
-                <Button size="sm" variant="solid" color="danger"
-                    style={{
-                        position: "relative",
-                        right: 0
-                    }}
-                    onClick={(e) => handleUnFriend(e)}
-                >
-                    <PersonRemoveIcon sx={{ marginRight: 1 }} /> Unfriend
-                </Button> :
-
-                hasFriendRequest ?
-                    <>
-                        <Button size="sm" variant="solid" color="primary"
-                            style={{
-                                position: "relative",
-                                right: 0
-                            }}
-                            onClick={(e) => handleAcceptFriendRequest(e)}
-                        >
-                            <PersonAddIcon sx={{ marginRight: 1 }} /> Accept
-                        </Button>
+            {isFriend !== undefined &&
+                <>
+                    {isFriend ?
                         <Button size="sm" variant="solid" color="danger"
                             style={{
                                 position: "relative",
                                 right: 0
                             }}
-                            onClick={(e) => handleDeclineFriendRequest(e)}
+                            onClick={(e) => handleUnfriend(e)}
                         >
-                            <PersonRemoveIcon sx={{ marginRight: 1 }} /> Decline
-                        </Button>
-                    </>
-                    :
-                    sentFriendRequest ?
-                        <Button size="sm" variant="solid" color="neutral"  disabled
-                            style={{
-                                position: "relative",
-                                right: 0
-                            }}
+                            <PersonRemoveIcon sx={{ marginRight: 1 }} /> Unfriend
+                        </Button> :
 
-                        >
-                            <HourglassBottomIcon sx={{ marginRight: 1 }} /> Pending
-                        </Button>
-                        :
-                        <Button size="sm" variant="solid" color="primary"
-                            style={{
-                                position: "relative",
-                                right: 0
-                            }}
-                            onClick={(e) => handleFriend(e)}
-                        >
-                            <PersonAddIcon sx={{ marginRight: 1 }} /> Add Friend
+                        hasFriendRequest ?
+                            <>
+                                <Button size="sm" variant="solid" color="primary"
+                                    style={{
+                                        position: "relative",
+                                        right: 0
+                                    }}
+                                    onClick={(e) => handleAcceptFriendRequest(e)}
+                                >
+                                    <PersonAddIcon sx={{ marginRight: 1 }} /> Accept
+                                </Button>
+                                <Button size="sm" variant="solid" color="danger"
+                                    style={{
+                                        position: "relative",
+                                        right: 0
+                                    }}
+                                    onClick={(e) => handleDeclineFriendRequest(e)}
+                                >
+                                    <PersonRemoveIcon sx={{ marginRight: 1 }} /> Decline
+                                </Button>
+                            </>
+                            :
+                            sentFriendRequest ?
+                                <Button size="sm" variant="solid" color="neutral" disabled
+                                    style={{
+                                        position: "relative",
+                                        right: 0
+                                    }}
 
-                        </Button>
+                                >
+                                    <HourglassBottomIcon sx={{ marginRight: 1 }} /> Pending
+                                </Button>
+                                :
+                                <Button size="sm" variant="solid" color="primary"
+                                    style={{
+                                        position: "relative",
+                                        right: 0
+                                    }}
+                                    onClick={(e) => handleFriend(e)}
+                                >
+                                    <PersonAddIcon sx={{ marginRight: 1 }} /> Add Friend
+
+                                </Button>
+                    }
+                </>
             }
         </>
     )

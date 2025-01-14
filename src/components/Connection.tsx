@@ -15,7 +15,7 @@ interface ConnectionProps {
     connection: UserType
 }
 
-const Connection: FunctionComponent<ConnectionProps> = ({ connection}: ConnectionProps) => {
+const Connection: FunctionComponent<ConnectionProps> = ({ connection }: ConnectionProps) => {
 
     return (
         <LinkToProfile username={connection.username}>
@@ -23,7 +23,7 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection}: Connectio
                 <Stack
                     direction={"row"}
                     spacing={3}
-                    sx={{ display: { xs: 'flex', md: 'flex' }}}
+                    sx={{ display: { xs: 'flex', md: 'flex' } }}
                     alignItems={"center"}
                     justifyContent={"space-between"}
                 >
@@ -32,7 +32,8 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection}: Connectio
                             display: "flex",
                             my: 1,
                             flexDirection: "row",
-                            alignItems: "center"
+                            alignItems: "center",
+                            flex: '1 1 auto',
                         }}
                     >
                         <Avatar
@@ -44,16 +45,24 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection}: Connectio
                             <Typography level="title-sm">{connection.bio}</Typography>
                         </div>
                     </CardContent>
-                    <CardActions>
-                        <FriendButton
-                            connection={connection}
-                        /> 
-                        <Divider orientation="vertical"/>
+                    <CardActions
+                        sx={{
+                            display: 'flex',
+                            flex: '2 0 auto',
+                            justifyContent: 'flex-end',
+                            '& > button': {
+                                minWidth: 'fit-content',
+                                flex: '0 1 9em',
+                            },
+                        }}
+                    >
+                        <FriendButton connection={connection} />
+                        <Divider orientation="vertical" />
                         <FollowButton connection={connection} />
                     </CardActions>
                 </Stack>
             </Card>
-        </LinkToProfile>
+        </LinkToProfile >
     );
 }
 
