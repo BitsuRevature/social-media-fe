@@ -4,23 +4,27 @@ import Connection from "./Connection";
 import { CardActions, CardOverflow } from "@mui/joy";
 import FriendButton from "./FriendButtons";
 import { useEffect, useState } from "react";
-import { getFriendRequests, getFriends } from "../util/apiHelper";
+import { getFriends } from "../util/apiHelper";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { fetchFriendRequests } from "../features/user/userSlice";
 
 
 export default function FriendsConnections() {
+
+    const userStore = useAppSelector(store => store.user);
+    const dispatch = useAppDispatch();
     const { id } = useParams();
 
     const [friends, setFriends]: [UserType[], any] = useState([]);
-
-    const [friendRequests, setFriendRequest]: [UserType[], any] = useState([]);
+    const [friendRequests, setFriendRequests]: [UserType[], any] = useState([]);
 
     useEffect(() => {
         getFriends().then((data) => {
             setFriends(data);
         })
 
-        getFriendRequests().then((data) => {
-            setFriendRequest(data);
+        dispatch(fetchFriendRequests()).then(() => {
+            setFriendRequests(userStore.friendRequests);
         })
 
     }, [])
