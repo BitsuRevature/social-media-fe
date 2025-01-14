@@ -122,6 +122,7 @@ export async function getFriendRequests(): Promise<UserType[]> {
 // Check if a user is a friend
 export async function checkIsFriend(userId: number): Promise<boolean> {
   const response = await axios.get(`/friends/is-friend/${userId}`);
+  console.log('getting friend requests! ', response.data);
   return response.data;
 }
 export async function checkIsFriendRequest(userId: number, status: string): Promise<boolean> {
