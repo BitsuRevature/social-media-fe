@@ -83,7 +83,7 @@ export default function CreatePost() {
               mediaURL: url as string,
             })
           ).then(() => {
-            navigate("/");
+            navigate("/profile");
           });
         })
         .catch((err) => {
