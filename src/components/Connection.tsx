@@ -21,9 +21,8 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection }: Connecti
         <LinkToProfile username={connection.username}>
             <Card>
                 <Stack
-                    direction={"row"}
                     spacing={3}
-                    sx={{ display: { xs: 'flex', md: 'flex' } }}
+                    sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}
                     alignItems={"center"}
                     justifyContent={"space-between"}
                 >
@@ -51,8 +50,10 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection }: Connecti
                             flex: '2 0 auto',
                             justifyContent: 'flex-end',
                             '& > button': {
-                                minWidth: 'fit-content',
-                                flex: '0 1 9em',
+                                sm: {
+                                    minWidth: 'fit-content',
+                                    flex: '0 1 9em',
+                                },
                             },
                         }}
                     >

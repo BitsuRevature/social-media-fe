@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { checkIsFriend, sendFriendRequest, unfriend, checkIsFriendRequest, acceptFriendRequest, declineFriendRequest, checkSentFriendRequest } from "../util/apiHelper"
 import { fetchFriendRequests } from "../features/user/userSlice";
 import { useAppDispatch } from "../app/hooks";
+import { Box } from "@mui/joy";
 
 
 type FriendButtonProps = {
@@ -89,7 +90,20 @@ export default function FriendButton({ connection }: FriendButtonProps) {
                         </Button> :
 
                         hasFriendRequest ?
-                            <>
+                            <Box sx={{
+                                display: "flex",
+                                flex: 1,
+                                justifyContent: 'flex-end',
+                                flexDirection: { xs: 'column', sm: 'row' },
+                                gap: 1,
+                                '& > button': {
+                                    sm: {
+                                        minWidth: 'fit-content',
+                                        flex: '0 1 9em',
+                                    },
+                                },
+                            }}
+                            >
                                 <Button size="sm" variant="solid" color="primary"
                                     style={{
                                         position: "relative",
@@ -108,7 +122,7 @@ export default function FriendButton({ connection }: FriendButtonProps) {
                                 >
                                     <PersonRemoveIcon sx={{ marginRight: 1 }} /> Decline
                                 </Button>
-                            </>
+                            </Box>
                             :
                             sentFriendRequest ?
                                 <Button size="sm" variant="solid" color="neutral" disabled
@@ -124,7 +138,8 @@ export default function FriendButton({ connection }: FriendButtonProps) {
                                 <Button size="sm" variant="solid" color="primary"
                                     style={{
                                         position: "relative",
-                                        right: 0
+                                        right: 0,
+                                        textWrap: 'nowrap',
                                     }}
                                     onClick={(e) => handleFriend(e)}
                                 >
