@@ -1,8 +1,5 @@
-import { useParams } from "react-router-dom";
 import { UserType } from "../util/types";
 import Connection from "./Connection";
-import { CardActions, CardOverflow } from "@mui/joy";
-import FriendButton from "./FriendButtons";
 import { useEffect, useState } from "react";
 import { getFriends } from "../util/apiHelper";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
@@ -13,7 +10,6 @@ export default function FriendsConnections() {
 
     const userStore = useAppSelector(store => store.user);
     const dispatch = useAppDispatch();
-    const { id } = useParams();
 
     const [friends, setFriends]: [UserType[], any] = useState([]);
     const [friendRequests, setFriendRequests]: [UserType[], any] = useState([]);
@@ -53,14 +49,6 @@ export default function FriendsConnections() {
                 ))
             ) : (
                 <p>No pending friend requests.</p>
-            )}
-
-            {id && (
-                <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
-                    <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
-                        <FriendButton connection={friends.find(friend => friend.id === parseInt(id))!} />
-                    </CardActions>
-                </CardOverflow>
             )}
         </div>
     );
