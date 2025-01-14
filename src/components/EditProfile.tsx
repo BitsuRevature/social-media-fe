@@ -131,7 +131,12 @@ export default function EditProfile() {
           <Stack
             direction="row"
             spacing={3}
-            sx={{ my: 1 }}
+            sx={{
+              my: 1,
+              display: 'flex',
+              flexDirection: { xs: 'column', sm: 'row' },
+              alignItems: { xs: 'center', sm: 'flex-start' },
+            }}
           >
             <Stack direction="column" spacing={1}>
               <Badge
