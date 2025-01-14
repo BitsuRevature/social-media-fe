@@ -22,7 +22,7 @@ export const preloadedState = {
       lastname: "testerson",
       exipreDate: undefined,
     },
-    isLoading: false,
+    isLoading: false
   },
 };
 
@@ -30,23 +30,9 @@ export const testStore = configureStore({
   reducer: {
     auth: authReducer,
     user: userReducer,
+    post: postReducer
   },
   preloadedState,
-});
-
-export const preloadedPostState = {
-  posts: [],
-  isLoading: false,
-  loadingId: [],
-};
-
-//vscode linter says this is wrong but it is correct
-export const testPostStore = configureStore({
-  reducer: {
-    //@ts-ignore
-    post: postReducer,
-  },
-  preloadedState: preloadedPostState,
 });
 
 export const mockPost = {
