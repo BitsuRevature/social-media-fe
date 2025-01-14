@@ -77,6 +77,13 @@ export type UserProfileType = {
     posts: PostType[];
 }
 
+export type FriendRequestType = {
+    requestId: number;
+    id: number;  // Use `id` for the connection's user ID
+    profilePicture: string;
+    username: string;
+    status: "PENDING" | "ACCEPTED" | "DECLINED";
+};
 export type PagedUserType = {
     users: UserType[],
     totalPages: number,

@@ -1,5 +1,6 @@
 import axios from "../config/axiosConfig.ts";
-import { PagedUserType, UserBioType, UserPIType, UserProfileType, UserType } from "./types";
+import { UserBioType, UserPIType, UserProfileType, UserType,PagedUserType} from "./types";
+
 
 export async function changePIInfo(data: UserPIType) {
   try {
@@ -86,6 +87,52 @@ export async function getUserDetails(username: String): Promise<UserProfileType>
   }
 }
 
+// Send a friend request
+export async function sendFriendRequest(id: number) {
+  await axios.post(`/friends/${id}`);
+}
+
+// Accept a friend request
+export async function acceptFriendRequest(requestId: number) {
+  await axios.put(`/friends/requests/accept/${requestId}`);
+}
+
+// Decline a friend request
+export async function declineFriendRequest(requestId: number) {
+  await axios.put(`/friends/requests/decline/${requestId}`);
+}
+
+// Unfriend a user
+export async function unfriend(id: number) {
+  await axios.delete(`/friends/${id}`);
+}
+
+// Get list of friends
+export async function getFriends(): Promise<UserType[]> {
+  const response = await axios.get(`/friends`);
+  return response.data;
+}
+
+// Get pending friend requests
+export async function getFriendRequests(): Promise<UserType[]> {
+  const response = await axios.get(`/friends/requests`);
+  return response.data;
+}
+
+// Check if a user is a friend
+export async function checkIsFriend(userId: number): Promise<boolean> {
+  const response = await axios.get(`/friends/is-friend/${userId}`);
+  return response.data;
+}
+export async function checkIsFriendRequest(userId: number, status: string): Promise<boolean> {
+  const response = await axios.get(`/friends/is-friend-request/${userId}/${status}`);
+  return response.data;
+}
+
+export async function checkSentFriendRequest(userId: number, status: string): Promise<boolean> {
+  const response = await axios.get(`/friends/sent-friend-request/${userId}/${status}`);
+  return response.data;
+}
 export async function checkIfFollowing(id: number): Promise<boolean>{
   try{
     const res = await axios.get(`/users/following/check/${id}`)

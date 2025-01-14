@@ -11,12 +11,13 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { useAppSelector } from '../app/hooks';
 import { useEffect, useState } from 'react';
-import { getUserDetails, getUserFollowing } from '../util/apiHelper';
+import { getUserDetails, getUserFollowing, getFriendRequests, unfriend } from '../util/apiHelper';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UserProfileType, UserType } from '../util/types';
 import FollowButton from '../components/FollowButton';
 import Posts from './Posts';
 import { Avatar, IconButton } from '@mui/joy';
+import FriendButton from '../components/FriendButtons';
 
 export default function Profile() {
 
@@ -119,8 +120,13 @@ export default function Profile() {
 
           {userProfile && userProfile.username !== authStore.auth?.username &&
             <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
-              <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
+              <CardActions sx={{ alignSelf: 'flex-end', pt: 2  }}>
                 <FollowButton connection={userProfile as UserType} />
+                <Divider orientation="vertical"/>
+                <FriendButton
+                    connection={userProfile as UserType}
+                />
+
               </CardActions>
             </CardOverflow>
           }
