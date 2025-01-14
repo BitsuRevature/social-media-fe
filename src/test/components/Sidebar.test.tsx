@@ -12,10 +12,10 @@ describe('Sidebar Component', () => {
     render(
       <CssVarsProvider>
       <Provider store={testStore}>
-        <Router>
-          <Sidebar />
-        </Router>
-      </Provider>
+          <Router>
+            <Sidebar />
+          </Router>
+        </Provider>
       </CssVarsProvider>
     );
     const fn_ln = document.querySelector("[data-testid=fn_ln]");

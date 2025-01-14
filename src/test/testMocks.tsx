@@ -1,6 +1,7 @@
 import { PostType, UserType, CommentType } from '../util/types';
 import authReducer from '../features/auth/authSlice';
 import postReducer from '../features/post/postSlice';
+import userReducer from '../features/user/userSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import { checkFileSize } from '../util/helper';
 import { ChangeEvent } from 'react';
@@ -29,6 +30,8 @@ export const preloadedState = {
 export const testStore = configureStore({
     reducer: {
       auth: authReducer,
+      user: userReducer,
+      post: postReducer
     },
     preloadedState, 
   });
@@ -38,15 +41,6 @@ export const preloadedPostState = {
   isLoading: false,
   loadingId: []
 }
-
-//vscode linter says this is wrong but it is correct
-export const testPostStore = configureStore({
-  reducer: {
-    //@ts-ignore
-    post: postReducer,
-  },
-  preloadedState: preloadedPostState
-})
 
 
 export const mockPost = {
@@ -84,4 +78,3 @@ export function mockHandleFileChange(event: ChangeEvent<HTMLInputElement>) {
       }
     }
   }
-

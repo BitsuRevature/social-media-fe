@@ -5,21 +5,20 @@ import Feed from '../../pages/Feed';
 import {
   CssVarsProvider,
 } from "@mui/joy";
-import { testPostStore } from '../testMocks'
+import { testStore } from '../testMocks'
 import { assert } from 'vitest';
 
 describe('Feed Page', () => {
   it('renders Feed page and does not crash', () => {
     const renderContainer = () => render(
       <CssVarsProvider>
-      <Provider store={testPostStore}>
+      <Provider store={testStore}>
         <Router>
           <Feed />
         </Router>
       </Provider>
       </CssVarsProvider>
     );
-    console.log(testPostStore.getState())
     assert.doesNotThrow(renderContainer);
   });
 });
