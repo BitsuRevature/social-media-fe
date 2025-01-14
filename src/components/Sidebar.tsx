@@ -1,21 +1,27 @@
 import * as React from 'react';
-import GlobalStyles from '@mui/joy/GlobalStyles';
-import { Avatar } from '@mui/joy';
-import Box from '@mui/joy/Box';
-import Divider from '@mui/joy/Divider';
-import IconButton from '@mui/joy/IconButton';
-import List from '@mui/joy/List';
-import ListItem from '@mui/joy/ListItem';
-import ListItemButton, { listItemButtonClasses } from '@mui/joy/ListItemButton';
-import ListItemContent from '@mui/joy/ListItemContent';
-import Typography from '@mui/joy/Typography';
-import Sheet from '@mui/joy/Sheet';
-import HomeIcon from '@mui/icons-material/Home';
-import ExploreIcon from '@mui/icons-material/Explore';
-import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import PostAddIcon from '@mui/icons-material/PostAdd';
+import {
+  GlobalStyles,
+  Avatar,
+  Badge,
+  Box,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  listItemButtonClasses,
+  ListItemContent,
+  Typography,
+  Sheet
+} from '@mui/joy';
+import {
+  Home as HomeIcon,
+  Explore as ExploreIcon,
+  LogoutRounded as LogoutRoundedIcon,
+  GroupRounded as GroupRoundedIcon,
+  KeyboardArrowDown as KeyboardArrowDownIcon,
+  PostAdd as PostAddIcon
+} from '@mui/icons-material';
 
 import { closeSidebar } from '../util/utils';
 import { useNavigate } from 'react-router-dom';
@@ -23,6 +29,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { logout } from '../features/auth/authSlice';
 import ColorSchemeToggle from './ColorSchemeToggle';
 import BalayHubLogo from './BalayHubLogo';
+import { fetchFriendRequests } from '../features/user/userSlice';
 
 
 function Toggler({
@@ -63,9 +70,17 @@ function Toggler({
 export default function Sidebar() {
 
   const authStore = useAppSelector(store => store.auth);
+  const userStore = useAppSelector(store => store.user);
   const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
+  const [friendRequestCount, setFriendRequestCount] = React.useState(userStore.friendRequests.length);
+
+  React.useEffect(() => {
+    dispatch(fetchFriendRequests()).then(() => {
+      setFriendRequestCount(userStore.friendRequests.length);
+    })
+  }, [])
+
 
   function handleLogOut(e: React.MouseEvent) {
     e.stopPropagation();
@@ -78,6 +93,7 @@ export default function Sidebar() {
     closeSidebar();
     navigate(route);
   }
+
 
 
   return (
@@ -236,7 +252,24 @@ export default function Sidebar() {
                     onClick={
                       () => handleNavigation('/users/friends')
                     }
-                  >Friends</ListItemButton>
+                  >
+                    <Badge
+                      badgeContent={friendRequestCount}
+                      color="danger"
+                      size="sm"
+                      sx={{
+                        '& .MuiBadge-badge': {
+                          left: '-1em',
+                          right: 'auto',
+                          top: '50%',
+                          transform: 'translate(-100%, -50%)',
+                        },
+                      }}
+                      invisible={!friendRequestCount || friendRequestCount === 0}
+                    >
+                      Friends
+                    </Badge>
+                  </ListItemButton>
                 </ListItem>
                 <ListItem>
                   <ListItemButton
