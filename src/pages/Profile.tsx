@@ -11,7 +11,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { useAppSelector } from '../app/hooks';
 import { useEffect, useState } from 'react';
-import { getUserDetails, getUserFollowing, getFriendRequests, unfriend } from '../util/apiHelper';
+import { getUserDetails } from '../util/apiHelper';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UserProfileType, UserType } from '../util/types';
 import FollowButton from '../components/FollowButton';
@@ -77,9 +77,13 @@ export default function Profile() {
           <Divider />
 
           <Stack
-            direction="row"
             spacing={3}
-            sx={{ my: 1 }}
+            sx={{
+              my: 1,
+              display: 'flex',
+              flexDirection: { xs: 'column', sm: 'row' },
+              alignItems: { xs: 'center', sm: 'flex-start' },
+            }}
           >
             <Avatar
               src={userProfile?.profilePicture}
@@ -120,11 +124,11 @@ export default function Profile() {
 
           {userProfile && userProfile.username !== authStore.auth?.username &&
             <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
-              <CardActions sx={{ alignSelf: 'flex-end', pt: 2  }}>
+              <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
                 <FollowButton connection={userProfile as UserType} />
-                <Divider orientation="vertical"/>
+                <Divider orientation="vertical" />
                 <FriendButton
-                    connection={userProfile as UserType}
+                  connection={userProfile as UserType}
                 />
 
               </CardActions>
