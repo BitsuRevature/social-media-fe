@@ -4,8 +4,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import { useEffect, useState } from "react";
-import { data } from "react-router-dom";
-import { getFriendRequests, checkIsFriend, sendFriendRequest, unfriend, checkIsFriendRequest, acceptFriendRequest, declineFriendRequest, checkSentFriendRequest } from "../util/apiHelper"
+import { checkIsFriend, sendFriendRequest, unfriend, checkIsFriendRequest, acceptFriendRequest, declineFriendRequest, checkSentFriendRequest } from "../util/apiHelper"
 
 type FriendButtonProps = {
     connection: UserType;
@@ -101,7 +100,7 @@ export default function FriendButton({ connection }: FriendButtonProps) {
                     </>
                     :
                     sentFriendRequest ?
-                        <Button size="sm" variant="solid" color="neutral"  disabled
+                        <Button size="sm" variant="solid" color="neutral" disabled
                             style={{
                                 position: "relative",
                                 right: 0

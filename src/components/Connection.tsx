@@ -15,7 +15,7 @@ interface ConnectionProps {
     connection: UserType
 }
 
-const Connection: FunctionComponent<ConnectionProps> = ({ connection}: ConnectionProps) => {
+const Connection: FunctionComponent<ConnectionProps> = ({ connection }: ConnectionProps) => {
 
     return (
         <LinkToProfile username={connection.username}>
@@ -23,7 +23,7 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection}: Connectio
                 <Stack
                     direction={"row"}
                     spacing={3}
-                    sx={{ display: { xs: 'flex', md: 'flex' }}}
+                    sx={{ display: { xs: 'flex', md: 'flex' } }}
                     alignItems={"center"}
                     justifyContent={"space-between"}
                 >
@@ -45,10 +45,8 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection}: Connectio
                         </div>
                     </CardContent>
                     <CardActions>
-                        <FriendButton
-                            connection={connection}
-                        /> 
-                        <Divider orientation="vertical"/>
+                        <FriendButton connection={connection} />
+                        <Divider orientation="vertical" />
                         <FollowButton connection={connection} />
                     </CardActions>
                 </Stack>

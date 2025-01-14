@@ -4,7 +4,7 @@ import Connection from "./Connection";
 import { CardActions, CardOverflow } from "@mui/joy";
 import FriendButton from "./FriendButtons";
 import { useEffect, useState } from "react";
-import { getFriendRequests, getFriends, sendFriendRequest } from "../util/apiHelper";
+import { getFriendRequests, getFriends } from "../util/apiHelper";
 
 
 export default function FriendsConnections() {
