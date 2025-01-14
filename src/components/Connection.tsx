@@ -32,7 +32,8 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection }: Connecti
                             display: "flex",
                             my: 1,
                             flexDirection: "row",
-                            alignItems: "center"
+                            alignItems: "center",
+                            flex: '1 1 auto',
                         }}
                     >
                         <Avatar
@@ -44,14 +45,24 @@ const Connection: FunctionComponent<ConnectionProps> = ({ connection }: Connecti
                             <Typography level="title-sm">{connection.bio}</Typography>
                         </div>
                     </CardContent>
-                    <CardActions>
+                    <CardActions
+                        sx={{
+                            display: 'flex',
+                            flex: '2 0 auto',
+                            justifyContent: 'flex-end',
+                            '& > button': {
+                                minWidth: 'fit-content',
+                                flex: '0 1 9em',
+                            },
+                        }}
+                    >
                         <FriendButton connection={connection} />
                         <Divider orientation="vertical" />
                         <FollowButton connection={connection} />
                     </CardActions>
                 </Stack>
             </Card>
-        </LinkToProfile>
+        </LinkToProfile >
     );
 }
 
