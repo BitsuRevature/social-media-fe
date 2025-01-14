@@ -111,11 +111,9 @@ export default function SignUp() {
                                 </Typography>
                                 <Typography level="body-sm">
                                     Already Have an Account?{' '}
-                                    <Link to="/login" >
-                                        <MuiLink level="title-sm">
-                                            Sign in!
-                                        </MuiLink>
-                                    </Link>
+                                    <MuiLink level="title-sm" component={Link} to="/login">
+                                        Sign in!
+                                    </MuiLink>
                                 </Typography>
                             </Stack>
 

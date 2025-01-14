@@ -8,6 +8,7 @@ import { checkIsFriend, sendFriendRequest, unfriend, checkIsFriendRequest, accep
 import { fetchFriendRequests } from "../features/user/userSlice";
 import { useAppDispatch } from "../app/hooks";
 
+
 type FriendButtonProps = {
     connection: UserType;
     friendRequests?: any[];

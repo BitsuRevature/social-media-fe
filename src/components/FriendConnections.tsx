@@ -1,9 +1,10 @@
 import { UserType } from "../util/types";
 import Connection from "./Connection";
 import { useEffect, useState } from "react";
-import { getFriends } from "../util/apiHelper";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { fetchFriendRequests } from "../features/user/userSlice";
+import { getFriendRequests, getFriends} from "../util/apiHelper";
+
 
 
 export default function FriendsConnections() {
