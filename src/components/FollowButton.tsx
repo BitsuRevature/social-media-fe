@@ -13,7 +13,7 @@ type FollowButtonProps = {
 
 export default function FollowButton({ connection }: FollowButtonProps) {
 
-    const [isFollowing, setIsFollowing] = useState(false);
+    const [isFollowing, setIsFollowing] = useState<boolean>();
 
     useEffect(() => {
         checkIfFollowing(connection.id).then(
@@ -45,27 +45,30 @@ export default function FollowButton({ connection }: FollowButtonProps) {
 
     return (
         <>
-            {/* {isFollowing} */}
-            {isFollowing ?
-                <Button size="sm" variant="solid" color="danger"
-                    style={{
-                        position: "relative",
-                        right: 0
-                    }}
-                    onClick={(e) => handleUnfollow(e)}
-                >
-                    <RemoveCircleOutlineRoundedIcon sx={{ marginRight: 1 }} /> Unfollow
-                </Button> :
-                <Button size="sm" variant="solid" color="primary"
-                    style={{
-                        position: "relative",
-                        right: 0
-                    }}
-                    onClick={(e) => handleFollow(e)}
-                >
-                    <AddCircleOutlineRoundedIcon sx={{ marginRight: 1 }} /> Follow
+            {isFollowing !== undefined &&
+                <>
+                    {isFollowing ?
+                        <Button size="sm" variant="solid" color="danger"
+                            style={{
+                                position: "relative",
+                                right: 0
+                            }}
+                            onClick={(e) => handleUnfollow(e)}
+                        >
+                            <RemoveCircleOutlineRoundedIcon sx={{ marginRight: 1 }} /> Unfollow
+                        </Button> :
+                        <Button size="sm" variant="solid" color="primary"
+                            style={{
+                                position: "relative",
+                                right: 0
+                            }}
+                            onClick={(e) => handleFollow(e)}
+                        >
+                            <AddCircleOutlineRoundedIcon sx={{ marginRight: 1 }} /> Follow
 
-                </Button>
+                        </Button>
+                    }
+                </>
             }
         </>
     )
